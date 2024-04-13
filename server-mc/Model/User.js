@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
       required: true,
-      enum: ["ADMIN", "CONSULTANT", "USER"],
+      enum: ["ADMIN", "CONSULTANT", "STUDENT"],
     },
     profile: String,
     rating: String,
@@ -70,12 +70,3 @@ userSchema.methods.comparedPassword = async function (password) {
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;
-
-// "email":"admin@gmail.com",
-// "password":"admin",
-
-// "email":"mech@gmail.com",
-// "password":"mech",
-
-// "email":"dr@gmail.com",
-// "password":"dr",
