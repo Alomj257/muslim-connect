@@ -14,7 +14,7 @@ const {
 const uploadFile = require("../Middleware/uploadFile");
 
 const AuthRoutes = require("express").Router();
-AuthRoutes.post("/register", register);
+AuthRoutes.post("/register", uploadFile("./Public/Profile"), register);
 AuthRoutes.post("/resend/token", resendToken);
 AuthRoutes.get("/verify/:email/:token", verifyEmail);
 AuthRoutes.post("/login", login);

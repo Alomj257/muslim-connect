@@ -1,0 +1,155 @@
+.register{
+    width: 1,726px;
+height:916px;
+top: 238px;
+left: 2px;
+gap: 0px;
+opacity: 0px;
+font-family: Arial, Helvetica, sans-serif;
+}
+
+.register .register-left-side{
+    height: inherit;
+padding: 0px 32px 0px 32px;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+overflow-y: scroll;
+scrollbar-width: none;
+}
+.register .register-left-side h3{
+
+font-family: Arial, Helvetica, sans-serif;
+font-size: 30px;
+font-weight: 600;
+line-height: 38px;
+text-align: center;
+}
+.register .register-left-side p{
+    font-family: Arial, Helvetica, sans-serif;    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: center;
+}
+.register .register-left-side .register-tabs{
+padding: 0px 24px 0px 24px;
+gap: 10px;
+background-color: #F9FAFB !important;
+padding: 4px 0px 0px 0px;
+gap: 8px;
+font-weight: 600;
+border-radius: 8px 0px 0px 0px;
+border: 1px 0px 0px 0px;
+}
+.register .register-left-side .register-tabs button{
+    padding: 8px, 12px, 8px, 12px !important;
+    font-weight: 600;
+}
+.register .register-left-side .btn-register-active{
+padding: 8px 12px 8px 12px;
+background-color: #ffffff;
+gap: 8px;
+border-radius: 6px 0px 0px 0px;
+color: black;
+box-shadow: 0px 1px 2px 0px #1018280F;
+
+box-shadow: 0px 1px 3px 0px #1018281A;
+
+}
+.register .register-left-side .register-input{
+padding: 10px 14px 10px 14px;
+gap: 8px;
+border-radius: 8px;
+border: 1px 0px 0px 0px;
+opacity: 0px;
+background: #FFFFFF;
+border: 1px solid #D0D5DD;
+box-shadow: 0px 1px 2px 0px #1018280D;
+width: 100%;
+outline: none;
+}
+
+.register .register-left-side .register-left{
+    width: 491px;
+    gap: 32px;
+    margin: auto;
+    }
+    .register .register-left-side .register-form{
+        height: 500px;
+        overflow-y: scroll;
+        scrollbar-width: none;
+    }
+    .register .register-left-side .btn-signup{
+        padding: 10px 18px 10px 18px;
+        gap: 8px;
+        border-radius: 8px;
+        border: 1px 0px 0px 0px;
+        opacity: 0px;
+        background: #7C5399;
+        color: #FFFFFF;
+         
+    }
+
+    .register .register-left-side .btn-google{
+padding: 10px 16px 10px 16px;
+border-radius: 8px ;
+border: 1px 0px 0px 0px;
+background-color: #FFFFFF;
+border: 1px solid #D0D5DD;
+box-shadow: 0px 1px 2px 0px #1018280D;
+    }
+
+    .register .register-right-side .said{
+      padding: 24px 20px 24px 20px;  
+      background: #FFFFFF4D;
+      border: 1px solid #FFFFFF80;
+      margin: 25px;
+      font-family: Poppins;
+font-size: 24px;
+font-weight: 500;
+line-height: 38px;
+text-align: left;
+color: #ffffff;
+position: absolute;
+bottom: 0;
+    }
+    .register .identity{
+padding: 16px 24px 16px 24px;
+margin: 4px;
+border-radius: 12px;
+border: 1px solid #EAECF0;
+z-index: 3;
+
+    }
+    .register .consult-said{
+        width: 686px;
+height: 230px;
+position: absolute;
+bottom: 3rem;
+left: 0;
+right: 0;
+margin: 25px;
+color: #FFFFFF;
+
+    }
+    .register .consult-said p{
+        font-family: Poppins;
+font-size: 24px;
+font-weight: 500;
+line-height: 44px;
+letter-spacing: -0.02em;
+text-align: left;
+    }
+
+    .register .student-img{
+        width: 863px;
+height: 916px;
+/* padding: 451px ; */
+    }
+    .register .consultant-img{
+        width: 863px;
+        height: 916px;
+        /* padding: 500px 87px 56px 90px; */
+        border-radius: 80px 0px 0px 80px;
+    }
