@@ -2,7 +2,7 @@ import React from "react";
 import SearchSvg from "../assets/Nav_assets/search_svg";
 function Popular_Service() {
   return (
-    <div className="d-flex w-100 justify-content-center justify-content-evenly ">
+    <div className="d-flex w-100  justify-content-between ">
       <div className="">
         <h1 className="fs-1 text-wrap">
           Trouvez immédiatement l’expertise dont vous avez besoin
@@ -19,7 +19,9 @@ function Popular_Service() {
           </div>
         </div>
       </div>
-      <div className="">2</div>
+      <div className="">
+        2<h1>serdtfyguhijokwaesrdtfyguhijdrftgyhujiokp</h1>
+      </div>
     </div>
   );
 }
