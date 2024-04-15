@@ -13,6 +13,16 @@ code {
     monospace;
 }
 
+:root{
+  --purple-color:#7C5399;
+  --white-color:#ffffff;
+  --blue-color:#5e15b7;
+  --border-color:#D0D5DD80;
+  --black-light-color:#0C0C0C80;
+  --black-color:#000000;
+
+}
+
 .text-purple{
   color: #7C5399;
 }
