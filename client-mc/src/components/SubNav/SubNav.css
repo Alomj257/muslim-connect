@@ -1,0 +1,18 @@
+.sub-nav{
+    border: 1px solid var(--border-color);
+    font-family: Poppins;
+font-size: 21px;
+font-weight: 400;
+line-height: 24px;
+text-align: left;
+}
+.sub-nav ul{
+    list-style: none;
+    align-items: center;
+padding: 29px 56px 29px 56px;
+
+}
+.sub-nav ul li:hover{
+    color: var(--purple-color);
+    cursor: pointer;
+}

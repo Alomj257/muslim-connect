@@ -1,6 +1,5 @@
 .login{
-    width: 1,726px;
-height:916px;
+height:70vh;
 gap: 0px;
 opacity: 0px;
 font-family: Arial, Helvetica, sans-serif;
@@ -133,5 +132,5 @@ text-align: left;
         width: 863px;
         height: 916px;
         /* padding: 500px 87px 56px 90px; */
-        border-radius: 80px 0px 0px 80px;
+        border-radius: 0px 80px 80px 0px;
     }
