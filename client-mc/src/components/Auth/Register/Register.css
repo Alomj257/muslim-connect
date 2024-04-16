@@ -1,5 +1,5 @@
 .register{
-    height: 70vh;
+    height: 90vh;
     /* height: max-content; */
     display: grid;
     grid-template-columns: repeat(2,1fr);
@@ -107,7 +107,7 @@ color: #ffffff;
 z-index: 3;
     }
     .register .register-left-side .said p{
-        font-size: 20px;
+        font-size: 18px;
 font-weight: 500;
     }
     .register .identity{

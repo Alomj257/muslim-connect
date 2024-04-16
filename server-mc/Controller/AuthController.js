@@ -76,7 +76,9 @@ const verifyEmail = async (req, res) => {
     // Enable the user
     user.isEnable = true;
     await user.save();
-    return res.status(200).json({ message: "User verified successfully" });
+    // return res.status(200).json({ message: "User verified successfully" });
+    //  res.redirect(`${process.env.clientUrl}/login`);
+    res.redirect(`http://localhost:3000/login`);
   } catch (error) {
     console.error("Error verifying user:", error);
     return res.status(500).json({ message: "Internal server error" });
@@ -84,8 +86,8 @@ const verifyEmail = async (req, res) => {
 };
 const login = async (req, res) => {
   try {
+    console.log(req.body);
     const user = await User.findOne({ email: req.body.email });
-    console.log(user);
     if (!user) {
       return res
         .status(401)

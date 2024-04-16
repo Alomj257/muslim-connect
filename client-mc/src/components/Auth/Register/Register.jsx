@@ -261,6 +261,7 @@ const Register = () => {
                 {!more ? (
                   <div className="d-flex flex-column w-100">
                     <button
+                      type="button"
                       onClick={() => setMore(!more)}
                       className="btn btn-signup"
                     >
@@ -306,21 +307,19 @@ const Register = () => {
         {/*  student */}
         {role === "STUDENT" && (
           <div
-            className="w-100 position-relative h-100"
-            style={{ zIndex: "1" }}
+            style={{ height: more ? "" : "100vh", zIndex: "1" }}
+            className={`w-100 position-relative ${more ? "h-100" : ""}`}
           >
             <img
               src={studentImg}
               className="student-img w-100 h-100"
               alt="register"
             />
-            <div className="position-absolute d-flex  " style={{ inset: "0" }}>
-              <div
-                className={`slide said d-flex flex-column ${
-                  more ? "mt-auto" : "mb-auto"
-                }  `}
-                style={{ marginTop: !more ? "160px" : "" }}
-              >
+            <div
+              className="position-absolute d-flex pb-5  "
+              style={{ inset: "0" }}
+            >
+              <div className={`slide said d-flex flex-column mt-auto mb-5  `}>
                 <p>
                   “As a devout follower seeking religious guidance and
                   knowledge, I couldn't be more pleased with my experience on
@@ -348,7 +347,7 @@ const Register = () => {
         )}
         {role === "CONSULTANT" && (
           <div
-            style={{ height: more ? "" : "70vh", zIndex: "1" }}
+            style={{ height: more ? "" : "90vh", zIndex: "1" }}
             className={`w-100 position-relative ${more ? "h-100" : ""}`}
           >
             <img
