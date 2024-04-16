@@ -1,7 +1,5 @@
 .login{
 height:70vh;
-gap: 0px;
-opacity: 0px;
 font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -30,14 +28,14 @@ text-align: center;
     text-align: center;
 }
 .login .login-left-side .login-tabs{
-padding: 0px 24px 0px 24px;
+padding: 0 14px;
 gap: 10px;
 background-color: #F9FAFB !important;
-padding: 4px 0px 0px 0px;
+padding: 4px;
 gap: 8px;
 font-weight: 600;
-border-radius: 8px 0px 0px 0px;
-border: 1px 0px 0px 0px;
+border-radius: 8px ;
+border: 1px ;
 }
 .login .login-left-side .login-tabs button{
     padding: 8px, 12px, 8px, 12px !important;
@@ -47,7 +45,7 @@ border: 1px 0px 0px 0px;
 padding: 8px 12px 8px 12px;
 background-color: #ffffff;
 gap: 8px;
-border-radius: 6px 0px 0px 0px;
+border-radius: 6px ;
 color: black;
 box-shadow: 0px 1px 2px 0px #1018280F;
 
@@ -58,21 +56,27 @@ box-shadow: 0px 1px 3px 0px #1018281A;
 padding: 10px 14px 10px 14px;
 gap: 8px;
 border-radius: 8px;
-border: 1px 0px 0px 0px;
-opacity: 0px;
+border: 1px ;
 background: #FFFFFF;
 border: 1px solid #D0D5DD;
 box-shadow: 0px 1px 2px 0px #1018280D;
 width: 100%;
 outline: none;
+font-size: 13px;
+
+}
+.login .login-left-side label{
+    font-size: 13px;
+}
+.login .login-left-side .login-form{
+    font-size: 13px;
 }
 
     .login .login-left-side .btn-signup{
         padding: 10px 18px 10px 18px;
         gap: 8px;
         border-radius: 8px;
-        border: 1px 0px 0px 0px;
-        opacity: 0px;
+        border: 1px;
         background: #7C5399;
         color: #FFFFFF;
          
@@ -85,6 +89,8 @@ border: 1px 0px 0px 0px;
 background-color: #FFFFFF;
 border: 1px solid #D0D5DD;
 box-shadow: 0px 1px 2px 0px #1018280D;
+font-size: 15px;
+font-weight: 600;
     }
 
     .login .login-right-side .said{
@@ -93,9 +99,8 @@ box-shadow: 0px 1px 2px 0px #1018280D;
       border: 1px solid #FFFFFF80;
       margin: 25px;
       font-family: Poppins;
-font-size: 24px;
+font-size: 14px;
 font-weight: 500;
-line-height: 38px;
 text-align: left;
 color: #ffffff;
 position: absolute;
@@ -110,27 +115,23 @@ z-index: 3;
 
     }
     .login .consult-said{
-        width: 686px;
-height: 230px;
-position: absolute;
-bottom: 3rem;
-left: 0;
-right: 0;
 margin: 25px;
 color: #FFFFFF;
 
     }
     .login .consult-said p{
         font-family: Poppins;
-font-size: 24px;
+font-size: 22px;
 font-weight: 500;
-line-height: 44px;
 letter-spacing: -0.02em;
 text-align: left;
     }
-    .login .consultant-img{
-        width: 863px;
-        height: 916px;
+    .login .consultant-img {
+        /* width: 863px;
+        height: 916px; */
         /* padding: 500px 87px 56px 90px; */
         border-radius: 0px 80px 80px 0px;
     }
+     .login .consult-layer{
+        border-radius: 0px 80px 80px 0px;
+     }
