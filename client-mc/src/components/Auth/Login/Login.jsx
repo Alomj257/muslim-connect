@@ -454,7 +454,7 @@ const Login = () => {
                 as a religious expert.”
               </p>
               <div className="">
-                <h3 className="fw-bold">Md Useman</h3>
+                <h3 className="fw-bold">Mohammed Useman</h3>
               </div>
               <div className="d-flex justify-content-between">
                 <div className="d-flex flex-column">
