@@ -2,6 +2,7 @@ import React from "react";
 import "./Navbar.css";
 import { MdSearch } from "react-icons/md";
 import { NavLink } from "react-router-dom";
+import logo from "../../assets/Nav_assets/logo.png";
 const Navbar = () => {
   return (
     <nav className="c-navbar">
@@ -12,7 +13,9 @@ const Navbar = () => {
             nav.isActive ? "navbar-active" : ""} text-decoration-none
           `}
         >
-          <li className="logo">logo</li>
+          <li className="logo">
+            <img src={logo} alt="logo" className="h-100 w-100" />
+          </li>
         </NavLink>
         <li className="">
           <form action="" className="search-form border rounded">

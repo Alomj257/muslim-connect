@@ -37,7 +37,7 @@ const Register = () => {
     <div className="register" style={{ height: more ? "max-content" : "" }}>
       <div className="register-left-side w-100">
         <div className="register-left py-2">
-          <h3>Create New Account</h3>
+          <h4>Create New Account</h4>
           <p>
             Welcome! Please enter your asked information to complete the
             Registration Process
@@ -63,7 +63,7 @@ const Register = () => {
           <form action="" className="w-100" onSubmit={handlesubmit}>
             <div
               className="d-flex flex-column register-form w-100"
-              style={{ rowGap: "20px", padding: "16px 0" }}
+              style={{ rowGap: "10px", padding: "10px 0" }}
             >
               <div className="d-flex flex-column w-100">
                 <label htmlFor="firstName">First Name*</label>
@@ -85,19 +85,20 @@ const Register = () => {
                   placeholder="Enter Last Name"
                 />
               </div>
-              <div className="d-flex flex-column w-100">
-                <label htmlFor="Email">Email*</label>
-                <input
-                  onChange={handleChange}
-                  type="email"
-                  name="email"
-                  id="Email"
-                  className="register-input"
-                  placeholder="Enter your Email"
-                />
-              </div>
               {more && (
                 <>
+                  <div className="d-flex flex-column w-100">
+                    <label htmlFor="Email">Email*</label>
+                    <input
+                      onChange={handleChange}
+                      type="email"
+                      name="email"
+                      id="Email"
+                      className="register-input"
+                      placeholder="Enter your Email"
+                    />
+                  </div>
+
                   <div className="d-flex flex-column w-100">
                     <label htmlFor="firstName">Date Of Birth*</label>
                     <input
@@ -256,38 +257,47 @@ const Register = () => {
               )}
             </div>
             <div className="d-flex flex-column gap-4">
-              {more && (
-                <>
+              <>
+                {!more ? (
+                  <div className="d-flex flex-column w-100">
+                    <button
+                      onClick={() => setMore(!more)}
+                      className="btn btn-signup"
+                    >
+                      Sign Up
+                    </button>
+                  </div>
+                ) : (
                   <div className="d-flex flex-column w-100">
                     <button type="submit" className="btn btn-signup">
                       Sign Up
                     </button>
                   </div>
-                  <div className="d-flex flex-column w-100">
-                    <button className="btn btn-google">
-                      Sign Up with Google
-                    </button>
-                  </div>
-                  <div className="text-center">
-                    Already have an account?{" "}
-                    <Link
-                      to="/login"
-                      className="text-decoration-none text-purple fw-bold"
-                    >
-                      Sign In
-                    </Link>
-                  </div>
-                </>
-              )}
+                )}
+                <div className="d-flex flex-column w-100">
+                  <button className="btn btn-google">
+                    Sign Up with Google
+                  </button>
+                </div>
+                <div className="text-center">
+                  Already have an account?{" "}
+                  <Link
+                    to="/login"
+                    className="text-decoration-none text-purple fw-bold"
+                  >
+                    Sign In
+                  </Link>
+                </div>
+              </>
 
-              <div className="d-flex flex-column w-100">
+              {/* <div className="d-flex flex-column w-100">
                 <button
                   onClick={() => setMore(!more)}
                   className="btn btn-signup"
                 >
                   {!more ? "Continue" : "less"}
                 </button>
-              </div>
+              </div> */}
             </div>
           </form>
         </div>
@@ -338,18 +348,20 @@ const Register = () => {
         )}
         {role === "CONSULTANT" && (
           <div
-            className="w-100 position-relative h-100"
-            style={{ zIndex: "1" }}
+            style={{ height: more ? "" : "70vh", zIndex: "1" }}
+            className={`w-100 position-relative ${more ? "h-100" : ""}`}
           >
             <img
               src={consultantImg}
-              className="consultant-img w-100 h-100"
+              className={`consultant-img w-100 h-100 `}
               alt="register"
             />
-            <div className="position-absolute d-flex  " style={{ inset: "0" }}>
+            <div
+              className="position-absolute consult-layer d-flex  "
+              style={{ inset: "0" }}
+            >
               <div
-                className={`slide consult-said d-flex flex-column ${
-                  more ? "mt-auto" : "mb-auto"
+                className={`slide consult-said d-flex flex-column  mt-auto 
                 }  `}
                 style={{ marginTop: !more ? "160px" : "" }}
               >

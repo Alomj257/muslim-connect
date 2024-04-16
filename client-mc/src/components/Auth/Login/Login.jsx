@@ -35,7 +35,7 @@ const Login = () => {
           <form action="" className="w-100" onSubmit={handlesubmit}>
             <div
               className="d-flex flex-column login-form w-100"
-              style={{ rowGap: "20px", padding: "16px 0" }}
+              style={{ rowGap: "10px", padding: "8px 0" }}
             >
               {(step === "login" || step === "forget") && (
                 <div className="d-flex flex-column w-100">
@@ -119,9 +119,17 @@ const Login = () => {
             className="consultant-img w-100 h-100"
             alt="register"
           />
-          <div className="position-absolute d-flex  " style={{ inset: "0" }}>
+          <div
+            className="position-absolute d-flex  "
+            style={{
+              inset: "0",
+              borderRadius: " 0px 80px 80px 0px",
+              background:
+                "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 99.95%);",
+            }}
+          >
             <div
-              className={`slide consult-said d-flex flex-column 
+              className={`slide consult-said mt-auto d-flex flex-column 
                 }  `}
             >
               <p>

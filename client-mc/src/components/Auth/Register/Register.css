@@ -6,7 +6,9 @@
     overflow-y: hidden;
 font-family: Arial, Helvetica, sans-serif;
 }
-
+.register .register-left-side{
+    padding:20px 0 ;
+}
 /* .register .register-left-side{
 padding: 0px 32px 0px 32px;
 display: flex;
@@ -14,19 +16,17 @@ align-items: center;
 justify-content: center;
 flex-direction: column;
 } */
-.register .register-left-side h3{
+.register .register-left-side h4{
 
 font-family: Arial, Helvetica, sans-serif;
-font-size: 30px;
+/* font-size: 30px; */
 font-weight: 600;
 line-height: 38px;
+margin: 0;
 text-align: center;
 }
 .register .register-left-side p{
     font-family: Arial, Helvetica, sans-serif;  
-      font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
     text-align: center;
 }
 .register .register-left-side .register-tabs{
@@ -46,7 +46,7 @@ border: 1px;
 padding: 8px 12px 8px 12px;
 background-color: #ffffff;
 gap: 8px;
-border-radius: 6px 0px 0px 0px;
+border-radius: 6px;
 color: black;
 box-shadow: 0px 1px 2px 0px #1018280F;
 
@@ -54,28 +54,28 @@ box-shadow: 0px 1px 3px 0px #1018281A;
 
 }
 .register .register-left-side .register-input{
-padding: 10px 14px 10px 14px;
-gap: 8px;
+padding:10px 14px;
+font-size: 13px;
 border-radius: 8px;
-border: 1px;
-opacity: 0px;
 background: #FFFFFF;
 border: 1px solid #D0D5DD;
 box-shadow: 0px 1px 2px 0px #1018280D;
 width: 100%;
 outline: none;
 }
+.register .register-left-side label{
+    font-size: 13px;
+}
 
 .register .register-left-side .register-left{
     width: 491px;
-    gap: 32px;
     margin: auto;
     }
     .register .register-left-side .btn-signup{
         padding: 10px 18px 10px 18px;
         gap: 8px;
         border-radius: 8px;
-        border: 1px 0px 0px 0px;
+        border: 1px;
         opacity: 0px;
         background: #7C5399;
         color: #FFFFFF;
@@ -85,13 +85,15 @@ outline: none;
     .register .register-left-side .btn-google{
 padding: 10px 16px 10px 16px;
 border-radius: 8px ;
-border: 1px 0px 0px 0px;
+border: 1px;
 background-color: #FFFFFF;
 border: 1px solid #D0D5DD;
 box-shadow: 0px 1px 2px 0px #1018280D;
+font-size: 15px;
+font-weight: 600;
     }
 
-    .register .register-right-side .said{
+    .register .register-right-side .said {
       padding: 24px 20px 24px 20px;  
       background: #FFFFFF4D;
       border: 1px solid #FFFFFF80;
@@ -103,6 +105,10 @@ line-height: 38px;
 text-align: left;
 color: #ffffff;
 z-index: 3;
+    }
+    .register .register-left-side .said p{
+        font-size: 20px;
+font-weight: 500;
     }
     .register .identity{
 padding: 16px 24px 16px 24px;
@@ -118,17 +124,16 @@ color: #FFFFFF;
     }
     .register .consult-said p{
         font-family: Poppins;
-font-size: 24px;
+font-size: 20px;
 font-weight: 500;
-line-height: 44px;
-letter-spacing: -0.02em;
+/* line-height: 44px; */
+/* letter-spacing: -0.02em; */
 text-align: left;
     }
 
    
     .register .consultant-img{
         width: 100%;
-        height: 100%;
         /* padding: 500px 87px 56px 90px; */
         border-radius: 80px 0px 0px 80px;
     }
@@ -138,8 +143,7 @@ font-weight: 600;
 line-height: 44px;
 letter-spacing: -0.02em;
 text-align: left;
-
-    }
+   }
     .register .alumani-location{
 font-size: 18px;
 line-height: 28px;
