@@ -5,7 +5,8 @@
 .c-navbar ul{
     list-style: none;
     font-family: Poppins;
-font-size: 18px;
+/* font-size: 21px; */
+font-size: 1.5vw;
 font-weight: 600;
 line-height: 31.5px;
 text-align: left;

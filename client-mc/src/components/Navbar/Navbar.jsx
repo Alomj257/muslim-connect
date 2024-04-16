@@ -6,7 +6,7 @@ import logo from "../../assets/Nav_assets/logo.png";
 const Navbar = () => {
   return (
     <nav className="c-navbar">
-      <ul className="d-flex m-0 justify-content-between">
+      <ul className="d-flex gap-2 flex-wrap m-0 justify-content-between">
         <NavLink
           to="/"
           className={`${(nav) =>

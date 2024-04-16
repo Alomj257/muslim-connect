@@ -2,6 +2,9 @@
 height:70vh;
 font-family: Arial, Helvetica, sans-serif;
 }
+.login .login-left{
+    width: 490px;
+}
 
 .login .login-left-side{
     height: inherit;
@@ -14,7 +17,6 @@ overflow-y: scroll;
 scrollbar-width: none;
 }
 .login .login-left-side h3{
-
 font-family: Arial, Helvetica, sans-serif;
 font-size: 30px;
 font-weight: 600;
@@ -86,6 +88,7 @@ font-size: 13px;
 padding: 10px 16px 10px 16px;
 border-radius: 8px ;
 border: 1px 0px 0px 0px;
+color: var(--light-black-color);
 background-color: #FFFFFF;
 border: 1px solid #D0D5DD;
 box-shadow: 0px 1px 2px 0px #1018280D;
@@ -134,4 +137,13 @@ text-align: left;
     }
      .login .consult-layer{
         border-radius: 0px 80px 80px 0px;
+     }
+
+    .login .otp-container input,.login .otp-container .dash{
+            color: var(--purple-color);
+            text-align: center;
+            font-size: 28px;
+            font-weight: 600;
+            padding:0  2px;
+            border: 2px solid var(--purple-color);
      }
