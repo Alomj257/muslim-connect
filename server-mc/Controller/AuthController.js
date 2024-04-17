@@ -5,6 +5,18 @@ const { sendEmail } = require("../Middleware/EmailHandle");
 
 const register = async (req, res) => {
   try {
+    let { idProof, certificate } = req.body;
+    if (req.files) {
+      if (req.files.idProof) {
+        idProof = "/idProof/" + req?.files?.idProof[0]?.originalname;
+      }
+      if (req?.files?.certificate) {
+        certificate =
+          "/certificate/" + req?.files?.certificate[0]?.originalname;
+      }
+    }
+    req.body.idProof = idProof;
+    req.body.certificate = certificate;
     const user = await User.findOne({ email: req.body.email });
     const { password, cnfPassword } = req.body;
     if (user) {

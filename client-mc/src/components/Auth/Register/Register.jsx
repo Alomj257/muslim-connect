@@ -5,7 +5,11 @@ import studentImg from "../../../assets/auth/student.jpeg";
 import consultantImg from "../../../assets/auth/login.jpeg";
 import { Link } from "react-router-dom";
 import { registerUserService } from "../../../ApiService/Auth/Auth";
-import { FaStar } from "react-icons/fa6";
+import { FaArrowLeft, FaArrowRight, FaStar } from "react-icons/fa6";
+import {
+  FaRegArrowAltCircleRight,
+  FaRegArrowAltCircleLeft,
+} from "react-icons/fa";
 
 const Register = () => {
   const [role, setRole] = useState("STUDENT");
@@ -316,10 +320,14 @@ const Register = () => {
               alt="register"
             />
             <div
-              className="position-absolute d-flex pb-5  "
+              className={`position-absolute d-flex  ${!more ? "pb-5" : ""} `}
               style={{ inset: "0" }}
             >
-              <div className={`slide said d-flex flex-column mt-auto mb-5  `}>
+              <div
+                className={`slide said d-flex flex-column mt-auto ${
+                  !more ? "mb-5" : ""
+                }  `}
+              >
                 <p>
                   “As a devout follower seeking religious guidance and
                   knowledge, I couldn't be more pleased with my experience on
@@ -340,6 +348,23 @@ const Register = () => {
                   <small className="text-light">
                     Newly Converted Muslim, Indonesian
                   </small>
+                  <div
+                    className="d-flex gap-4"
+                    style={{ fontWeight: "lighter" }}
+                  >
+                    <span
+                      className="p-2 border rounded-circle"
+                      style={{ cursor: "pointer" }}
+                    >
+                      <FaArrowLeft size={30} />
+                    </span>
+                    <span
+                      className="p-2 border rounded-circle"
+                      style={{ cursor: "pointer" }}
+                    >
+                      <FaArrowRight size={30} />
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -378,8 +403,24 @@ const Register = () => {
                   <div className="d-flex flex-column">
                     <span className="fw-bold">Finance consultant</span>
                     <small className="text-light">Indonesian</small>
+                  </div>{" "}
+                  <div
+                    className="d-flex gap-4"
+                    style={{ fontWeight: "lighter" }}
+                  >
+                    <span
+                      className="p-2 border rounded-circle"
+                      style={{ cursor: "pointer" }}
+                    >
+                      <FaArrowLeft size={30} />
+                    </span>
+                    <span
+                      className="p-2 border rounded-circle"
+                      style={{ cursor: "pointer" }}
+                    >
+                      <FaArrowRight size={30} />
+                    </span>
                   </div>
-                  <div>left right icons</div>
                 </div>
               </div>
             </div>

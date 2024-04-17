@@ -12,7 +12,12 @@ import {
   setPasswordService,
   verifyOtpService,
 } from "../../../ApiService/Auth/Auth";
-import { FaArrowLeftLong, FaRegEnvelope } from "react-icons/fa6";
+import {
+  FaArrowLeft,
+  FaArrowLeftLong,
+  FaArrowRight,
+  FaRegEnvelope,
+} from "react-icons/fa6";
 import { useAuth } from "../../../context/AuthContext";
 
 const Login = () => {
@@ -283,7 +288,7 @@ const Login = () => {
                     <span
                       onClick={() => setStep("forget")}
                       style={{ cursor: "pointer" }}
-                      className="text-purple"
+                      className="text-purple my-2"
                     >
                       Forget Passoword
                     </span>
@@ -438,8 +443,7 @@ const Login = () => {
             style={{
               inset: "0",
               borderRadius: " 0px 80px 80px 0px",
-              background:
-                "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 99.95%);",
+              backgroundColor: "#00000070",
             }}
           >
             <div
@@ -461,7 +465,20 @@ const Login = () => {
                   <span className="fw-bold">Finance consultant</span>
                   <small className="text-light">Indonesian</small>
                 </div>
-                <div>left right icons</div>
+                <div className="d-flex gap-4" style={{ fontWeight: "lighter" }}>
+                  <span
+                    className="p-2 border rounded-circle"
+                    style={{ cursor: "pointer" }}
+                  >
+                    <FaArrowLeft size={30} />
+                  </span>
+                  <span
+                    className="p-2 border rounded-circle"
+                    style={{ cursor: "pointer" }}
+                  >
+                    <FaArrowRight size={30} />
+                  </span>
+                </div>
               </div>
             </div>
           </div>
