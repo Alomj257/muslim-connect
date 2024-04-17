@@ -12,9 +12,10 @@ const {
   updatePassword,
 } = require("../Controller/AuthController");
 const uploadFile = require("../Middleware/uploadFile");
+const uploadMuiltiFieldFiles = require("../Middleware/uploadMultifieldFiles");
 
 const AuthRoutes = require("express").Router();
-AuthRoutes.post("/register", uploadFile("./Public/Profile"), register);
+AuthRoutes.post("/register", uploadMuiltiFieldFiles("./Public/User"), register);
 AuthRoutes.post("/resend/token", resendToken);
 AuthRoutes.get("/verify/:email/:token", verifyEmail);
 AuthRoutes.post("/login", login);

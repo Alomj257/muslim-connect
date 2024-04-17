@@ -46,6 +46,8 @@ const userSchema = new mongoose.Schema(
       enum: ["ADMIN", "CONSULTANT", "STUDENT"],
     },
     profile: String,
+    certificate: String,
+    idProof: String,
     rating: String,
     description: String,
     location: String,

@@ -54,3 +54,23 @@ transition: all 100ms;
     width: 103px;
 height: 60px;
 }
+
+/*  childrens */
+
+.c-navbar .dash-child:hover{
+    color: var(--purple-color);
+}
+.c-navbar .dash-child .childrens{
+    height: 0;
+    overflow: hidden;
+    position: absolute;
+    transition: height 1s;
+    
+}
+.c-navbar .dash-child:hover .childrens{
+    height: max-content;
+    transition: height 1s;
+}
+.c-navbar .dash-child svg{
+  transform: rotate("180deg");
+}
