@@ -20,6 +20,7 @@ border: 1px;
 }
 .c-navbar ul li{
     color: var(--black-light-color);
+    cursor: pointer;
 }
 .btn-search{
     background-color: var(--purple-color) !important;
