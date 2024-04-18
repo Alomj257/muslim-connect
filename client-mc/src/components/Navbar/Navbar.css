@@ -1,28 +1,32 @@
-.c-navbar{
+.c-navbar {
     border: 1px solid #D0D5DD80;
     min-width: 1248px !important;
 }
-.c-navbar ul{
+
+.c-navbar ul {
     list-style: none;
     font-family: Poppins;
-/* font-size: 21px; */
-font-size: 1.3vw;
-font-weight: 600;
-line-height: 31.5px;
-text-align: left;
-padding: 1.5rem;
-align-items: center;
+    /* font-size: 21px; */
+    font-size: 1.4vw;
+    font-weight: 600;
+    line-height: 31.5px;
+    text-align: left;
+    padding: 1.5rem;
+    align-items: center;
 
 }
-.c-navbar .search-form{
-padding: 5px 5px 5px 20px;
-border-radius: 8px;
-border: 1px;
+
+.c-navbar .search-form {
+    padding: 5px 5px 5px 20px;
+    border-radius: 8px;
+    border: 1px;
 }
-.c-navbar ul li{
+
+.c-navbar ul li {
     color: var(--black-light-color);
 }
-.btn-search{
+
+.btn-search {
     background-color: var(--purple-color) !important;
     color: var(--white-color) !important;
     border: 1px solid var(--purple-color);
@@ -34,24 +38,27 @@ border: 1px;
  background-color: var(--white-color) !important;
  border: 1px solid var(--purple-color);
 } */
-.connect-btn{
-padding: 8px 24px 8px 24px;
-border-radius: 10px;
-font-family: Poppins;
-font-size: 20px;
-font-weight: 500;
-line-height: 30px;
+.connect-btn {
+    padding: 8px 24px 8px 24px;
+    border-radius: 10px;
+    font-family: Poppins;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 30px;
 
-background-color: var(--purple-color) !important;
-color: var(--white-color) !important;
-border: 1px solid var(--purple-color);
-transition: all 100ms;
+    background-color: var(--purple-color) !important;
+    color: var(--white-color) !important;
+    border: 1px solid var(--purple-color);
+    transition: all 100ms;
 
 }
-.navbar-active{
+
+.navbar-active {
     color: var(--purple-color) !important;
 }
-.c-navbar .logo{
+
+.c-navbar .logo {
     width: 103px;
-height: 60px;
+    height: 60px;
+    margin-right: 120px;
 }
