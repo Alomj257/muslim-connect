@@ -1,10 +1,12 @@
 import React from "react";
 import Navbar from "../../components/Navbar/Navbar";
+import HomeComponent from "../../components/Home/Home";
 
 const HomePage = () => {
   return (
     <div>
       <Navbar navData={navData} type="home" />
+      <HomeComponent/>
     </div>
   );
 };
