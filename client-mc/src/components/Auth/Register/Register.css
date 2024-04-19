@@ -5,6 +5,10 @@
     grid-template-columns: repeat(2,1fr);
     overflow-y: hidden;
 font-family: Arial, Helvetica, sans-serif;
+/* Modification */
+width: 100%;
+top: 18vh;
+position: relative;
 }
 .register .register-left-side{
     padding:20px 0 ;
@@ -26,7 +30,7 @@ margin: 0;
 text-align: center;
 }
 .register .register-left-side p{
-    font-family: Arial, Helvetica, sans-serif;  
+    font-family: Arial, Helvetica, sans-serif;
     text-align: center;
 }
 .register .register-left-side .register-tabs{
@@ -79,7 +83,7 @@ outline: none;
         opacity: 0px;
         background: #7C5399;
         color: #FFFFFF;
-         
+
     }
 
     .register .register-left-side .btn-google{
@@ -94,7 +98,7 @@ font-weight: 600;
     }
 
     .register .register-right-side .said {
-      padding: 24px 20px 24px 20px;  
+      padding: 24px 20px 24px 20px;
       background: #a09a9ae5;
       border: 1px solid #FFFFFF80;
       margin: 25px;
@@ -131,7 +135,7 @@ font-weight: 500;
 text-align: left;
     }
 
-   
+
     .register .consultant-img{
         width: 100%;
         /* padding: 500px 87px 56px 90px; */

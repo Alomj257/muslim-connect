@@ -1,6 +1,9 @@
 .login{
 height:70vh;
 font-family: Arial, Helvetica, sans-serif;
+width: 100%;
+top: 18vh;
+position: relative;
 }
 .login .login-left{
     width: 490px;
@@ -81,7 +84,7 @@ font-size: 13px;
         border: 1px;
         background: #7C5399;
         color: #FFFFFF;
-         
+
     }
 
     .login .login-left-side .btn-google{
@@ -97,7 +100,7 @@ font-weight: 600;
     }
 
     .login .login-right-side .said{
-      padding: 24px 20px 24px 20px;  
+      padding: 24px 20px 24px 20px;
       background: #FFFFFF4D;
       border: 1px solid #FFFFFF80;
       margin: 25px;
