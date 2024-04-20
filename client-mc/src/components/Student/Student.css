@@ -1,0 +1,43 @@
+.student-container {
+    position: relative;
+    top: 18vh;
+    display: grid;
+    grid-template-columns: 30% 70%;
+}
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    padding: 2%;
+    border-right: 2px solid gray;
+}
+
+.profile-picture {
+    /* width: 150px;
+    height: 150px; */
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+.profile-info {
+    margin-bottom: 20px;
+}
+
+.profile-info h2 {
+    margin-bottom: 5px;
+    font-size: 24px;
+}
+
+.profile-info p {
+    margin: 0;
+    color: #555;
+}
+
+.description {
+    margin-bottom: 20px;
+}
+
+.description p {
+    line-height: 1.5;
+}
