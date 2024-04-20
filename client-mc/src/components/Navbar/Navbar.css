@@ -1,18 +1,24 @@
 .c-navbar {
     border: 1px solid #D0D5DD80;
-    min-width: 1248px !important;
+    position: fixed;
+    width: 100%;
+    z-index: 2;
+    height: 18vh;
+    background-color: white;
 }
 
 .c-navbar ul {
     list-style: none;
     font-family: Poppins;
-    /* font-size: 21px; */
-    font-size: 1.4vw;
-    font-weight: 600;
-    line-height: 31.5px;
-    text-align: left;
-    padding: 1.5rem;
-    align-items: center;
+/* font-size: 21px; */
+font-size: 1.3vw;
+font-weight: 600;
+line-height: 31.5px;
+text-align: left;
+padding: 1.5rem;
+/* padding-inline: 1.5rem;
+padding-block: 1rem; */
+align-items: center;
 
 }
 
