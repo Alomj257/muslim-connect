@@ -7,14 +7,14 @@ const Learning = () => {
         <div className="card cus">
             <img src={learningImg} className="lcart" />
             <img src={profileImg} className="profileImg" />
-            <p style={{ fontWeight: "bold" }}>Ayesha Ali</p>
+            <p style={{ fontWeight: "bold", marginLeft: "-30px" }}>Ayesha Ali</p>
             <div><p>Price</p>
-                <p>
+                <p style={{ fontWeight: "bold" }}>
                     $56
                 </p>
             </div>
             <div><p>Schedule on</p>
-                <p>
+                <p style={{ fontWeight: "bold" }}>
                     4/3/2024
                 </p>
             </div>

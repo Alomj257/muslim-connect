@@ -2,6 +2,7 @@ import React from "react";
 import './Student.css'
 import Profile from "./Profile/Profile";
 import Learning from "./ActiveLearning/Learning";
+import Item from "../Item/Item";
 
 const Student = () => {
     return (
@@ -25,6 +26,12 @@ const Student = () => {
                     </div>
                     <Learning />
                     <Learning />
+                </div>
+                <h2 style={{ marginTop: "4%" }}>Recommendations</h2>
+                <div className="card items">
+                    <Item />
+                    <Item />
+                    <Item />
                 </div>
             </div>
         </div>

@@ -16,7 +16,7 @@
     padding: 2% 4%;
     width: 80%;
     height: 17vh;
-    border-radius: 12px;
+    border-radius: 10px;
     background-color: var(--purple-color);
     display: flex;
     flex-direction: column;
@@ -49,4 +49,12 @@
 .card {
     padding: 3%;
     /* width: 70%; */
+}
+
+.items {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
