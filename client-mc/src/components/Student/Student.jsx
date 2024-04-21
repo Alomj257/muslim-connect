@@ -24,6 +24,7 @@ const Student = () => {
                         <h6>Active Learnings - 2</h6>
                     </div>
                     <Learning />
+                    <Learning />
                 </div>
             </div>
         </div>

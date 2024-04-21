@@ -8,6 +8,21 @@ const Learning = () => {
             <img src={learningImg} className="lcart" />
             <img src={profileImg} className="profileImg" />
             <p style={{ fontWeight: "bold" }}>Ayesha Ali</p>
+            <div><p>Price</p>
+                <p>
+                    $56
+                </p>
+            </div>
+            <div><p>Schedule on</p>
+                <p>
+                    4/3/2024
+                </p>
+            </div>
+            <div><p>Status</p>
+                <div className="cbtn sbtn">
+                    In Progress
+                </div>
+            </div>
         </div>
     )
 };

@@ -6,6 +6,18 @@
 
 .cus {
     margin-top: 2%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cus>p {
+    margin-bottom: 0;
+}
+
+.cus>div>p {
+    text-align: center;
+    margin-bottom: 0;
 }
 
 .lcart {
@@ -15,4 +27,15 @@
 .profileImg {
     /* width: 4rem;  */
     block-size: 45px;
+}
+
+.sbtn {
+    color: white;
+    margin-right: 0;
+    background-color: var(--purple-color);
+}
+
+.sbtn:hover {
+    color: white;
+    background-color: var(--purple-color);
 }
