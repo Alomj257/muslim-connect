@@ -1,24 +1,31 @@
 import React from "react";
 import './Student.css'
-import profilePic from '../../assets/Student/Ellipse 21.png'
+import Profile from "./Profile/Profile";
+import Learning from "./ActiveLearning/Learning";
 
 const Student = () => {
     return (
         <div className="student-container">
-            <div className="profile-container">
-                <div class="profile-picture">
-                    <img src={profilePic} alt="Profile Picture" />
+            <div>
+                <Profile />
+            </div>
+            <div className="about-container">
+                <div className="big-btn">
+                    <h4 style={{ color: "white", margin: "0" }}>Unlock Exclusive Benefits with Subscription!</h4>
+                    <div>
+                        <h6>Join Our Community of Dedicated Learners and Experts"</h6>
+                        <button type="button" className="btn btn-success" style={{ backgroundColor: "#6FAE9C" }}>
+                            Subscribe Now
+                        </button>
+                    </div>
                 </div>
-                <div class="profile-info">
-                    <h2>John Doe</h2>
-                    <p>Role: Developer</p>
-                </div>
-                <div class="description">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget risus enim. Nullam faucibus, ligula non mattis accumsan, velit felis volutpat arcu, nec hendrerit metus lectus et leo.</p>
+                <div className="act-learning">
+                    <div className="card">
+                        <h6>Active Learnings - 2</h6>
+                    </div>
+                    <Learning />
                 </div>
             </div>
-
-            <h2 className="text-center"> welcome to Student</h2>
         </div>
     );
 };
