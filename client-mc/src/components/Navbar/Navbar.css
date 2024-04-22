@@ -1,4 +1,4 @@
-.c-navbar {
+.c-navbar{
     border: 1px solid #D0D5DD80;
     position: fixed;
     width: 100%;
@@ -6,8 +6,7 @@
     height: 18vh;
     background-color: white;
 }
-
-.c-navbar ul {
+.c-navbar ul{
     list-style: none;
     font-family: Poppins;
 /* font-size: 21px; */
@@ -21,18 +20,15 @@ padding-block: 1rem; */
 align-items: center;
 
 }
-
-.c-navbar .search-form {
-    padding: 5px 5px 5px 20px;
-    border-radius: 8px;
-    border: 1px;
+.c-navbar .search-form{
+padding: 5px 5px 5px 20px;
+border-radius: 8px;
+border: 1px;
 }
-
-.c-navbar ul li {
+.c-navbar ul li{
     color: var(--black-light-color);
 }
-
-.btn-search {
+.btn-search{
     background-color: var(--purple-color) !important;
     color: var(--white-color) !important;
     border: 1px solid var(--purple-color);
@@ -44,27 +40,24 @@ align-items: center;
  background-color: var(--white-color) !important;
  border: 1px solid var(--purple-color);
 } */
-.connect-btn {
-    padding: 8px 24px 8px 24px;
-    border-radius: 10px;
-    font-family: Poppins;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 30px;
+.connect-btn{
+padding: 8px 24px 8px 24px;
+border-radius: 10px;
+font-family: Poppins;
+font-size: 20px;
+font-weight: 500;
+line-height: 30px;
 
-    background-color: var(--purple-color) !important;
-    color: var(--white-color) !important;
-    border: 1px solid var(--purple-color);
-    transition: all 100ms;
+background-color: var(--purple-color) !important;
+color: var(--white-color) !important;
+border: 1px solid var(--purple-color);
+transition: all 100ms;
 
 }
-
-.navbar-active {
+.navbar-active{
     color: var(--purple-color) !important;
 }
-
-.c-navbar .logo {
+.c-navbar .logo{
     width: 103px;
-    height: 60px;
-    margin-right: 120px;
+height: 60px;
 }
