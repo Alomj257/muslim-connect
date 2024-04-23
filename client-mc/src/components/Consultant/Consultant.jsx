@@ -1,30 +1,79 @@
 import React from "react";
 import Profile from "../Student/Profile/Profile";
-import Item from "../Item/Item"
+import Item from "../Item/Item";
+import CreateNew from "../../assets/Student/CreateNew";
 const Consultant = () => {
-    return (
-        <div className="student-container">
-            <div>
-                <Profile />
-            </div>
-            <div className="about-container">
-                <div className="big-btn">
-                    <h4 style={{ color: "white", margin: "0" }}>Unlock Exclusive Benefits with Subscription!</h4>
-                    <div>
-                        <h6>Join Our Community of Dedicated Learners and Experts"</h6>
-                        <button type="button" className="btn btn-success" style={{ backgroundColor: "#6FAE9C" }}>
-                            Subscribe Now
-                        </button>
-                    </div>
-                </div>
-                <div className="card items" style={{ marginTop: "4%" }}>
-                    <Item />
-                    <Item />
-                    <Item />
-                </div>
-            </div>
+  return (
+    <div className="student-container">
+      <div>
+        <Profile />
+      </div>
+      <div className="about-container">
+        <div className="big-btn">
+          <h4
+            style={{
+              color: "white",
+              margin: "0",
+              fontWeight: "600",
+              fontSize: "32px",
+            }}
+          >
+            Unlock Exclusive Benefits with Subscription!
+          </h4>
+          <div>
+            <h6 style={{ fontWeight: "400", fontSize: "22px" }}>
+              Join Our Community of Dedicated Learners and Experts"
+            </h6>
+            <button
+              type="button"
+              className="btn btn-success"
+              style={{ backgroundColor: "#6FAE9C" }}
+            >
+              Subscribe Now
+            </button>
+          </div>
         </div>
-    );
+        <div className="card items" style={{ marginTop: "4%" }}>
+          <Item />
+          <Item />
+          <Item />
+
+          <div
+            className="card item"
+            style={{
+              borderRadius: "15px",
+              width: "45%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                marginTop: "19%",
+                marginBottom: "19%",
+              }}
+            >
+              <CreateNew />
+              <p
+                style={{
+                  fontWeight: "500",
+                  fontsize: "32px",
+                  marginTop: "20px",
+                }}
+              >
+                Create New Gig
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Consultant;
