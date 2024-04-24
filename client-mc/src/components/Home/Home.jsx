@@ -161,7 +161,7 @@ const HomeComponent = () => {
 
       {/* fifth Portion  */}
 
-      <div style={{ marginTop: "150px", paddingBottom: "150px" }}>
+      <div style={{ marginTop: "2%", paddingBottom: "2%" }}>
         <div
           style={{
             display: "flex",
@@ -170,11 +170,11 @@ const HomeComponent = () => {
             alignItems: "center",
           }}
         >
-          <h1 style={{ fontWeight: "600", fontSize: "50px" }}>
+          <h1 style={{ fontWeight: "600", fontSize: "45px" }}>
             Unlock <span style={{ color: "Purple" }}>Premium Features</span>{" "}
             with{" "}
           </h1>
-          <h1 style={{ fontWeight: "600", fontSize: "50px" }}>
+          <h1 style={{ fontWeight: "600", fontSize: "45px" }}>
             {" "}
             MuslimConnect Subscription
           </h1>

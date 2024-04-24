@@ -9,8 +9,8 @@ const Item = () => {
       <div class="cart-item">
         <img src={cartImg} alt="Product Image" />
         <div class="cart-item-info">
-          <div style={{ marginTop: "-20px" }}>
-            <img src={profileImg} className="profileImg" />
+          <div style={{ marginTop: "15px" }}>
+            <img src={profileImg} className="profileImg" style={{ marginRight: "20px" }}/>
             <p
               className="cart-item-price"
               style={{ fontSize: "14px", marginLeft: "-180px" }}

@@ -17,7 +17,7 @@ const navData = [
   {
     name: "Learning",
     child: [
-      { name: "loyalty Program", path: "/loyalty" },
+      { name: "loyalty Program", path: "/student/learning" },
       { name: "Subscription", path: "/subscription" },
       { name: "Sessions", path: "/sessions" },
     ],

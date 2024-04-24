@@ -14,7 +14,7 @@ const ConsultantPage = () => {
 export default ConsultantPage;
 const navData = [
   { name: "Dashboard", path: "/consultant" },
-  { name: "Gigs", path: "/gigs" },
+  { name: "Gigs", path: "/consultant/gigs" },
   { name: "Level Overview", path: "/level" },
   { name: "Subscription", path: "/subscription" },
   { name: "Sessions", path: "/sessions" },
