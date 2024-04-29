@@ -14,6 +14,8 @@ import BookConsultant from "./components/Student/BookConsultant/BookConsultant";
 import PaymentPage from "./components/Student/PaymentPage/PaymentPage";
 import AddCard from "./components/Student/AddCard/AddCard";
 import LevelOverview from "./components/Student/LevelOverview/LevelOverview";
+import Subscription from "./components/Student/Subscription/Subscription";
+import Sessions from "./components/Student/Sessions/Sessions";
 function App() {
   return (
     <>
@@ -35,6 +37,8 @@ function App() {
         <Route path="/student/payment" element={<PaymentPage />} />
         <Route path="/student/addcard" element={<AddCard />} />
         <Route path="/student/loyaltyprogram" element={<LevelOverview />} />
+        <Route path="/student/subscription" element={<Subscription />} />
+        <Route path="/student/sessions" element={<Sessions />} />
       </Routes>
     </>
   );

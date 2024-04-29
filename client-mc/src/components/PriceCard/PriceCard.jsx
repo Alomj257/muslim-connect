@@ -14,9 +14,7 @@ function PriceCard({ n, pm, py, list }) {
         boxShadow: "0px 4px 24px 0px rgba(0, 0, 0, 0.25)",
       }}
     >
-      <h3 style={{ fontWeight: "500", fontSize: "2.3rem" }}>
-        Subscription for {n}
-      </h3>
+      <h3 style={{ fontWeight: "500", fontSize: "2.3rem" }}>{n}</h3>
       <div style={{ marginTop: "10px", marginBottom: "15px" }}>
         <span style={{ fontWeight: "600", fontSize: "2.5rem" }}>
           ${pm}{" "}
