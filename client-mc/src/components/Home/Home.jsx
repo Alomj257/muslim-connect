@@ -193,7 +193,12 @@ const HomeComponent = () => {
               transform: "rotateZ(-5deg) rotateX(30deg)",
             }}
           >
-            <PriceCard n="Students" pm="5.90" py="50.00" list={list} />
+            <PriceCard
+              n=" Subscription for Students"
+              pm="5.90"
+              py="50.00"
+              list={list}
+            />
           </div>
           <div
             style={{
@@ -201,7 +206,12 @@ const HomeComponent = () => {
               transform: "rotateZ(7deg)",
             }}
           >
-            <PriceCard n="Consultant" pm="9.90" py="90.00" list={list} />
+            <PriceCard
+              n=" Subscription for Consultant"
+              pm="9.90"
+              py="90.00"
+              list={list}
+            />
           </div>
         </div>
 

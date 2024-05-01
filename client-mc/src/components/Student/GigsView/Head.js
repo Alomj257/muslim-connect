@@ -1,12 +1,12 @@
 import React from "react";
 import MoreSvg from "../../../assets/Gigs/MoreSvg";
-import HomeSvg from "../../../assets/GigsView/HomeSvg";
 import LikeSvg from "../../../assets/GigsView/LikeSvg";
 import PlusSvg from "../../../assets/GigsView/PlusSvg";
 import ShareSvg from "../../../assets/GigsView/ShareSvg";
-import ToArrow from "../../../assets/GigsView/ToArrow";
+import Tabs from "../../Tabs/Tabs";
 
 const Head = () => {
+  let arr = ["Learning", "Consultation"];
   return (
     <div
       style={{
@@ -15,21 +15,8 @@ const Head = () => {
         alignItems: "center",
       }}
     >
-      <div style={{ display: "flex" }}>
-        <HomeSvg />
-        <ToArrow />
-        <span style={{ fontWeight: "500", fontSize: "20px" }}>Learning</span>
-        <ToArrow />
-        <span
-          style={{
-            fontWeight: "500",
-            fontSize: "20px",
-            color: "rgba(111, 174, 156, 1)",
-          }}
-        >
-          Consultations
-        </span>
-      </div>
+      <Tabs arr={arr} />
+
       <div style={{ display: "flex" }}>
         <button
           style={{
