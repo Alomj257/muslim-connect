@@ -6,10 +6,10 @@ import consultantImg from "../../../assets/auth/login.jpeg";
 import { Link } from "react-router-dom";
 import { registerUserService } from "../../../ApiService/Auth/Auth";
 import { FaArrowLeft, FaArrowRight, FaStar } from "react-icons/fa6";
-import {
-  FaRegArrowAltCircleRight,
-  FaRegArrowAltCircleLeft,
-} from "react-icons/fa";
+// import {
+//   FaRegArrowAltCircleRight,
+//   FaRegArrowAltCircleLeft,
+// } from "react-icons/fa";
 
 const Register = () => {
   const [role, setRole] = useState("STUDENT");

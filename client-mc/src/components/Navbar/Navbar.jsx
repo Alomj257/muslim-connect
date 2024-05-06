@@ -36,9 +36,11 @@ const Navbar = ({ navData, type }) => {
           <NavLink
             key={key}
             to={value.path}
-            className={`${(nav) =>
-              nav.isActive ? "navbar-active" : ""} text-decoration-none
-          `}
+            className={(nav) =>
+              value.name !== "Connectez-vous" && nav.isActive
+                ? "navbar-active text-decoration-none"
+                : " text-decoration-none"
+            }
           >
             <li
               className={

@@ -48,6 +48,20 @@
 
 .details p {
     font-size: 14px;
-    margin-bottom: 3px;
     line-height: 1;
+}
+
+.availablity-container div span,.availablity-container div {
+    color: var(--light-black-color);
+}
+.availablity-container .availability-btn{
+    background: var(--purple-color);
+    color: white;
+    padding:15px 195px 15px 195px ;
+    cursor: pointer;
+}
+.details .skill{
+    background: #F1F1F1;
+    padding: 7px 20px 7px 20px;
+font-size: 14px;
 }

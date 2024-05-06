@@ -1,12 +1,12 @@
 import React from "react";
-import DashNav from "../../DashNav/DashNav";
 import "./Gigs.css";
 import myimg from "../../../assets/Rectangle 1891.png";
 import MoreSvg from "../../../assets/Gigs/MoreSvg";
+import { useNavigate } from "react-router-dom";
 function Gigs() {
   return (
     <div>
-      <DashNav navData={navData} />
+      {/* <DashNav navData={navData} /> */}
       <Head />
       <div
         style={{
@@ -95,22 +95,23 @@ function Gigs() {
 }
 
 export default Gigs;
-const navData = [
-  { name: "Dashboard", path: "/student" },
-  {
-    name: "Learning",
-    child: [
-      { name: "loyalty Program", path: "/loyalty" },
-      { name: "Subscription", path: "/subscription" },
-      { name: "Sessions", path: "/sessions" },
-    ],
-  },
-  { name: "loyalty Program", path: "/loyalty" },
-  { name: "Subscription", path: "/subscription" },
-  { name: "Sessions", path: "/sessions" },
-];
+// const navData = [
+//   { name: "Dashboard", path: "/student" },
+//   {
+//     name: "Learning",
+//     child: [
+//       { name: "loyalty Program", path: "/loyalty" },
+//       { name: "Subscription", path: "/subscription" },
+//       { name: "Sessions", path: "/sessions" },
+//     ],
+//   },
+//   { name: "loyalty Program", path: "/loyalty" },
+//   { name: "Subscription", path: "/subscription" },
+//   { name: "Sessions", path: "/sessions" },
+// ];
 
 const Head = () => {
+  const navigate = useNavigate();
   return (
     <div style={{ paddingTop: "13%" }}>
       <div
@@ -122,12 +123,14 @@ const Head = () => {
       >
         <h1 style={{ fontWeight: "600", fontSize: "50px" }}>Manage Gigs</h1>
         <button
+          onClick={() => navigate("create-gigs")}
           style={{
             backgroundColor: "rgba(124, 83, 153, 1)",
             color: "white",
             border: "1px solid white",
             borderRadius: "10px",
             padding: "0px 30px 0px 30px",
+            cursor: "pointer",
           }}
         >
           Create a New Gig

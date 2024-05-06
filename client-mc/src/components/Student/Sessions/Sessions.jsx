@@ -1,12 +1,11 @@
 import React from "react";
-import DashNav from "../../DashNav/DashNav";
 import myimg from "../../../assets/Rectangle 1891.png";
 import SearchSvg from "../../../assets/Session/Search_Svg";
 import "./Session.css";
 function Session() {
   return (
     <div style={{ paddingBottom: "5%" }}>
-      <DashNav navData={navData} />
+      {/* <DashNav navData={navData} /> */}
       <Head />
 
       <div style={{ display: "flex", marginLeft: "5%" }}>
@@ -64,22 +63,6 @@ function Session() {
 }
 
 export default Session;
-
-const navData = [
-  { name: "Dashboard", path: "/student" },
-  {
-    name: "Learning",
-    child: [
-      { name: "loyalty Program", path: "/loyalty" },
-      { name: "Subscription", path: "/subscription" },
-      { name: "Sessions", path: "/sessions" },
-    ],
-  },
-  { name: "loyalty Program", path: "/loyalty" },
-  { name: "Subscription", path: "/subscription" },
-  { name: "Sessions", path: "/sessions" },
-];
-
 const Head = () => {
   return (
     <div style={{ paddingTop: "13%" }}>
