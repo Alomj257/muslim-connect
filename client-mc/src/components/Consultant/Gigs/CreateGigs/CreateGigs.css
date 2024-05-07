@@ -20,8 +20,15 @@
 .selection-theme{
     width: 70%;
     margin: 0 auto;
+    margin-top: 5rem;
+   
 }
 
+.gigs-comp{
+    border: 2px solid var(--border-color );
+    padding:50px 100px ;
+    border-radius: 3px;
+}
  .btn-create-gigs-back{
     border: 2px solid var(--purple-color) !important;
     color: var(--purple-color) !important;

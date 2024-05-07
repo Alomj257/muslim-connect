@@ -20,6 +20,8 @@ import StudentHome from "./pages/Student/StudentHome";
 import GigsPage from "./pages/Consultant/GigsPage";
 import ConsultantHome from "./pages/Consultant/ConsultantHome";
 import CreateGigsPage from "./pages/Consultant/Gigs/CreateGigsPage";
+import LevelOverviewPage from "./pages/Consultant/LevelOverviewPage";
+import SubscriptionPage from "./pages/Consultant/SubscriptionPage";
 function App() {
   return (
     <>
@@ -52,6 +54,10 @@ function App() {
           <Route path="" element={<ConsultantHome />} />
           <Route path="gigs/create-gigs" element={<CreateGigsPage />} />
           <Route path="gigs" element={<GigsPage />} />
+          <Route path="level" element={<LevelOverviewPage />} />
+          <Route path="subscription" element={<SubscriptionPage />} />
+          <Route path="sessions" element={<SubscriptionPage />} />
+          <Route path="payment" element={<PaymentPage />} />
         </Route>
       </Routes>
     </>
