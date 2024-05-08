@@ -22,6 +22,8 @@ import ConsultantHome from "./pages/Consultant/ConsultantHome";
 import CreateGigsPage from "./pages/Consultant/Gigs/CreateGigsPage";
 import LevelOverviewPage from "./pages/Consultant/LevelOverviewPage";
 import SubscriptionPage from "./pages/Consultant/SubscriptionPage";
+import SessionsPage from "./pages/Consultant/SessionsPage";
+import ChatPage from "./pages/Chat/ChatPage";
 function App() {
   return (
     <>
@@ -42,6 +44,7 @@ function App() {
           <Route path="learning" element={<ConsultantList />} />
           <Route path="subscription" element={<Subscription />} />
           <Route path="sessions" element={<Sessions />} />
+          <Route path="chat" element={<ChatPage />} />
         </Route>
 
         <Route path="/student/gigsview" element={<GigsView />} />
@@ -56,8 +59,9 @@ function App() {
           <Route path="gigs" element={<GigsPage />} />
           <Route path="level" element={<LevelOverviewPage />} />
           <Route path="subscription" element={<SubscriptionPage />} />
-          <Route path="sessions" element={<SubscriptionPage />} />
+          <Route path="sessions" element={<SessionsPage />} />
           <Route path="payment" element={<PaymentPage />} />
+          <Route path="chat" element={<ChatPage />} />
         </Route>
       </Routes>
     </>

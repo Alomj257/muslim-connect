@@ -11,7 +11,7 @@ const CreateGigs = () => {
     <>
       <div className="create-gigs">
         <div className="progress-comp">
-          <ProgressComp />
+          <ProgressComp index={index} stepsString={stepsString} />
         </div>
         <div className="selection-theme">
           <div className="gigs-comp">

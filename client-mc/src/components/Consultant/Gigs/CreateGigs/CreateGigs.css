@@ -15,6 +15,10 @@
     height: 3px;
     background-color:lightgray;
 }
+.create-gigs .progress-comp .progress-line-active{
+    height: 3px;
+    background-color:var(--purple-color);
+}
 
 
 .selection-theme{
