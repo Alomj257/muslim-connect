@@ -2,7 +2,6 @@ import React from "react";
 import DownArrow from "../../../assets/Student/DownArrow";
 import FilterSvg from "../../../assets/Student/FilterSvg";
 import SearchSvg from "../../../assets/Student/SearchSvg";
-import DashNav from "../../DashNav/DashNav";
 import SubNav from "../../SubNav/SubNav";
 import cartImg from "../../../assets/Student/cartImg.png";
 import profileImg from "../../../assets/Student/Ellipse 21.png";
@@ -12,7 +11,7 @@ function ConsultantList() {
   return (
     <div>
       <div>
-        <DashNav navData={navData} type="student" />
+        {/* <DashNav navData={navData} type="student" /> */}
         <SubNav />
       </div>
       <div style={{ marginTop: "12%" }}>
@@ -104,29 +103,19 @@ function ConsultantList() {
 }
 
 export default ConsultantList;
-const navData = [
-  { name: "Dashboard", path: "/student" },
-  {
-    name: "Learning",
-    child: [
-      { name: "loyalty Program", path: "/loyalty" },
-      { name: "Subscription", path: "/subscription" },
-      { name: "Sessions", path: "/sessions" },
-    ],
-  },
-  { name: "loyalty Program", path: "/loyalty" },
-  { name: "Subscription", path: "/subscription" },
-  { name: "Sessions", path: "/sessions" },
-];
-
 const ConsultantCard = () => {
   return (
     <div className="card item" style={{ borderRadius: "15px", width: "29.3%" }}>
       <div class="cart-item">
-        <img src={cartImg} alt="Product Image" />
+        <img src={cartImg} alt="Product Images" />
         <div class="cart-item-info">
-          <div style={{ marginTop: "-20px" }}>
-            <img src={profileImg} className="profileImg" />
+          <div style={{ marginTop: "20px" }}>
+            <img
+              src={profileImg}
+              className="profileImg"
+              alt="profile"
+              style={{ marginRight: "20px" }}
+            />
             <p
               className="cart-item-price"
               style={{ fontSize: "14px", marginLeft: "-180px" }}

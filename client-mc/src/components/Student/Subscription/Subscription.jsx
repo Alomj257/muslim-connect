@@ -1,5 +1,4 @@
 import React from "react";
-import DashNav from "../../DashNav/DashNav";
 import PriceCard from "../../PriceCard/PriceCard";
 import BulletPoint from "../../../assets/PriceCard/BulletPoint";
 import "./Subscription.css";
@@ -8,7 +7,7 @@ import CrossSvg from "../../../assets/Subscription/CrossSvg";
 function Subscription() {
   return (
     <div>
-      <DashNav navData={navData} />
+      {/* <DashNav navData={navData} /> */}
 
       <div
         style={{
@@ -82,21 +81,6 @@ function Subscription() {
 }
 
 export default Subscription;
-
-const navData = [
-  { name: "Dashboard", path: "/student" },
-  {
-    name: "Learning",
-    child: [
-      { name: "loyalty Program", path: "/loyalty" },
-      { name: "Subscription", path: "/subscription" },
-      { name: "Sessions", path: "/sessions" },
-    ],
-  },
-  { name: "loyalty Program", path: "/loyalty" },
-  { name: "Subscription", path: "/subscription" },
-  { name: "Sessions", path: "/sessions" },
-];
 
 let list = [
   "Consult with the best Consultants",

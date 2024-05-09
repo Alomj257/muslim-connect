@@ -1,0 +1,8 @@
+.conversations{
+    max-height: 60vh;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+.conversation-active{
+    background-color: var( --border-color);
+}

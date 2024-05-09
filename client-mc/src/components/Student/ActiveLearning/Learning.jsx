@@ -5,8 +5,8 @@ import profileImg from "../../../assets/Student/Ellipse 21.png";
 const Learning = () => {
   return (
     <div className="card cus">
-      <img src={learningImg} className="lcart" />
-      <img src={profileImg} className="profileImg" />
+      <img src={learningImg} className="lcart" alt="l cart" />
+      <img src={profileImg} className="profileImg" alt="profile" />
       <p style={{ fontWeight: "bold", marginLeft: "-85px" }}>Ayesha Ali</p>
       <div>
         <p>Price</p>

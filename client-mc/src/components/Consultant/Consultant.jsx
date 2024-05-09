@@ -2,6 +2,7 @@ import React from "react";
 import Profile from "../Student/Profile/Profile";
 import Item from "../Item/Item";
 import CreateNew from "../../assets/Student/CreateNew";
+import Review from "./Reviews/Review";
 const Consultant = () => {
   return (
     <div className="student-container">
@@ -33,7 +34,7 @@ const Consultant = () => {
             </button>
           </div>
         </div>
-        <div className="card items" style={{ marginTop: "4%" }}>
+        <div className="card border-0 items" style={{ marginTop: "4%" }}>
           <Item />
           <Item />
           <Item />
@@ -70,6 +71,9 @@ const Consultant = () => {
               </p>
             </div>
           </div>
+        </div>
+        <div className="w-100">
+          <Review />
         </div>
       </div>
     </div>

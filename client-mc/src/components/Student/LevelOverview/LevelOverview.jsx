@@ -1,6 +1,5 @@
 import React from "react";
 import "./LevelOverview.css";
-import DashNav from "../../DashNav/DashNav";
 import ProfileImage from "../../../assets/Nav_assets/studentProfile.jpeg";
 import BornzeSvg from "../../../assets/LevelOverview/BornzeSvg";
 import NextArrow from "../../../assets/LevelOverview/NextArrow";
@@ -8,7 +7,7 @@ import img2 from "../../../assets/LevelOverview/Group 3535.png";
 function LevelOverview() {
   return (
     <div>
-      <DashNav navData={navData} />
+      {/* <DashNav navData={navData} /> */}
       <div
         style={{
           height: "65vh",
@@ -210,21 +209,6 @@ function LevelOverview() {
 }
 
 export default LevelOverview;
-
-const navData = [
-  { name: "Dashboard", path: "/student" },
-  {
-    name: "Learning",
-    child: [
-      { name: "loyalty Program", path: "/loyalty" },
-      { name: "Subscription", path: "/subscription" },
-      { name: "Sessions", path: "/sessions" },
-    ],
-  },
-  { name: "loyalty Program", path: "/loyalty" },
-  { name: "Subscription", path: "/subscription" },
-  { name: "Sessions", path: "/sessions" },
-];
 
 const LevelCard = ({ img, level, li1, li2 }) => {
   return (

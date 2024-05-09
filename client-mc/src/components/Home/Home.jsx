@@ -14,6 +14,34 @@ import arrowRight from "../../assets/Home_assets/arrow-right.png";
 import SuccessText from "./SuccessText/SuccessText";
 import PriceCard from "../PriceCard/PriceCard";
 import ArrowSvg from "../../assets/PriceCard/ArrowSvg";
+
+
+export const ThirdPortion = ({ rightImg }) => {
+  const successData = [
+      { header: "Une expertise religieuse diversifiée", body: "Accès à un large éventail d’experts religieux spécialisés dans différents domaines." },
+      { header: "Convivialité et simplicité", body: "Interface conviviale et intuitive pour une expérience utilisateur optimale." },
+      { header: "Sécurité et confidentialité", body: "Des protocoles de sécurité renforcés pour assurer la confidentialité des échanges entre utilisateurs et consultants" },
+      { header: "Fidélité et engagement", body: "Programme tidente engageant et engagement continu à améliorer l’expérience client" },
+  ];
+
+  return (
+      <div className="inside-container" style={{ marginTop: "2%" }}>
+          <div className="left-container" style={{ padding: "4% 4% 4% 7%" }}>
+              <h2>Expertise, convivialité, sécurité, satisfaction garantie.</h2>
+              <div style={{ marginTop: "2%" }}>
+                  {successData.map((item, index) => (
+                      <SuccessText key={index} header={item.header} body={item.body} />
+                  ))}
+              </div>
+          </div>
+          <div className="right-container" style={{ padding: "4% 7% 4% 4%" }}>
+              <img src={rightImg2} alt="Search Icon" style={{ width: "30rem" }} />
+          </div>
+      </div>
+  );
+};
+
+
 const HomeComponent = () => {
   const list = [
     "Consult with the best Consultants",
@@ -92,7 +120,7 @@ const HomeComponent = () => {
         </div>
       </div>
       {/* Third portion */}
-      <div className="inside-container" style={{ marginTop: "2%" }}>
+      {/* <div className="inside-container" style={{ marginTop: "2%" }}>
         <div className="left-container" style={{ padding: "4% 4% 4% 7%" }}>
           <h2>Expertise, convivialité, sécurité, satisfaction garantie.</h2>
           <div style={{ marginTop: "2%" }}>
@@ -104,7 +132,8 @@ const HomeComponent = () => {
         <div className="right-container" style={{ padding: "4% 7% 4% 4%" }}>
           <img src={rightImg2} alt="Search Icon" style={{ width: "30rem" }} />
         </div>
-      </div>
+      </div> */}
+      <ThirdPortion />
       {/* Fourth portion */}
       <div className="inside-container">
         <div className="left-container" style={{ padding: "4% 7% 4% 4%" }}>
@@ -132,7 +161,7 @@ const HomeComponent = () => {
 
       {/* fifth Portion  */}
 
-      <div style={{ marginTop: "150px", paddingBottom: "150px" }}>
+      <div style={{ marginTop: "2%", paddingBottom: "2%" }}>
         <div
           style={{
             display: "flex",
@@ -141,11 +170,11 @@ const HomeComponent = () => {
             alignItems: "center",
           }}
         >
-          <h1 style={{ fontWeight: "600", fontSize: "50px" }}>
+          <h1 style={{ fontWeight: "600", fontSize: "45px" }}>
             Unlock <span style={{ color: "Purple" }}>Premium Features</span>{" "}
             with{" "}
           </h1>
-          <h1 style={{ fontWeight: "600", fontSize: "50px" }}>
+          <h1 style={{ fontWeight: "600", fontSize: "45px" }}>
             {" "}
             MuslimConnect Subscription
           </h1>
@@ -214,21 +243,21 @@ const HomeComponent = () => {
 };
 
 export default HomeComponent;
-const successData = [
-  {
-    header: "Une expertise religieuse diversifiée",
-    body: "Accès à un large éventail d’experts religieux spécialisés dans différents domaines.",
-  },
-  {
-    header: "Convivialité et simplicité",
-    body: "Interface conviviale et intuitive pour une expérience utilisateur optimale.",
-  },
-  {
-    header: "Sécurité et confidentialité",
-    body: "Des protocoles de sécurité renforcés pour assurer la confidentialité des échanges entre utilisateurs et consultants",
-  },
-  {
-    header: "Fidélité et engagement",
-    body: "Programme tidente engageant et engagement continu à améliorer l’expérience client",
-  },
-];
+// const successData = [
+//   {
+//     header: "Une expertise religieuse diversifiée",
+//     body: "Accès à un large éventail d’experts religieux spécialisés dans différents domaines.",
+//   },
+//   {
+//     header: "Convivialité et simplicité",
+//     body: "Interface conviviale et intuitive pour une expérience utilisateur optimale.",
+//   },
+//   {
+//     header: "Sécurité et confidentialité",
+//     body: "Des protocoles de sécurité renforcés pour assurer la confidentialité des échanges entre utilisateurs et consultants",
+//   },
+//   {
+//     header: "Fidélité et engagement",
+//     body: "Programme tidente engageant et engagement continu à améliorer l’expérience client",
+//   },
+// ];

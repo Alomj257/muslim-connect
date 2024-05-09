@@ -48,7 +48,7 @@ border: 1px solid var(--purple-color);
 transition: all 100ms;
 
 }
-.navbar-active{
+.navbar-active,.navbar-active li{
     color: var(--purple-color) !important;
 }
 .c-navbar .logo{

@@ -7,10 +7,15 @@ const Item = () => {
   return (
     <div className="card item" style={{ borderRadius: "15px", width: "45%" }}>
       <div class="cart-item">
-        <img src={cartImg} alt="Product Image" />
+        <img src={cartImg} alt="Product Images" />
         <div class="cart-item-info">
-          <div style={{ marginTop: "-20px" }}>
-            <img src={profileImg} className="profileImg" />
+          <div style={{ marginTop: "15px" }}>
+            <img
+              src={profileImg}
+              className="profileImg"
+              alt=""
+              style={{ marginRight: "20px" }}
+            />
             <p
               className="cart-item-price"
               style={{ fontSize: "14px", marginLeft: "-180px" }}

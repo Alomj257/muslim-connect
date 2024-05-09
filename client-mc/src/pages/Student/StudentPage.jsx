@@ -1,12 +1,13 @@
 import React from "react";
-import Student from "../../components/Student/Student";
 import DashNav from "../../components/DashNav/DashNav";
+import { Outlet } from "react-router-dom";
 
 const StudentPage = () => {
   return (
     <div>
       <DashNav navData={navData} type="student" />
-      <Student />
+      <Outlet />
+      {/* <Student /> */}
     </div>
   );
 };
@@ -16,13 +17,14 @@ const navData = [
   { name: "Dashboard", path: "/student" },
   {
     name: "Learning",
-    child: [
-      { name: "loyalty Program", path: "/loyalty" },
-      { name: "Subscription", path: "/subscription" },
-      { name: "Sessions", path: "/sessions" },
-    ],
+    path: "learning",
+    // child: [
+    //   { name: "loyalty Program", path: "/student/learning" },
+    //   { name: "Subscription", path: "/subscription" },
+    //   { name: "Sessions", path: "/sessions" },
+    // ],
   },
-  { name: "loyalty Program", path: "/loyalty" },
-  { name: "Subscription", path: "/subscription" },
-  { name: "Sessions", path: "/sessions" },
+  { name: "loyalty Program", path: "loyalty" },
+  { name: "Subscription", path: "subscription" },
+  { name: "Sessions", path: "sessions" },
 ];
