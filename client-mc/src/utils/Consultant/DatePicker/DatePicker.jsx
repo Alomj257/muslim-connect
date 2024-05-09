@@ -1,6 +1,6 @@
 import React from "react";
 import { DateRangePicker } from "rsuite";
-import "rsuite/dist/rsuite.css";
+// import "rsuite/dist/rsuite.css";
 
 const DatePicker = ({ date, setDate }) => {
   return (
