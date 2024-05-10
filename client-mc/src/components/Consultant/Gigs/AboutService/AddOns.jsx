@@ -21,10 +21,10 @@ const AddOns = () => {
             id=""
           >
             <option value="">Select Time</option>
-            <option value="time1">Time1</option>
-            <option value="time1">Time2</option>
-            <option value="time1">Time3</option>
-            <option value="time1">Time4</option>
+            <option value="10">10min</option>
+            <option value="20">20min</option>
+            <option value="30">30min</option>
+            <option value="40">40min</option>
           </select>
           <select
             style={{ outline: "none" }}
@@ -33,10 +33,10 @@ const AddOns = () => {
             className="w-100 border p-2"
           >
             <option value="">Select Price</option>
-            <option value="time1">Price1</option>
-            <option value="time1">Price2</option>
-            <option value="time1">Price3</option>
-            <option value="time1">Price4</option>
+            <option value="1">$1</option>
+            <option value="2">$2</option>
+            <option value="3">$3</option>
+            <option value="4">$4</option>
           </select>
         </div>
         <div className="d-flex align-items-center">
@@ -54,10 +54,8 @@ const AddOns = () => {
             id=""
           >
             <option value="">Select Individual</option>
-            <option value="time1">Individual1</option>
-            <option value="time1">Individual2</option>
-            <option value="time1">Individual3</option>
-            <option value="time1">Individual4</option>
+            <option value="Individual">Individual</option>
+            <option value="collective">Collective</option>
           </select>
           <select
             style={{ outline: "none" }}
@@ -66,10 +64,10 @@ const AddOns = () => {
             className="w-100 border p-2"
           >
             <option value="">Select Price</option>
-            <option value="time1">Price1</option>
-            <option value="time1">Price2</option>
-            <option value="time1">Price3</option>
-            <option value="time1">Price4</option>
+            <option value="1">$1</option>
+            <option value="2">$2</option>
+            <option value="3">$3</option>
+            <option value="4">$4</option>
           </select>
         </div>
       </div>

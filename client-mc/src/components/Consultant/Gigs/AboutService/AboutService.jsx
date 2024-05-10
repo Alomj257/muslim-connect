@@ -20,6 +20,7 @@ const AboutService = () => {
             <input
               id="permiumPackage"
               type="checkbox"
+              value="Premium"
               style={{ width: "15px", height: "15px", cursor: "pointer" }}
             />
             <label htmlFor="permiumPackage">Premium Package</label>
@@ -28,6 +29,7 @@ const AboutService = () => {
             <input
               id="freePackage"
               type="checkbox"
+              value="Free"
               style={{ width: "15px", height: "15px", cursor: "pointer" }}
             />
             <label htmlFor="freePackage">Free Package</label>
@@ -57,10 +59,10 @@ const AboutService = () => {
             className="border p-2 w-100 bg-transparent border-2 rounded"
           >
             <option value="them1">Select Option</option>
-            <option value="them1">Available1</option>
-            <option value="them1">Available2</option>
-            <option value="them1">Available3</option>
-            <option value="them1">Available4</option>
+            <option value="them1">Date1</option>
+            <option value="them1">Date2</option>
+            <option value="them1">Date3</option>
+            <option value="them1">Date4</option>
           </select>
         </div>
         <div className="them-input my-4 mt-0">
@@ -72,13 +74,13 @@ const AboutService = () => {
           </div>
         </div>
         <div className="them-input my-4">
-          <label htmlFor="price" className="my-2">
-            Price
+          <label htmlFor="serviceType" className="my-2">
+            Service Type
           </label>
           <select
-            name="price"
+            name="serviceType"
             type="text"
-            id="price"
+            id="serviceType"
             style={{ outline: "none" }}
             className="border p-2 w-100 bg-transparent border-2 rounded"
           >
@@ -102,10 +104,10 @@ const AboutService = () => {
               className="border p-2 w-100 bg-transparent border-2 rounded"
             >
               <option value="them1">Select Option</option>
-              <option value="them1">$1</option>
-              <option value="them1">$2</option>
-              <option value="them1">$3</option>
-              <option value="them1">$4</option>
+              <option value="them1">$10</option>
+              <option value="them1">$20</option>
+              <option value="them1">$30</option>
+              <option value="them1">$40</option>
             </select>
           </div>
           <div className="w-100">
@@ -120,10 +122,10 @@ const AboutService = () => {
               className="border p-2 w-100 bg-transparent border-2 rounded"
             >
               <option value="them1">Select Option</option>
-              <option value="them1">1</option>
-              <option value="them1">2</option>
-              <option value="them1">3</option>
-              <option value="them1">4</option>
+              <option value="30">30mins</option>
+              <option value="40">40mins</option>
+              <option value="50">50mins</option>
+              <option value="60">60mins</option>
             </select>
           </div>
         </div>

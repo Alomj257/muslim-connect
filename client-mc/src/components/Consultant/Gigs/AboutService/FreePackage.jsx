@@ -18,10 +18,10 @@ const FreePackage = () => {
             className="border p-2 w-100 bg-transparent border-2 rounded"
           >
             <option value="them1">Select Option</option>
-            <option value="them1">Available1</option>
-            <option value="them1">Available2</option>
-            <option value="them1">Available3</option>
-            <option value="them1">Available4</option>
+            <option value="10hr/week">10hr/week</option>
+            <option value="20hr/week">20hr/week</option>
+            <option value="30hr/week">30hr/week</option>
+            <option value="40hr/week">40hr/week</option>
           </select>
         </div>
         <div className="them-input my-4 mt-0">

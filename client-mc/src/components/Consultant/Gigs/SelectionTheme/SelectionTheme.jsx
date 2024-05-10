@@ -36,11 +36,9 @@ const SelectionTheme = () => {
             style={{ outline: "none" }}
             className="border p-2 w-100 bg-transparent border-2 rounded"
           >
-            <option value="them1">Select Theme</option>
-            <option value="them1">them1</option>
-            <option value="them1">them2</option>
-            <option value="them1">them3</option>
-            <option value="them1">them4</option>
+            <option value="">Select Theme</option>
+            <option value="individual">Individual</option>
+            <option value="collective">Collective</option>
           </select>
         </div>
         <div className="them-input my-4">
@@ -54,10 +52,10 @@ const SelectionTheme = () => {
             style={{ outline: "none" }}
             className="border p-2 w-100 bg-transparent border-2 rounded"
           >
-            <option value="them1">Select level</option>
-            <option value="them1">level2</option>
-            <option value="them1">level3</option>
-            <option value="them1">level4</option>
+            <option value="">Select level</option>
+            <option value="level 1">level 1</option>
+            <option value="level 2">level 2</option>
+            <option value="Level 3">level 3</option>
           </select>
         </div>
         <div className="them-input my-4">
