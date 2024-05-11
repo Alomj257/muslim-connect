@@ -1,7 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import ReactQuill from "react-quill";
-const ContentGigs = () => {
-  const [value, setValue] = useState("");
+const ContentGigs = ({ gigs, setGigs }) => {
+  const handleChange = (e) => {
+    setGigs((prevGigs) => ({
+      ...prevGigs,
+      content: e,
+    }));
+  };
+  console.log(gigs);
   return (
     <div className="mb-4">
       <h4 className="fw-bold my-4">Content</h4>
@@ -11,8 +17,8 @@ const ContentGigs = () => {
         id="about"
         style={{ height: "50vh" }}
         className="bg-white rounded"
-        value={value}
-        onChange={setValue}
+        value={gigs?.content ? gigs?.content : ""}
+        onChange={handleChange}
       />
     </div>
   );

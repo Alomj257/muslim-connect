@@ -3,7 +3,11 @@ import "./Gigs.css";
 import myimg from "../../../assets/Rectangle 1891.png";
 import MoreSvg from "../../../assets/Gigs/MoreSvg";
 import { useNavigate } from "react-router-dom";
+import { useGetAllGigsQuery } from "../../../ApiService/GigsService/GigsService";
 function Gigs() {
+  const gigs = useGetAllGigsQuery();
+  if (gigs?.isLoading) return <div>Loading....</div>;
+  if (gigs?.isError) return <div>Something went wrong...!</div>;
   return (
     <div>
       {/* <DashNav navData={navData} /> */}
@@ -51,24 +55,29 @@ function Gigs() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td style={{ display: "flex" }}>
-                <img
-                  src={myimg}
-                  alt=""
-                  style={{ height: "40px", width: "40px", marginRight: "15px" }}
-                />
-                I will give consultation on the Financial system in light of
-                Quran
-              </td>
-              <td>11k</td>
-              <td>100</td>
-              <td>10</td>
-              <td>50%</td>
-              <td>
-                <MoreSvg />
-              </td>
-            </tr>
+            {gigs?.data?.map((val, key) => (
+              <tr>
+                <td style={{ display: "flex" }}>
+                  <img
+                    src={myimg}
+                    alt=""
+                    style={{
+                      height: "40px",
+                      width: "40px",
+                      marginRight: "15px",
+                    }}
+                  />
+                  {val?.title}
+                </td>
+                <td>11k</td>
+                <td>100</td>
+                <td>10</td>
+                <td>50%</td>
+                <td>
+                  <MoreSvg />
+                </td>
+              </tr>
+            ))}
             <tr>
               <td style={{ display: "flex" }}>
                 <img

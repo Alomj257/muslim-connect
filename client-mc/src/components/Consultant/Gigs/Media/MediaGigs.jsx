@@ -1,7 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import "./MediaGigs.css";
 import { LuUploadCloud } from "react-icons/lu";
-const MediaGigs = () => {
+const MediaGigs = ({ gigs, setGigs }) => {
+  const [fileName, setFileNames] = useState("");
+  const handleMultiChange = (e) => {
+    const { value, name, files } = e.target;
+    setGigs((prevGigs) => ({
+      ...prevGigs,
+      [name]: files ? files : value,
+    }));
+  };
+  const handleVideoChange = (e) => {
+    const { files } = e.target;
+    if (files) {
+      setFileNames(files[0]?.name);
+      setGigs((prevGigs) => ({
+        ...prevGigs,
+        gigsImages: [...prevGigs?.gigsImages, files[0]],
+      }));
+    }
+  };
+  console.log(fileName);
   return (
     <div className="media-gigs">
       <h4 className="my-4 fw-bold">Médias</h4>
@@ -22,14 +41,21 @@ const MediaGigs = () => {
                 <LuUploadCloud size={25} />
               </span>
               <span style={{ fontSize: "14px" }} className="navbar-active">
-                Cliquez pour télécharger
+                {gigs?.gigsImages
+                  ? fileName
+                    ? gigs?.gigsImages?.length - 1 + " x Images"
+                    : gigs?.gigsImages?.length + " x Images"
+                  : "Cliquez pour télécharger"}
               </span>
               <span style={{ fontSize: "14px" }}>ou glisser-déposer</span>
             </label>
             <input
+              onChange={handleMultiChange}
+              multiple
               className="position-absolute"
               style={{ zIndex: "-1", opacity: "0" }}
               id="media"
+              name="gigsImages"
               type="file"
             />
           </div>
@@ -52,14 +78,26 @@ const MediaGigs = () => {
             <span className="p-2 border rounded">
               <LuUploadCloud size={25} />
             </span>
-            <span>
-              <span style={{ fontSize: "14px" }} className="navbar-active mx-2">
-                Cliquez pour télécharger
+            {fileName ? (
+              fileName
+            ) : (
+              <span>
+                <span
+                  style={{ fontSize: "14px" }}
+                  className="navbar-active mx-2"
+                >
+                  Cliquez pour télécharger
+                </span>
+                <span style={{ fontSize: "14px" }}>ou glisser-déposer</span>
               </span>
-              <span style={{ fontSize: "14px" }}>ou glisser-déposer</span>
-            </span>
+            )}
           </label>
-          <input type="file" id="gigVideo" style={{ opacity: "0" }} />
+          <input
+            onChange={handleVideoChange}
+            type="file"
+            id="gigVideo"
+            style={{ opacity: "0" }}
+          />
         </div>
       </div>
     </div>

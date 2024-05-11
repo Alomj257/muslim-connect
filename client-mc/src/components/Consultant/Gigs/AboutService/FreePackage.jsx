@@ -1,7 +1,11 @@
-import React from "react";
-import { MdCalendarMonth } from "react-icons/md";
+import React, { useState } from "react";
+import DatePicker from "../../../../utils/Consultant/DatePicker/DatePicker";
 
-const FreePackage = () => {
+const FreePackage = ({ handleChange, gigs, setGigs }) => {
+  const [value, setDate] = useState([
+    new Date("2017-02-01"),
+    new Date("2017-05-20"),
+  ]);
   return (
     <>
       <div className="freePackage">
@@ -13,38 +17,30 @@ const FreePackage = () => {
           <select
             name="availability"
             type="text"
+            onChange={handleChange}
             id="availability"
             style={{ outline: "none" }}
             className="border p-2 w-100 bg-transparent border-2 rounded"
           >
             <option value="them1">Select Option</option>
-            <option value="10hr/week">10hr/week</option>
-            <option value="20hr/week">20hr/week</option>
-            <option value="30hr/week">30hr/week</option>
-            <option value="40hr/week">40hr/week</option>
+            <option value="5hr/week">5hr a week</option>
+            <option value="6hr/week">6hr a week</option>
+            <option value="7hr/week">7hr a week</option>
+            <option value="8hr/week">8hr a week</option>
           </select>
         </div>
         <div className="them-input my-4 mt-0">
           <label htmlFor="range" className="my-2">
             Select from Range
           </label>
-          <div className="d-flex justify-content-between">
-            <select
-              name="range"
-              type="text"
-              id="range"
-              style={{ outline: "none" }}
-              className="border p-2 w-100 bg-transparent border-2 rounded"
-            >
-              <option value="them1">Select Range</option>
-              <option value="them1">Range1</option>
-              <option value="them1">Range2</option>
-              <option value="them1">Range3</option>
-              <option value="them1">Range4</option>
-            </select>{" "}
-            <span>
-              <MdCalendarMonth />
-            </span>{" "}
+          <div className="d-flex justify-content-between border align-items-center rounded border-2">
+            <DatePicker
+              date={value}
+              setDate={setDate}
+              gigs={gigs}
+              setGigs={setGigs}
+              name="freeDateRange"
+            />
           </div>
         </div>
         <div className="them-input ">
@@ -52,35 +48,34 @@ const FreePackage = () => {
             Platform
           </label>
           <select
+            onChange={handleChange}
             name="platform"
             type="text"
             id="platform"
             style={{ outline: "none" }}
             className="border p-2 w-100 bg-transparent border-2 rounded"
           >
-            <option value="them1">Select Platform</option>
-            <option value="them1">Platform1</option>
-            <option value="them1">Platform2</option>
-            <option value="them1">Platform3</option>
-            <option value="them1">Platform4</option>
+            <option value="">Select Platform</option>
+            <option value="zoom">Zoom</option>
+            <option value="google">Google Meet</option>
+            <option value="muslim-connect">Muslim Connect</option>
           </select>
         </div>
         <div className="them-input ">
           <label htmlFor="platform" className="my-2">
-            Individuals
+            Individuals/collective
           </label>
           <select
-            name="platform"
+            name="collective"
+            onChange={handleChange}
             type="text"
             id="platform"
             style={{ outline: "none" }}
             className="border p-2 w-100 bg-transparent border-2 rounded"
           >
-            <option value="them1">Select Number</option>
-            <option value="them1">1</option>
-            <option value="them1">2</option>
-            <option value="them1">3</option>
-            <option value="them1">4</option>
+            <option value="">Select </option>
+            <option value="Indidividaul">Individuals</option>
+            <option value="collective">Collectives</option>
           </select>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React from "react";
 
-const AddOns = () => {
+const AddOns = ({ handleChange }) => {
   return (
     <div className="add-ons">
       <h4 className="fw-semibold my-4">Add Ons</h4>
@@ -9,6 +9,7 @@ const AddOns = () => {
         <div className="d-flex align-items-center">
           <input
             name="extraTime"
+            onChange={handleChange}
             style={{ outline: "none" }}
             type="text"
             className="w-100 border p-2"
@@ -16,7 +17,8 @@ const AddOns = () => {
           />
           <select
             style={{ outline: "none" }}
-            name="extraTime"
+            name="extraDuration"
+            onChange={handleChange}
             className="w-100 border p-2"
             id=""
           >
@@ -28,6 +30,7 @@ const AddOns = () => {
           </select>
           <select
             style={{ outline: "none" }}
+            onChange={handleChange}
             name="extraPrice"
             id=""
             className="w-100 border p-2"
@@ -43,13 +46,15 @@ const AddOns = () => {
           <input
             style={{ outline: "none" }}
             type="text"
-            name="extraIndividual"
+            onChange={handleChange}
+            name="extraTime"
             className="w-100 border p-2"
-            placeholder="Extra Individual"
+            placeholder="Extra Time"
           />
           <select
             style={{ outline: "none" }}
-            name=""
+            onChange={handleChange}
+            name="collective"
             className="w-100 border p-2"
             id=""
           >
@@ -59,15 +64,16 @@ const AddOns = () => {
           </select>
           <select
             style={{ outline: "none" }}
-            name=""
+            onChange={handleChange}
+            name="price"
             id=""
             className="w-100 border p-2"
           >
             <option value="">Select Price</option>
-            <option value="1">$1</option>
-            <option value="2">$2</option>
-            <option value="3">$3</option>
-            <option value="4">$4</option>
+            <option value="$1/person">$1 per person</option>
+            <option value="$2/person">$2 per person</option>
+            <option value="$3/person">$3 per person</option>
+            <option value="$4/person">$4 per person</option>
           </select>
         </div>
       </div>

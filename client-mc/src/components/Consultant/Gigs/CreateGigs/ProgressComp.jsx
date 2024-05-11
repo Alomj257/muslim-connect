@@ -1,7 +1,6 @@
 import React from "react";
 import { FaRegDotCircle } from "react-icons/fa";
 const ProgressComp = ({ index }) => {
-  console.log(index);
   return (
     <div className="progress1 pt-5">
       <div className="d-flex pregress-comp-bar align-items-center">

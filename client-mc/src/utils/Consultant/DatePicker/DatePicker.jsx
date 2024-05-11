@@ -1,16 +1,20 @@
 import React from "react";
 import { DateRangePicker } from "rsuite";
-// import "rsuite/dist/rsuite.css";
+import "rsuite/dist/rsuite.min.css";
 
-const DatePicker = ({ date, setDate }) => {
+const DatePicker = ({ value, name, gigs, setGigs }) => {
+  const handleChange = (e) => {
+    setGigs((pre) => ({ ...pre, [name]: e }));
+  };
+
   return (
     <>
       <DateRangePicker
         placeholder="Select Range"
-        value={date}
+        value={gigs[name] ? gigs[name] : value}
         className="w-100"
         style={{ outline: "none" }}
-        onChange={setDate}
+        onChange={handleChange}
       />
     </>
   );

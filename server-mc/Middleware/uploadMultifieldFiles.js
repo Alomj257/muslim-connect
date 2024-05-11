@@ -42,6 +42,7 @@ const uploadMuiltiFieldFiles = (destination) => {
           console.log(err);
           return res.status(400).send({ message: "File upload error" });
         } else if (err) {
+          console.log(err);
           return res.status(400).send({ message: err.message });
         }
         //   req.filePath = req.file.path;

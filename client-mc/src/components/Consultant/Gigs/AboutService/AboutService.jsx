@@ -3,11 +3,8 @@ import "./AboutService.css";
 import FreePackage from "./FreePackage";
 import AddOns from "./AddOns";
 import DatePicker from "../../../../utils/Consultant/DatePicker/DatePicker";
-const AboutService = () => {
-  const [value, setDate] = useState([
-    new Date("2017-02-01"),
-    new Date("2017-05-20"),
-  ]);
+const AboutService = ({ handleChange, gigs, setGigs }) => {
+  const [value, setDate] = useState([new Date(), new Date()]);
   return (
     <div className="selection-theme-container mt-4">
       <h4 style={{ fontSize: "32px" }} className="fw-semibold my-4">
@@ -20,7 +17,9 @@ const AboutService = () => {
             <input
               id="permiumPackage"
               type="checkbox"
-              value="Premium"
+              onChange={handleChange}
+              name="package"
+              value="Premium package"
               style={{ width: "15px", height: "15px", cursor: "pointer" }}
             />
             <label htmlFor="permiumPackage">Premium Package</label>
@@ -29,7 +28,9 @@ const AboutService = () => {
             <input
               id="freePackage"
               type="checkbox"
-              value="Free"
+              onChange={handleChange}
+              name="package"
+              value="Free package"
               style={{ width: "15px", height: "15px", cursor: "pointer" }}
             />
             <label htmlFor="freePackage">Free Package</label>
@@ -41,6 +42,8 @@ const AboutService = () => {
           </label>
           <input
             type="text"
+            name="whyService"
+            onChange={handleChange}
             id="whyService"
             placeholder="Explain service"
             style={{ outline: "none" }}
@@ -54,15 +57,16 @@ const AboutService = () => {
           <select
             name="availability"
             type="text"
+            onChange={handleChange}
             id="availability"
             style={{ outline: "none" }}
             className="border p-2 w-100 bg-transparent border-2 rounded"
           >
-            <option value="them1">Select Option</option>
-            <option value="them1">Date1</option>
-            <option value="them1">Date2</option>
-            <option value="them1">Date3</option>
-            <option value="them1">Date4</option>
+            <option value="">Select Option</option>
+            <option value="10hr">10hr a week</option>
+            <option value="20hr">20hr a week</option>
+            <option value="30hr">30hr a week</option>
+            <option value="40hr">40hr a week</option>
           </select>
         </div>
         <div className="them-input my-4 mt-0">
@@ -70,7 +74,13 @@ const AboutService = () => {
             Select from Range
           </label>
           <div className="d-flex justify-content-between border align-items-center rounded border-2">
-            <DatePicker date={value} setDate={setDate} />
+            <DatePicker
+              date={value}
+              setDate={setDate}
+              gigs={gigs}
+              setGigs={setGigs}
+              name="dateRange"
+            />
           </div>
         </div>
         <div className="them-input my-4">
@@ -80,15 +90,18 @@ const AboutService = () => {
           <select
             name="serviceType"
             type="text"
+            onChange={handleChange}
             id="serviceType"
             style={{ outline: "none" }}
             className="border p-2 w-100 bg-transparent border-2 rounded"
           >
-            <option value="them1">Select Option</option>
-            <option value="them1">service1</option>
-            <option value="them1">service2</option>
-            <option value="them1">service3</option>
-            <option value="them1">service4</option>
+            <option value="">Select Option</option>
+            <option value="arabic"> Arabic lessons</option>
+            <option value="quran">Quran lessons</option>
+            <option value="tafsir"> Tafsir course</option>
+            <option value="hadith">Hadith lessons</option>
+            <option value="islam">Islamic Finance Course</option>
+            <option value="between-women">: Between Women</option>
           </select>
         </div>
         <div className="them-input my-4 d-flex justify-content-between align-items-center">
@@ -97,6 +110,7 @@ const AboutService = () => {
               price
             </label>
             <select
+              onChange={handleChange}
               name="price"
               type="text"
               id="price"
@@ -117,6 +131,7 @@ const AboutService = () => {
             <select
               name="duration"
               type="text"
+              onChange={handleChange}
               id="duration"
               style={{ outline: "none" }}
               className="border p-2 w-100 bg-transparent border-2 rounded"
@@ -129,8 +144,12 @@ const AboutService = () => {
             </select>
           </div>
         </div>
-        <FreePackage />
-        <AddOns />
+        <FreePackage
+          setGigs={setGigs}
+          gigs={gigs}
+          handleChange={handleChange}
+        />
+        <AddOns handleChange={handleChange} />
       </form>
     </div>
   );

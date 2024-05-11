@@ -15,7 +15,7 @@ const GigsSchema = new mongoose.Schema({
   whyService: String,
   availablity: String,
   selectRange: String,
-  serviceType: Number,
+  serviceType: String,
   price: String,
   duration: String,
   // free
@@ -34,6 +34,6 @@ const GigsSchema = new mongoose.Schema({
   cancelations: Number,
 });
 
-const Gig = mongoose.model("Gigs", GigsSchema);
+const Gigs = mongoose.model("Gigs", GigsSchema);
 
-module.exports = Gig;
+module.exports = Gigs;
