@@ -1,5 +1,4 @@
 import React from "react";
-import DashNav from "../../DashNav/DashNav";
 import ProfileAndPrice from "../../ProfileAndPrice/ProfileAndPrice";
 import SubNav from "../../SubNav/SubNav";
 import Tabs from "../../Tabs/Tabs";
@@ -13,7 +12,7 @@ function PaymentPage() {
   let arr = ["Learning", "Consultation", "Book Consultation", "Payment"];
   return (
     <div>
-      <DashNav navData={navData} />
+      {/* <DashNav navData={navData} /> */}
       <SubNav />
       <div
         style={{
@@ -53,6 +52,7 @@ function PaymentPage() {
             head={"Payment"}
             body={<PaymentInfo />}
             btn={"Check out"}
+            url="/student/addcard"
           />
         </div>
       </div>
@@ -61,21 +61,6 @@ function PaymentPage() {
 }
 
 export default PaymentPage;
-
-const navData = [
-  { name: "Dashboard", path: "/student" },
-  {
-    name: "Learning",
-    child: [
-      { name: "loyalty Program", path: "/loyalty" },
-      { name: "Subscription", path: "/subscription" },
-      { name: "Sessions", path: "/sessions" },
-    ],
-  },
-  { name: "loyalty Program", path: "/loyalty" },
-  { name: "Subscription", path: "/subscription" },
-  { name: "Sessions", path: "/sessions" },
-];
 
 const PaymentMethod = () => {
   return (

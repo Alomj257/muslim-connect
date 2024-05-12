@@ -37,7 +37,7 @@ const uploadArrayImages = (destination) => {
     fileFilter: fileFilter,
   });
 
-  return upload.array("gigsImages", 6); // Change upload.fields to upload.array
+  return upload.array("gigsImages", 10);
 };
 
 module.exports = uploadArrayImages;

@@ -4,8 +4,10 @@ import Time1 from "../../../assets/GigsView/Time";
 import Calender from "../../../assets/GigsView/Calender";
 import Time2 from "../../../assets/GigsView/Time2";
 import ArrowSvg from "../../../assets/PriceCard/ArrowSvg";
+import { useNavigate } from "react-router-dom";
 
 const RightContaineer = () => {
+  const navigate = useNavigate();
   return (
     <>
       <div className="container_main">
@@ -60,6 +62,7 @@ const RightContaineer = () => {
           </p>
           <div className="submit_btn">
             <button
+              onClick={() => navigate("/student/book")}
               className="button_book"
               style={{ display: "flex", justifyContent: "center" }}
             >

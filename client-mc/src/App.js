@@ -45,12 +45,12 @@ function App() {
           <Route path="subscription" element={<Subscription />} />
           <Route path="sessions" element={<Sessions />} />
           <Route path="chat" element={<ChatPage />} />
+          <Route path="gigsview" element={<GigsView />} />
+          <Route path="book" element={<BookConsultant />} />
+          <Route path="payment" element={<PaymentPage />} />
+          <Route path="addcard" element={<AddCard />} />
         </Route>
 
-        <Route path="/student/gigsview" element={<GigsView />} />
-        <Route path="/student/book" element={<BookConsultant />} />
-        <Route path="/student/payment" element={<PaymentPage />} />
-        <Route path="/student/addcard" element={<AddCard />} />
         {/* consultant */}
         <Route path="/découvrir" element={<SuccessSectionPage />} />
         <Route path="/consultant" element={<ConsultantPage />}>

@@ -6,6 +6,7 @@ const { sendEmail } = require("../Middleware/EmailHandle");
 const register = async (req, res) => {
   try {
     let { idProof, certificate } = req.body;
+    console.log(req.body);
     if (req.files) {
       if (req.files.idProof) {
         idProof = "/idProof/" + req?.files?.idProof[0]?.originalname;

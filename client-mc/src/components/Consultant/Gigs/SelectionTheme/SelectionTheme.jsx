@@ -68,7 +68,12 @@ const SelectionTheme = ({ handleChange, gigs, setGigs }) => {
           <label htmlFor="keyword" className="my-2">
             keyword
           </label>
-          <TagTaker setTags={setTags} />
+          <TagTaker
+            tags={tags}
+            gigs={gigs}
+            setGigs={setGigs}
+            setTags={setTags}
+          />
         </div>
         <div className="text-end">
           <span

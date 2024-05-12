@@ -6,6 +6,7 @@ import SubNav from "../../SubNav/SubNav";
 import cartImg from "../../../assets/Student/cartImg.png";
 import profileImg from "../../../assets/Student/Ellipse 21.png";
 import starImg from "../../../assets/Student/material-symbols_star.png";
+import { useNavigate } from "react-router-dom";
 
 function ConsultantList() {
   return (
@@ -104,8 +105,13 @@ function ConsultantList() {
 
 export default ConsultantList;
 const ConsultantCard = () => {
+  const navigate = useNavigate();
   return (
-    <div className="card item" style={{ borderRadius: "15px", width: "29.3%" }}>
+    <div
+      onClick={() => navigate("/student/gigsview")}
+      className="card item"
+      style={{ borderRadius: "15px", width: "29.3%" }}
+    >
       <div class="cart-item">
         <img src={cartImg} alt="Product Images" />
         <div class="cart-item-info">

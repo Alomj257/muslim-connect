@@ -10,28 +10,34 @@ const GigsSchema = new mongoose.Schema({
   theme: String,
   level: String,
   keyword: Array,
+  content: String,
+  collective: String,
+  availability: String,
   // service
   package: String,
   whyService: String,
   availablity: String,
-  selectRange: String,
+  dateRange: String,
   serviceType: String,
   price: String,
   duration: String,
-  // free
-  freePackege: {},
-  addOns: {},
+  // package
+  freeDateRange: String,
+  platform: String,
+  extraDuration: String,
+  extraPrice: String,
   // content
   description: String,
   // media
-  gigimages: Array,
-  gigVideo: String,
+  gigsImages: Array,
   status: String,
   //   actions
   impression: Number,
   clicks: Number,
   Orders: Number,
   cancelations: Number,
+  // rating
+  rating: Array,
 });
 
 const Gigs = mongoose.model("Gigs", GigsSchema);

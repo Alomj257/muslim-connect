@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import baseUrl from "../Axios";
+import { baseUrl } from "../Axios";
 
 export const authApi = createApi({
   reducerPath: "authApi",
@@ -10,7 +10,7 @@ export const authApi = createApi({
   endpoints: (builder) => ({
     getAllAuth: builder.query({
       query: () => ({
-        url: "/auth/",
+        url: "/auth/users",
         method: "GET",
       }),
     }),
@@ -18,7 +18,7 @@ export const authApi = createApi({
       query: (id) => {
         console.log("ID:", id);
         return {
-          url: `/auth/${id}`,
+          url: `/auth/users/${id}`,
           method: "GET",
         };
       },
@@ -47,8 +47,24 @@ export const authApi = createApi({
     createAuth: builder.mutation({
       query: (newPost) => {
         console.log("Create Post: ", newPost);
+        const formData = new FormData();
+        for (const key in newPost) {
+          formData.append(key, newPost[key]);
+        }
         return {
-          url: `/auth/`,
+          url: `/auth/register`,
+          method: "POST",
+          body: formData,
+          formData: true,
+        };
+      },
+    }),
+    // login data
+    loginAuth: builder.mutation({
+      query: (newPost) => {
+        console.log("login Post: ", newPost);
+        return {
+          url: `/auth/login`,
           method: "POST",
           body: newPost,
           headers: {

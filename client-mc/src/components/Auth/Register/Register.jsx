@@ -4,8 +4,9 @@ import { toast } from "react-toastify";
 import studentImg from "../../../assets/auth/student.jpeg";
 import consultantImg from "../../../assets/auth/login.jpeg";
 import { Link } from "react-router-dom";
-import { registerUserService } from "../../../ApiService/Auth/Auth";
+// import { registerUserService } from "../../../ApiService/Auth/Auth";
 import { FaArrowLeft, FaArrowRight, FaStar } from "react-icons/fa6";
+import { useCreateAuthMutation } from "../../../ApiService/AuthSlice/AuthSlice";
 // import {
 //   FaRegArrowAltCircleRight,
 //   FaRegArrowAltCircleLeft,
@@ -15,6 +16,7 @@ const Register = () => {
   const [role, setRole] = useState("STUDENT");
   const [user, setUser] = useState(null);
   const [more, setMore] = useState(false);
+  const [createAuth] = useCreateAuthMutation();
   const handleChange = (e) => {
     const { name, files, value } = e.target;
     setUser({ ...user, [name]: files ? files[0] : value });
@@ -22,14 +24,18 @@ const Register = () => {
   const handlesubmit = async (e) => {
     e.preventDefault();
     try {
-      const formdata = new FormData();
-      for (const [name, value] of Object.entries(user)) {
-        formdata.append(name, value);
-      }
-      formdata.append("role", role);
-      const { data } = await registerUserService(formdata);
+      user.role = role;
+      // const formdata = new FormData();
+      // for (const [name, value] of Object.entries(user)) {
+      //   formdata.append(name, value);
+      // }
+      // formdata.append("role", role);
+      // const { data } = await registerUserService(formdata);
+      const { data } = await createAuth(user);
+      console.log(data);
       if (data.message) {
         toast.error(data.message);
+        return;
       }
       toast.success(data);
     } catch (error) {

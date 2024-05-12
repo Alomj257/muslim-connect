@@ -1,6 +1,5 @@
 import React from "react";
 import "./BookConsultant.css";
-import DashNav from "../../DashNav/DashNav";
 import ProfileAndPrice from "../../ProfileAndPrice/ProfileAndPrice";
 import SubNav from "../../SubNav/SubNav";
 import Tabs from "../../Tabs/Tabs";
@@ -15,7 +14,7 @@ function BookConsultant() {
   let arr = ["Learning", "Consultation", "Book Consultation"];
   return (
     <div>
-      <DashNav navData={navData} />
+      {/* <DashNav navData={navData} /> */}
       <SubNav />
       <div
         style={{
@@ -55,6 +54,7 @@ function BookConsultant() {
             head={"Consultation"}
             body={<PaymentCardBody />}
             btn={"Pay Now"}
+            url="/student/payment"
           />
         </div>
       </div>
@@ -63,21 +63,6 @@ function BookConsultant() {
 }
 
 export default BookConsultant;
-
-const navData = [
-  { name: "Dashboard", path: "/student" },
-  {
-    name: "Learning",
-    child: [
-      { name: "loyalty Program", path: "/loyalty" },
-      { name: "Subscription", path: "/subscription" },
-      { name: "Sessions", path: "/sessions" },
-    ],
-  },
-  { name: "loyalty Program", path: "/loyalty" },
-  { name: "Subscription", path: "/subscription" },
-  { name: "Sessions", path: "/sessions" },
-];
 
 const PaymentCardBody = () => {
   return (

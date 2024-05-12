@@ -4,23 +4,29 @@ import { LuUploadCloud } from "react-icons/lu";
 const MediaGigs = ({ gigs, setGigs }) => {
   const [fileName, setFileNames] = useState("");
   const handleMultiChange = (e) => {
-    const { value, name, files } = e.target;
+    const { name, files, value } = e.target;
+    let imgFiles = [];
+    for (let i = 0; i < files.length; i++) {
+      imgFiles?.push(files[i]);
+    }
     setGigs((prevGigs) => ({
       ...prevGigs,
-      [name]: files ? files : value,
+      [name]: imgFiles || value,
     }));
   };
+
   const handleVideoChange = (e) => {
     const { files } = e.target;
-    if (files) {
-      setFileNames(files[0]?.name);
+    if (files && files.length > 0) {
+      const newGigsImages = [...gigs.gigsImages, files[0]];
+      setFileNames(files[0].name);
       setGigs((prevGigs) => ({
         ...prevGigs,
-        gigsImages: [...prevGigs?.gigsImages, files[0]],
+        gigsImages: newGigsImages,
       }));
     }
   };
-  console.log(fileName);
+
   return (
     <div className="media-gigs">
       <h4 className="my-4 fw-bold">Médias</h4>

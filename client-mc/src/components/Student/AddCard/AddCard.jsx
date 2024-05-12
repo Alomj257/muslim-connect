@@ -1,5 +1,4 @@
 import React from "react";
-import DashNav from "../../DashNav/DashNav";
 import ProfileAndPrice from "../../ProfileAndPrice/ProfileAndPrice";
 import SubNav from "../../SubNav/SubNav";
 import Tabs from "../../Tabs/Tabs";
@@ -16,7 +15,7 @@ function AddCard() {
   ];
   return (
     <div>
-      <DashNav navData={navData} />
+      {/* <DashNav navData={navData} /> */}
       <SubNav />
       <div
         style={{
@@ -78,6 +77,7 @@ function AddCard() {
             head={"Payment"}
             body={<PaymentInfo />}
             btn={"Check out"}
+            url="/student/addcard"
           />
         </div>
       </div>
@@ -86,21 +86,6 @@ function AddCard() {
 }
 
 export default AddCard;
-
-const navData = [
-  { name: "Dashboard", path: "/student" },
-  {
-    name: "Learning",
-    child: [
-      { name: "loyalty Program", path: "/loyalty" },
-      { name: "Subscription", path: "/subscription" },
-      { name: "Sessions", path: "/sessions" },
-    ],
-  },
-  { name: "loyalty Program", path: "/loyalty" },
-  { name: "Subscription", path: "/subscription" },
-  { name: "Sessions", path: "/sessions" },
-];
 
 const PaymentInfo = () => {
   return (

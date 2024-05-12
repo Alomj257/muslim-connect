@@ -3,7 +3,9 @@ import Profile from "../Student/Profile/Profile";
 import Item from "../Item/Item";
 import CreateNew from "../../assets/Student/CreateNew";
 import Review from "./Reviews/Review";
+import { useNavigate } from "react-router-dom";
 const Consultant = () => {
+  const navigate = useNavigate();
   return (
     <div className="student-container">
       <div>
@@ -26,6 +28,7 @@ const Consultant = () => {
               Join Our Community of Dedicated Learners and Experts"
             </h6>
             <button
+              onClick={() => navigate("subscription")}
               type="button"
               className="btn btn-success"
               style={{ backgroundColor: "#6FAE9C" }}

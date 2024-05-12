@@ -1,5 +1,4 @@
 import React from "react";
-import DashNav from "../../DashNav/DashNav";
 import SubNav from "../../SubNav/SubNav";
 import img from "../../../assets/GigsView/Rectangle 1895.png";
 // import PrevSvg from "../../../assets/GigsView/PrevSvg";
@@ -11,10 +10,11 @@ import Reviews from "./Reviews";
 import "./GigsView.css";
 import ArrowVio from "../../../assets/GigsView/ArrowVio";
 import RightContaineer from "./RightContaineer";
+import { useNavigate } from "react-router-dom";
 function GigsView() {
+  const navigate = useNavigate();
   return (
     <div>
-      <DashNav navData={navData} />
       <SubNav />
       <div style={{ padding: "12% 5% 12% 5%" }}>
         <Head />
@@ -78,6 +78,7 @@ function GigsView() {
             <RightContaineer />
             <div style={{ width: "100%", marginTop: "30px" }}>
               <button
+                onClick={() => navigate("/student/chat")}
                 className="button_book"
                 style={{
                   display: "flex",
@@ -104,21 +105,6 @@ function GigsView() {
 }
 
 export default GigsView;
-
-const navData = [
-  { name: "Dashboard", path: "/student" },
-  {
-    name: "Learning",
-    child: [
-      { name: "loyalty Program", path: "/loyalty" },
-      { name: "Subscription", path: "/subscription" },
-      { name: "Sessions", path: "/sessions" },
-    ],
-  },
-  { name: "loyalty Program", path: "/loyalty" },
-  { name: "Subscription", path: "/subscription" },
-  { name: "Sessions", path: "/sessions" },
-];
 
 const AboutText = () => {
   return (

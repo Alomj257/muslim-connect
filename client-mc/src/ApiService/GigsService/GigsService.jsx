@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import baseUrl from "../Axios";
+import { baseUrl } from "../Axios";
 
 // It is used to define our endpoints and allow to create the API slice
 export const gigsApi = createApi({
@@ -48,18 +48,21 @@ export const gigsApi = createApi({
     // post data
     createGigs: builder.mutation({
       query: (newPost) => {
-        // console.log("Create Post: ", newPost);
         const formData = new FormData();
         for (const [key, value] of Object.entries(newPost)) {
-          formData.append(key, value);
+          if (key !== "gigsImages") {
+            formData.append(key, value);
+          }
+        }
+        for (let i = 0; i < newPost?.gigsImages?.length; i++) {
+          console.log(newPost?.gigsImages[i]);
+          formData.append("gigsImages", newPost?.gigsImages[i]);
         }
         return {
           url: `/gigs/`,
           method: "POST",
           body: formData,
-          headers: {
-            "Content-type": "multipart/form-data",
-          },
+          formData: true,
         };
       },
     }),

@@ -1,8 +1,10 @@
 import React from "react";
 import "./PaymentCard.css";
 import ArrowSvg from "../../assets/PriceCard/ArrowSvg";
+import { useNavigate } from "react-router-dom";
 
-const PaymentCard = ({ head, body, btn }) => {
+const PaymentCard = ({ head, body, btn, url }) => {
+  const navigate = useNavigate();
   return (
     <>
       <div className="container_main" style={{ marginTop: "15%" }}>
@@ -27,6 +29,7 @@ const PaymentCard = ({ head, body, btn }) => {
           >
             <button
               className="button_book"
+              onClick={() => navigate(url)}
               style={{
                 display: "flex",
                 justifyContent: "center",

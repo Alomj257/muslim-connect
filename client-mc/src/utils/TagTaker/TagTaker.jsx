@@ -3,9 +3,14 @@ import { TagPicker } from "rsuite";
 import "./Tag.css";
 import "rsuite/dist/rsuite.min.css";
 
-const TagTaker = ({ data, setTags }) => {
+const TagTaker = ({ gigs, setGigs, tags, setTags }) => {
   const handleChange = (e) => {
     setTags(e);
+
+    setGigs((prevGigs) => ({
+      ...prevGigs,
+      keyword: tags,
+    }));
   };
   return (
     <TagPicker

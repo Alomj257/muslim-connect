@@ -5,8 +5,8 @@ import SelectionTheme from "../SelectionTheme/SelectionTheme";
 import AboutService from "../AboutService/AboutService";
 import ContentGigs from "../Content/ContentGigs";
 import MediaGigs from "../Media/MediaGigs";
-import { useCreateGigsMutation } from "../../../../ApiService/GigsService/GigsService";
 import { toast } from "react-toastify";
+import { useCreateGigsMutation } from "../../../../ApiService/GigsService/GigsService";
 const CreateGigs = () => {
   const [index, setIndex] = useState(0);
   const [gigs, setGigs] = useState({});
@@ -29,12 +29,19 @@ const CreateGigs = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await createGigs(gigs);
+      const res = await createGigs(gigs);
+      console.log(res);
       if (isSuccess) {
-        toast.success(data);
+        toast.success(res?.data);
+        return;
       }
       if (isError) {
-        toast.error(data?.message || "Something went wrong");
+        toast.error(
+          res?.error?.data?.message ||
+            res?.error?.data ||
+            "Something went wrong"
+        );
+        return;
       }
     } catch (error) {
       console.log(error);
