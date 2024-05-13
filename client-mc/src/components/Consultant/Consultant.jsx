@@ -4,8 +4,13 @@ import Item from "../Item/Item";
 import CreateNew from "../../assets/Student/CreateNew";
 import Review from "./Reviews/Review";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { useGetGigsByUserIdQuery } from "../../ApiService/GigsService/GigsService";
 const Consultant = () => {
   const navigate = useNavigate();
+  const [{ user }] = useAuth();
+  const gigs = useGetGigsByUserIdQuery(user?._id);
+  console.log(gigs);
   return (
     <div className="student-container">
       <div>

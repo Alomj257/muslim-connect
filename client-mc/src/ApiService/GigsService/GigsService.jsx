@@ -25,6 +25,15 @@ export const gigsApi = createApi({
         };
       },
     }),
+    getGigsByUserId: builder.query({
+      query: (id) => {
+        console.log("ID:", id);
+        return {
+          url: `/gigs/user/${id}`,
+          method: "GET",
+        };
+      },
+    }),
 
     getGigsByLimit: builder.query({
       query: (num) => {
@@ -89,6 +98,7 @@ export const gigsApi = createApi({
 export const {
   useGetAllGigsQuery,
   useGetGigsByIdQuery,
+  useGetGigsByUserIdQuery,
   useGetGigsByLimitQuery,
   useDeleteGigsMutation,
   useCreateGigsMutation,

@@ -4,10 +4,9 @@ const {
   deleteGigs,
   getOneGigs,
   getAllGigss,
+  getAllGigsByUserId,
 } = require("../Controller/GigsController");
-const uploadSingleVideoFile = require("../Middleware/UploadVideo");
 const uploadArrayImages = require("../Middleware/uploadArrayImages");
-const uploadArrayFiles = require("../Middleware/uploadArrayImages");
 
 const GigsRoutes = require("express").Router();
 
@@ -16,5 +15,6 @@ GigsRoutes.put("/:id", updateGigs);
 GigsRoutes.delete("/:id", deleteGigs);
 GigsRoutes.get("/:id", getOneGigs);
 GigsRoutes.get("/", getAllGigss);
+GigsRoutes.get("/user/:id", getAllGigsByUserId);
 
 module.exports = GigsRoutes;

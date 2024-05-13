@@ -80,13 +80,21 @@ export const authApi = createApi({
         console.log("Update Post: ", updatePostData);
         const { id, ...data } = updatePostData;
         console.log("Actual Update Post: ", data);
+        const formData = new FormData();
+        for (let key in data) {
+          formData.append(
+            key,
+            Array.isArray(data[key]) ? JSON.stringify(data[key]) : data[key]
+          );
+        }
         return {
-          url: `/auth/${id}`,
+          url: `/auth//update/${id}`,
           method: "PUT",
-          body: data,
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-          },
+          body: formData,
+          formData: true,
+          // headers: {
+          //   "Content-type": "application/json; charset=UTF-8",
+          // },
         };
       },
     }),

@@ -67,3 +67,13 @@ exports.getAllGigss = async (req, res) => {
     res.status(500).json(error.message);
   }
 };
+
+exports.getAllGigsByUserId = async (req, res) => {
+  try {
+    const gigs = await Gigs.find({ userId: req.params.id });
+    res.status(200).json(gigs);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+};

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Profile.css";
 import profilePic from "../../../assets/Student/Ellipse 21.png";
+import { toast } from "react-toastify";
 import {
   MdEdit,
   MdFacebook,
@@ -9,9 +10,69 @@ import {
   MdOutlineWatchLater,
   MdVideocam,
 } from "react-icons/md";
-import { FaYoutube } from "react-icons/fa6";
+import {
+  FaCircleNodes,
+  FaGithub,
+  FaLinkedin,
+  FaSquareInstagram,
+  FaYoutube,
+} from "react-icons/fa6";
+import { useAuth } from "../../../context/AuthContext";
+import {
+  useGetAuthByIdQuery,
+  useUpdateAuthMutation,
+} from "../../../ApiService/AuthSlice/AuthSlice";
+import UpdateUser, {
+  Interest,
+  LanguageUpdate,
+  Skills,
+  SocialMedia,
+} from "./UpdateProfile/UpdateUser";
 
 const Profile = () => {
+  const [auth] = useAuth();
+  const { data, refetch } = useGetAuthByIdQuery(auth?.user?._id);
+  const user = data;
+  const [isEditDesc, setIsDesc] = useState(false);
+  const [description, setDesc] = useState(user?.description);
+  const [isEducation, setIsEdu] = useState(false);
+  const [isLang, setIsLang] = useState(false);
+  const [isInterst, setIsInterest] = useState(false);
+  const [isSkill, setIsSkill] = useState(false);
+  const [isSocial, setIsSocial] = useState(false);
+  const [updateAuth, { isSuccess, isError }] = useUpdateAuthMutation();
+  const handleSaveClick = async (e) => {
+    e.preventDefault();
+    if (!description) {
+      setIsDesc(false);
+      return;
+    }
+    try {
+      const { data } = await updateAuth({
+        id: user?._id,
+        description: description,
+      });
+      if (data && isSuccess) {
+        toast.success("Description update successfully");
+        onUpdate();
+        setIsDesc(false);
+        return;
+      }
+      if (isError) {
+        toast.error("something went wrong try again");
+        setIsDesc(false);
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+      return;
+    }
+    setIsDesc(false);
+  };
+  const onUpdate = () => {
+    refetch();
+  };
+
   return (
     <div className="profile-container">
       <div class="profile-picture">
@@ -19,28 +80,45 @@ const Profile = () => {
       </div>
       <div class="profile-info w-100">
         <div className="d-flex w-100 align-items-center ">
-          <h6 className="fw-semibold ms-auto"> Muhammad Haseeb</h6>{" "}
+          <h6 className="fw-semibold ms-auto text-capitalize">
+            {user?.firstname} {user?.lastname}
+          </h6>
           <MdEdit className="ms-auto" size={20} />
         </div>
         <p>
           Loyality Rank:{" "}
           <span style={{ color: "#8F5F03", fontWeight: "light" }}>
-            Developer
+            {user?.rank || "Developer"}
           </span>
         </p>
       </div>
-      <div class="description">
-        <div className="d-flex justify-content-between align-items-center ">
-          <h6 className="fw-semibold"> Description</h6>{" "}
-          <button className="btn  small">
+      <div class="description w-100">
+        <div className="d-flex w-100 justify-content-between align-items-center ">
+          <h6 className="fw-semibold mx-auto"> Description</h6>{" "}
+          <button className="btn  small" onClick={() => setIsDesc(true)}>
             <MdEdit size={20} />
           </button>
         </div>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget
-          risus enim. Nullam faucibus, ligula non mattis accumsan, velit felis
-          volutpat arcu, nec hendrerit metus lectus et leo.
-        </p>
+        {isEditDesc ? (
+          <form action="" onSubmit={handleSaveClick}>
+            {" "}
+            <textarea
+              type="text"
+              value={description}
+              onChange={(e) => setDesc(e.target.value)}
+              onBlur={handleSaveClick}
+              autoFocus
+              className="w-100 border border-2 "
+              style={{ outline: "none" }}
+              id=""
+            />
+            <button className="d-done"></button>
+          </form>
+        ) : (
+          <p onDoubleClick={() => setIsDesc(true)}>
+            {description || user?.description}
+          </p>
+        )}
       </div>
       <hr style={{ width: "100%" }} />
       <div className="availablity-container d-flex flex-column gap-3 w-100 mb-2">
@@ -51,7 +129,7 @@ const Profile = () => {
             </span>
             <span>From</span>
           </div>
-          <div>Pakistan</div>
+          <div>{user?.location || "Pakistan"}</div>
         </div>
         <div className="d-flex justify-content-between fw-semibold">
           <div className="d-flex gap-2 align-item-center ">
@@ -88,58 +166,148 @@ const Profile = () => {
         </div>
       </div>
       <div class="details mt-4 d-flex flex-column gap-1">
+        {isEducation && (
+          <UpdateUser
+            user={user}
+            onUpdate={onUpdate}
+            type="education"
+            setEdu={setIsEdu}
+          />
+        )}
         <div className="d-flex justify-content-between align-items-center ">
-          <h6>Education</h6> <button className="btn border small">+ Add</button>
+          <h6>Education</h6>{" "}
+          <button onClick={() => setIsEdu(true)} className="btn border small">
+            + Add
+          </button>
         </div>
-        <p className="fw-semibold">B.Sc - BS Computer Science</p>
-        <p className="text-muted fw-semibold">COMSATS University, Pakistan.</p>
+        {user?.educations?.map((val, key) => (
+          <>
+            <p className="fw-semibold">
+              {val?.title} - {val?.major}
+            </p>
+            <p className="text-muted fw-semibold">
+              {val?.collage}, {val?.country}.
+            </p>
+          </>
+        ))}
       </div>
       <div class="details">
+        {isLang && (
+          <LanguageUpdate
+            user={user}
+            onUpdate={onUpdate}
+            setIsLang={setIsLang}
+          />
+        )}
         <div className="d-flex justify-content-between align-items-center ">
-          <h6>Language</h6> <button className="btn border small">+ Add</button>
+          <h6>Language</h6>{" "}
+          <button onClick={() => setIsLang(true)} className="btn border small">
+            + Add
+          </button>
         </div>
-        <p>
-          <span className="fw-semibold">English -</span>{" "}
-          <span className="text-muted"> Fluent</span>
-        </p>
-        <p>
-          <span className="fw-semibold">French -</span>{" "}
-          <span className="text-muted"> Native</span>
-        </p>
+        {user?.languages?.map((val, key) => (
+          <p>
+            <span className="fw-semibold">{val?.langauge} -</span>{" "}
+            <span className="text-muted"> {val?.level}</span>
+          </p>
+        ))}
       </div>
       <div class="details">
+        {isInterst && (
+          <Interest
+            user={user}
+            onUpdate={onUpdate}
+            setIsIntrest={setIsInterest}
+          />
+        )}
         <div className="d-flex justify-content-between align-items-center">
-          <h6>Interests</h6> <button className="btn border small">+ Add</button>
+          <h6>Interests</h6>{" "}
+          <button
+            onClick={() => setIsInterest(true)}
+            className="btn border small"
+          >
+            + Add
+          </button>
         </div>
-        <p>Islamic finance</p>
-        <p>Arabic Course</p>
+        {user?.intrests?.map((val, key) => (
+          <p>{val?.intrest}</p>
+        ))}
       </div>
       <div class="details">
+        {isSkill && (
+          <Skills user={user} onUpdate={onUpdate} setIsSkill={setIsSkill} />
+        )}
         <div className="d-flex justify-content-between align-items-center">
-          <h6>Skills</h6> <button className="btn border small">+ Add</button>
+          <h6>Skills</h6>{" "}
+          <button onClick={() => setIsSkill(true)} className="btn border small">
+            + Add
+          </button>
         </div>
         <div className="d-flex gap-3 my-2 flex-wrap align-items-center">
-          <span className="rounded skill">Islamic Finance</span>
-          <span className="rounded skill">mariage/divorce</span>
-          <span className="rounded skill">Arabic Course</span>
+          {user?.skills?.map((val, ke) => (
+            <span key={val?._id} className="rounded skill">
+              {val?.skill}
+            </span>
+          ))}
         </div>
       </div>
       <div class="details">
+        {isSocial && (
+          <SocialMedia
+            user={user}
+            onUpdate={onUpdate}
+            setIsSocial={setIsSocial}
+          />
+        )}
         <div className="d-flex justify-content-between align-items-center">
           <h6>Social Media</h6>{" "}
-          <button className="btn border small">+ Add</button>
+          <button
+            onClick={() => setIsSocial(true)}
+            className="btn border small"
+          >
+            + Add
+          </button>
         </div>
-        <div className="d-flex gap-3 my-2  align-items-center">
-          <MdFacebook size={20} />
-          <span>Facebook</span>
-        </div>
-        <div className="d-flex gap-3 my-2  align-items-center">
-          <FaYoutube size={20} />
-          <span>Youtube</span>
-        </div>
+        {user?.socialMedia?.map((val, key) => (
+          <a
+            key={val?._id}
+            href={val?.link}
+            className="d-flex gap-3 my-2  align-items-center text-dark"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {SocialIcon(val?.name)}
+            <span>{val?.name}</span>
+          </a>
+        ))}
       </div>
     </div>
   );
 };
 
 export default Profile;
+
+const SocialIcon = (val) => {
+  let icon;
+  switch (val) {
+    case "LinkedIn":
+      icon = <FaLinkedin size={20} />;
+      break;
+    case "Github":
+      icon = <FaGithub size={20} />;
+      break;
+    case "Youtube":
+      icon = <FaYoutube size={20} />;
+      break;
+    case "Instagram":
+      icon = <FaSquareInstagram size={20} />;
+      break;
+    case "Facebook":
+      icon = <MdFacebook size={20} />;
+      break;
+    default:
+      icon = <FaCircleNodes size={20} />;
+  }
+
+  return icon;
+};

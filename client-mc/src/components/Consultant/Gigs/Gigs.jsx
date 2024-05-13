@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { useGetAllGigsQuery } from "../../../ApiService/GigsService/GigsService";
 function Gigs() {
   const gigs = useGetAllGigsQuery();
-  if (gigs?.isLoading) return <div>Loading....</div>;
-  if (gigs?.isError) return <div>Something went wrong...!</div>;
+  // if (gigs?.isLoading) return <div>Loading....</div>;
+  // if (gigs?.isError) return <div>Something went wrong...!</div>;
   return (
     <div>
       {/* <DashNav navData={navData} /> */}

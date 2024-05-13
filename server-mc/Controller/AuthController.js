@@ -163,22 +163,36 @@ const getUsersByRole = async (req, res) => {
 
 const updateUserDetails = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
-    if (!user) {
+    console.log(req.body);
+    const arr = [
+      "educations",
+      "languages",
+      "intrests",
+      "skills",
+      "socialMedia",
+      "availableTime",
+    ];
+    const olduser = await User.findById(req.params.id);
+    if (!olduser) {
       return res.status(404).json({ message: "User not found" });
     }
+    for (const key in req.body) {
+      if (arr.includes(key)) {
+        req.body[key] = JSON.parse(req.body[key]);
+      }
+    }
+    console.log(req.body);
     if (req.files) {
       req.body.profile = "/profile/pic/" + req?.files[0]?.originalname;
     }
-
     console.log(req.body);
-    const updatedData = await User.findByIdAndUpdate(
+    const user = await User.findByIdAndUpdate(
       req.params.id,
       { $set: req.body },
       { new: true }
     );
-    console.log(updatedData);
-    res.status(200).json("User update successfully");
+    console.log(user);
+    res.status(200).json(user);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
@@ -244,6 +258,7 @@ const updatePassword = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
 function generateOTP() {
   // Generate a random 6-digit number
   const otp = Math.floor(100000 + Math.random() * 900000);
