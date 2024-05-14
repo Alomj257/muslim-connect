@@ -7,8 +7,10 @@ import ContentGigs from "../Content/ContentGigs";
 import MediaGigs from "../Media/MediaGigs";
 import { toast } from "react-toastify";
 import { useCreateGigsMutation } from "../../../../ApiService/GigsService/GigsService";
+import { useAuth } from "../../../../context/AuthContext";
 const CreateGigs = () => {
   const [index, setIndex] = useState(0);
+  const [{ user }] = useAuth();
   const [gigs, setGigs] = useState({});
   const [fileNames, setFileNames] = useState({});
   // [function,{isError,isLoading,isSuccess,originalArgs,isUninitialized}]
@@ -29,6 +31,7 @@ const CreateGigs = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      gigs.userId = user?._id;
       const res = await createGigs(gigs);
       console.log(res);
       if (isSuccess) {

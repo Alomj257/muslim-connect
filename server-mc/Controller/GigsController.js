@@ -70,10 +70,42 @@ exports.getAllGigss = async (req, res) => {
 
 exports.getAllGigsByUserId = async (req, res) => {
   try {
+    console.log(req.params.id);
     const gigs = await Gigs.find({ userId: req.params.id });
     res.status(200).json(gigs);
   } catch (error) {
     console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.filterGigs = async (req, res) => {
+  try {
+    const { location, category, priceMin, priceMax, keywords } = req.query;
+    const filter = {};
+    if (location) filter.location = location;
+    if (category) filter.category = category;
+    if (priceMin) filter.price = { ...filter.price, $gte: Number(priceMin) };
+    if (priceMax) filter.price = { ...filter.price, $lte: Number(priceMax) };
+
+    if (keywords) {
+      const keywordArray = keywords.split(",").map((keyword) => keyword.trim());
+      const regexArray = keywordArray.map(
+        (keyword) => new RegExp(keyword, "i")
+      );
+      filter.$or = [
+        { title: { $in: regexArray } },
+        { content: { $in: regexArray } },
+        { theme: { $in: regexArray } },
+        { keyword: { $in: regexArray } },
+        { collective: { $in: regexArray } },
+        { serviceType: { $in: regexArray } },
+        { whyService: { $in: regexArray } },
+      ];
+    }
+    const gigs = await Gigs.find(filter);
+    res.status(200).json(gigs);
+  } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };

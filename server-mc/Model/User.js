@@ -95,3 +95,4 @@ const User = mongoose.model("User", userSchema);
 module.exports = User;
 
 // email: 'kecicif666@rencr.com', password: 'Kecicif666@'
+// { email: 'xaruci@clip.lat', password: 'Shoyebmd424@' }

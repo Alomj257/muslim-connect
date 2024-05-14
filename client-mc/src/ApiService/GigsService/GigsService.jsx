@@ -16,6 +16,15 @@ export const gigsApi = createApi({
         method: "GET",
       }),
     }),
+    getFilterGigs: builder.query({
+      query: (params) => {
+        const queryString = new URLSearchParams(params).toString();
+        return {
+          url: `/gigs?${queryString}`,
+          method: "GET",
+        };
+      },
+    }),
     getGigsById: builder.query({
       query: (id) => {
         console.log("ID:", id);
@@ -92,15 +101,78 @@ export const gigsApi = createApi({
         };
       },
     }),
+
+    //  review end points
+
+    createRiview: builder.mutation({
+      query: (data) => {
+        return {
+          url: "/gigs/user/review/",
+          method: "POST",
+          body: data,
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        };
+      },
+    }),
+
+    updateReview: builder.mutation({
+      query: (data) => {
+        const { id, ...remain } = data;
+        return {
+          url: `/gigs/user/review/${id}`,
+          body: remain,
+          method: "PUT",
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        };
+      },
+    }),
+    deleteReview: builder.mutation({
+      query: (id) => {
+        return {
+          url: `/gigs/user/review/${id}`,
+          method: "DELETE",
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        };
+      },
+    }),
+    getAllReviewByUserId: builder.query({
+      query: (id) => {
+        return {
+          url: `/gigs/user/review/user/${id}`,
+          method: "GET",
+        };
+      },
+    }),
+    getAllReviewByGigId: builder.query({
+      query: (id) => {
+        return {
+          url: `/gigs/user/review/gig/${id}`,
+          method: "GET",
+        };
+      },
+    }),
   }),
 });
 
 export const {
   useGetAllGigsQuery,
   useGetGigsByIdQuery,
+  useGetFilterGigsQuery,
   useGetGigsByUserIdQuery,
   useGetGigsByLimitQuery,
   useDeleteGigsMutation,
   useCreateGigsMutation,
   useUpdateGigsMutation,
+  //  review
+  useCreateRiviewMutation,
+  useUpdateReviewMutation,
+  useDeleteReviewMutation,
+  useGetAllReviewByGigIdQuery,
+  useGetAllReviewByUserIdQuery,
 } = gigsApi;

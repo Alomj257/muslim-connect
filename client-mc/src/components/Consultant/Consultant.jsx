@@ -1,16 +1,17 @@
 import React from "react";
 import Profile from "../Student/Profile/Profile";
-import Item from "../Item/Item";
 import CreateNew from "../../assets/Student/CreateNew";
 import Review from "./Reviews/Review";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useGetGigsByUserIdQuery } from "../../ApiService/GigsService/GigsService";
+import Item from "./Item/Item";
 const Consultant = () => {
   const navigate = useNavigate();
   const [{ user }] = useAuth();
-  const gigs = useGetGigsByUserIdQuery(user?._id);
-  console.log(gigs);
+  console.log(user);
+  const { data } = useGetGigsByUserIdQuery(user?._id);
+  console.log(data);
   return (
     <div className="student-container">
       <div>
@@ -43,9 +44,11 @@ const Consultant = () => {
           </div>
         </div>
         <div className="card border-0 items" style={{ marginTop: "4%" }}>
-          <Item />
-          <Item />
-          <Item />
+          {data?.map((val, index) => (
+            <Item gig={val} index={index} />
+          ))}
+          {/* <Item />
+          <Item /> */}
 
           <div
             className="card item"
@@ -58,6 +61,7 @@ const Consultant = () => {
             }}
           >
             <div
+              onClick={() => navigate("gigs/create-gigs")}
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -65,6 +69,7 @@ const Consultant = () => {
                 justifyContent: "center",
                 marginTop: "19%",
                 marginBottom: "19%",
+                cursor: "pointer",
               }}
             >
               <CreateNew />

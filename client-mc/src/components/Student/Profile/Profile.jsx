@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Profile.css";
 import profilePic from "../../../assets/Student/Ellipse 21.png";
 import { toast } from "react-toastify";
@@ -31,7 +31,9 @@ import UpdateUser, {
 
 const Profile = () => {
   const [auth] = useAuth();
-  const { data, refetch } = useGetAuthByIdQuery(auth?.user?._id);
+  const [id, setId] = useState(auth?.user?._id);
+  const { data, refetch } = useGetAuthByIdQuery(id);
+  console.log(data);
   const user = data;
   const [isEditDesc, setIsDesc] = useState(false);
   const [description, setDesc] = useState(user?.description);
@@ -41,6 +43,9 @@ const Profile = () => {
   const [isSkill, setIsSkill] = useState(false);
   const [isSocial, setIsSocial] = useState(false);
   const [updateAuth, { isSuccess, isError }] = useUpdateAuthMutation();
+  useEffect(() => {
+    setId(auth?.user?._id);
+  }, [auth?.user?._id]);
   const handleSaveClick = async (e) => {
     e.preventDefault();
     if (!description) {
