@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Student.css";
 import Profile from "./Profile/Profile";
 import Learning from "./ActiveLearning/Learning";
 import Item from "../Item/Item";
 import { useNavigate } from "react-router-dom";
-import { useGetAllGigsQuery } from "../../ApiService/GigsService/GigsService";
+import {
+  useGetAllGigsQuery,
+  useGetFilterGigsQuery,
+} from "../../ApiService/GigsService/GigsService";
 import {
   useGetAllAuthQuery,
   useGetAuthByIdQuery,
@@ -14,9 +17,9 @@ import { useAuth } from "../../context/AuthContext";
 const Student = () => {
   const [auth] = useAuth();
   const navigate = useNavigate();
-  const user = useGetAuthByIdQuery(auth?.user?.id);
+  const user = useGetAuthByIdQuery(auth?.user?._id);
 
-  const [params, setParams] = useState({
+  let [params, setParams] = useState({
     location: "New York",
     category: "Music",
     priceMin: 100,
@@ -25,10 +28,14 @@ const Student = () => {
       ArrayToString(user?.data?.intrests, "intrest") +
       ArrayToString(user?.data?.skills, "skill"), // Example keywords
   });
-  console.log(user);
+  params.keywords =
+    ArrayToString(user?.data?.intrests, "intrest") +
+    ArrayToString(user?.data?.skills, "skill");
   const course = useGetAllGigsQuery();
-  const { data: gigs, error, isLoading } = useGetAllGigsQuery(params);
-  const consultant = useGetAllAuthQuery();
+  // const { data: gigs, error, isLoading } = useGetFilterGigsQuery(params);
+  // const { filtered } = useGetFilterGigsQuery(params);
+  // console.log(filtered);
+  // const consultant = useGetAllAuthQuery();
 
   return (
     <div className="student-container">
@@ -75,14 +82,14 @@ const Student = () => {
         </div>
         <h2 style={{ marginTop: "4%" }}>Recommendations</h2>
         <div className="card items">
-          {consultant?.isLoading ? (
+          {course?.isLoading ? (
             "Loading...."
-          ) : consultant?.isError ? (
+          ) : course?.isError ? (
             <div className="text-danger text-center w-100">
               Consultant fetching error{" "}
             </div>
           ) : (
-            consultant?.data?.map((val, index) => <Item />)
+            course?.data?.map((val, index) => <Item data={val} index={index} />)
           )}
 
           {/* <Item />
@@ -100,7 +107,7 @@ const ArrayToString = (arr, key) => {
   let res = "";
   if (Array.isArray(arr)) {
     arr?.forEach((ele) => {
-      res += ele[key] ? ele[key] : "";
+      res = res + (ele[key] ? ele[key] : "") + ",";
     });
   }
   return res;

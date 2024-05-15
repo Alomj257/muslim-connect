@@ -11,3 +11,5 @@ export const verifyOtpService = async (data) =>
   await Axios.post("/auth/users/verify", data);
 export const setPasswordService = async (data) =>
   await Axios.post("/auth/users/update/password", data);
+export const makePayment = async (data) =>
+  await Axios.post("/sessions/gig/session/", data);

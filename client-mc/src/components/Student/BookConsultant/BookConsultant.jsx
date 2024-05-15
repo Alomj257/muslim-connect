@@ -9,9 +9,15 @@ import Tick from "../../../assets/GigsView/Tick";
 import Time1 from "../../../assets/GigsView/Time";
 import Calender from "../../../assets/GigsView/Calender";
 import PaymentCard from "../../PaymentCard/PaymentCard";
+import { useGetAuthByIdQuery } from "../../../ApiService/AuthSlice/AuthSlice";
+import { useLocation } from "react-router-dom";
+import { DatePicker } from "rsuite";
+import { FaClock } from "react-icons/fa6";
 
 function BookConsultant() {
   let arr = ["Learning", "Consultation", "Book Consultation"];
+  const { state } = useLocation();
+  const user = useGetAuthByIdQuery(state?.userId);
   return (
     <div>
       {/* <DashNav navData={navData} /> */}
@@ -38,21 +44,21 @@ function BookConsultant() {
               marginTop: "20px",
             }}
           >
-            I will give consultation on the Financial system in light of Quran
+            {state?.title}
           </h2>
           <ProfileAndPrice
             img={Avatar}
-            name="Usman Ahmad"
+            name={user?.data?.firstname + " " + user?.data?.lastname}
             star={"5.0"}
             people="28"
-            price={"40.00"}
+            price={state?.price}
           />
-          <BenefitsCard />
+          <BenefitsCard gig={state} />
         </div>
         <div style={{ width: "35%" }}>
           <PaymentCard
+            gig={state}
             head={"Consultation"}
-            body={<PaymentCardBody />}
             btn={"Pay Now"}
             url="/student/payment"
           />
@@ -64,40 +70,28 @@ function BookConsultant() {
 
 export default BookConsultant;
 
-const PaymentCardBody = () => {
+export const PaymentCardBody = ({ details, setDetails }) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setDetails({ ...details, [name]: e.target?.value ? value : e });
+  };
+
   return (
     <>
       {/* date  */}
-      <div>
+      <div className="w-100">
         <label
           htmlFor=""
           style={{ display: "block", fontWeight: "500", fontSize: "18px" }}
         >
           Date
         </label>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            border: " 1px solid rgba(208, 213, 221, 1)",
-            boxShadow: "0px 1px 2px 0px rgba(16, 24, 40, 0.05)",
-            padding: "10px 14px 10px 14px",
-            borderRadius: "8px",
-            marginTop: "10px",
-          }}
-        >
-          <span
-            style={{
-              fontWeight: "400",
-              fontSize: "14px",
-              color: "rgba(102, 112, 133, 1)",
-            }}
-          >
-            Select Date
-          </span>
-          <Calender />
-        </div>
+        <DatePicker
+          onChange={(value, e) => setDetails({ ...details, date: value })}
+          value={details?.date}
+          className="w-100"
+          format="dd.MM.yyyy"
+        />
         <span
           style={{
             fontWeight: "400",
@@ -109,35 +103,30 @@ const PaymentCardBody = () => {
         </span>
       </div>
       {/* time  */}
-      <div>
+      <div className="w-100">
         <label
           htmlFor=""
           style={{ display: "block", fontWeight: "500", fontSize: "18px" }}
         >
           Time
         </label>
+
         <div
+          className="w-100"
           style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            border: " 1px solid rgba(208, 213, 221, 1)",
-            boxShadow: "0px 1px 2px 0px rgba(16, 24, 40, 0.05)",
-            padding: "10px 14px 10px 14px",
-            borderRadius: "8px",
-            marginTop: "10px",
+            fontWeight: "400",
+            fontSize: "14px",
+            color: "rgba(102, 112, 133, 1)",
           }}
         >
-          <span
-            style={{
-              fontWeight: "400",
-              fontSize: "14px",
-              color: "rgba(102, 112, 133, 1)",
-            }}
-          >
-            Select Time
-          </span>
-          <Time2 />
+          <DatePicker
+            name="time"
+            onChange={(value, e) => setDetails({ ...details, time: value })}
+            value={details?.time}
+            className="w-100"
+            format="HH:mm:ss"
+            caretAs={FaClock}
+          />
         </div>
         <span
           style={{
@@ -181,6 +170,8 @@ const PaymentCardBody = () => {
           </span>
           <Calender /> */}
           <select
+            name="duration"
+            onChange={handleChange}
             style={{
               border: "none",
               width: "100%",
@@ -191,9 +182,9 @@ const PaymentCardBody = () => {
               color: "rgba(102, 112, 133, 1)",
             }}
           >
-            <option value="">30 mins</option>
-            <option value="">1 hour</option>
-            <option value="">2 hour</option>
+            <option value="30">30 mins</option>
+            <option value="60">1 hour</option>
+            <option value="120">2 hour</option>
           </select>
         </div>
         <span
@@ -210,7 +201,7 @@ const PaymentCardBody = () => {
   );
 };
 
-const BenefitsCard = () => {
+const BenefitsCard = ({ gig }) => {
   return (
     <div
       style={{
@@ -234,7 +225,7 @@ const BenefitsCard = () => {
           <Tick /> Islam Financial System
         </li>
         <li>
-          <Time1 /> 30 mins Consultation Session
+          <Time1 /> {gig?.duration} mins Consultation Session
         </li>
       </ul>
       {/* </div> */}
@@ -250,16 +241,13 @@ const BenefitsCard = () => {
           <p>
             <Time2 />
             <span style={{ fontWeight: "500", fontSize: "12px" }}>
-              24hr available
+              {gig?.availability} available
             </span>
           </p>
         </div>
       </div>
       <h5 style={{ fontWeight: "600", fontSize: "18px" }}>In service</h5>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua.
-      </p>
+      <div dangerouslySetInnerHTML={{ __html: gig?.content }} />
     </div>
   );
 };

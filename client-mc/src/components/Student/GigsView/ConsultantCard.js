@@ -1,8 +1,10 @@
 import React from "react";
 import Avatar from "../../../assets/GigsView/Avatar.png";
 import StarSvg from "../../../assets/GigsView/StarSvg";
+import { useGetGigsByIdQuery } from "../../../ApiService/GigsService/GigsService";
 
-const ConsultantCard = () => {
+const ConsultantCard = ({ gig }) => {
+  const user = useGetGigsByIdQuery(gig?.userId);
   return (
     <div
       style={{
@@ -12,7 +14,7 @@ const ConsultantCard = () => {
         padding: "8%",
       }}
     >
-      <ConsultantCardHead />
+      <ConsultantCardHead gig={gig} user={user} />
       <button
         style={{
           backgroundColor: "transparent",
@@ -39,7 +41,9 @@ const ConsultantCard = () => {
             >
               Level
             </span>
-            <p style={{ fontWeight: "500", fontSize: "18px" }}> Bronze</p>
+            <p style={{ fontWeight: "500", fontSize: "18px" }}>
+              {user?.data?.level}
+            </p>
           </div>
           <div>
             <span
@@ -49,7 +53,9 @@ const ConsultantCard = () => {
             </span>
             <p style={{ fontWeight: "500", fontSize: "18px" }}>
               {" "}
-              Islamic Finance, Quran consultation
+              {user?.data?.skills?.map((val, key) => (
+                <span key={key}>{val?.skill} ,</span>
+              ))}
             </p>
           </div>
         </div>
@@ -61,7 +67,11 @@ const ConsultantCard = () => {
             >
               Member Since
             </span>
-            <p style={{ fontWeight: "500", fontSize: "18px" }}> 2018</p>
+            <p style={{ fontWeight: "500", fontSize: "18px" }}>
+              {new Date(
+                user?.data?.createAt ? user?.data?.createAt : ""
+              ).getUTCFullYear()}
+            </p>
           </div>
           <div>
             <span
@@ -70,8 +80,9 @@ const ConsultantCard = () => {
               Languages
             </span>
             <p style={{ fontWeight: "500", fontSize: "18px" }}>
-              {" "}
-              English, Indonesian
+              {user?.data?.languages?.map((val, key) => (
+                <span key={key}>{val?.language} ,</span>
+              ))}
             </p>
           </div>
         </div>
@@ -82,12 +93,7 @@ const ConsultantCard = () => {
           About
         </span>
         <p style={{ fontWeight: "500", fontSize: "18px" }}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum
-          quod obcaecati explicabo inventore odit minima aspernatur voluptates
-          enim, nisi voluptas natus id labore facilis incidunt vero
-          exercitationem quasi non quam fugit. Accusantium, itaque obcaecati?
-          Inventore in deserunt architecto assumenda nesciunt quod excepturi.
-          Esse quasi quam minima quo deleniti incidunt corporis?
+          {user?.data?.description}
         </p>
       </div>
     </div>
@@ -96,7 +102,8 @@ const ConsultantCard = () => {
 
 export default ConsultantCard;
 
-const ConsultantCardHead = () => {
+const ConsultantCardHead = ({ gig }) => {
+  const user = useGetGigsByIdQuery(gig?.userId);
   return (
     <>
       <div
@@ -123,13 +130,16 @@ const ConsultantCardHead = () => {
             justifyContent: "center",
           }}
         >
-          <p style={{ fontWeight: "600", fontSize: "24px" }}>Usman Ahmad</p>
+          <p style={{ fontWeight: "600", fontSize: "24px" }}>
+            {user?.data?.firstname} {user?.data?.lastname}
+          </p>
           <p
             style={{ fontWeight: "400", fontSize: "20px", marginTop: "-20px" }}
           >
-            Consultant Islamic Financial System
+            {gig?.title}
           </p>
           <p
+            className="mt-2"
             style={{
               display: "flex",
               alignItems: "center",
@@ -172,7 +182,7 @@ const ConsultantCardHead = () => {
             marginLeft: "150px",
           }}
         >
-          Expart
+          {user?.data?.level ? user?.data?.level : "New"}
         </div>
       </div>
     </>

@@ -7,8 +7,12 @@ import cartImg from "../../../assets/Student/cartImg.png";
 import profileImg from "../../../assets/Student/Ellipse 21.png";
 import starImg from "../../../assets/Student/material-symbols_star.png";
 import { useNavigate } from "react-router-dom";
+import { useGetAllGigsQuery } from "../../../ApiService/GigsService/GigsService";
+import { useGetAuthByIdQuery } from "../../../ApiService/AuthSlice/AuthSlice";
+import { server } from "../../../ApiService/Axios";
 
 function ConsultantList() {
+  const gigs = useGetAllGigsQuery();
   return (
     <div>
       <div>
@@ -92,11 +96,22 @@ function ConsultantList() {
           }}
           className="d-flex"
         >
+          {gigs?.isLoading ? (
+            "Loading...."
+          ) : gigs?.isError ? (
+            <div className="text-danger text-center w-100">
+              Gigs fetching error{" "}
+            </div>
+          ) : (
+            gigs?.data?.map((val, index) => (
+              <ConsultantCard gig={val} index={index} />
+            ))
+          )}
+          {/* <ConsultantCard />
           <ConsultantCard />
           <ConsultantCard />
           <ConsultantCard />
-          <ConsultantCard />
-          <ConsultantCard />
+          <ConsultantCard /> */}
         </div>
       </div>
     </div>
@@ -104,16 +119,23 @@ function ConsultantList() {
 }
 
 export default ConsultantList;
-const ConsultantCard = () => {
+const ConsultantCard = ({ gig, index }) => {
   const navigate = useNavigate();
+  const { data } = useGetAuthByIdQuery(gig?.userId);
   return (
     <div
-      onClick={() => navigate("/student/gigsview")}
+      key={index}
+      onClick={() => navigate("/student/gigsview", { state: gig })}
       className="card item"
       style={{ borderRadius: "15px", width: "29.3%" }}
     >
       <div class="cart-item">
-        <img src={cartImg} alt="Product Images" />
+        {(!gig?.gigsImages || !gig?.gigsImages[0]?.file) && (
+          <img src={cartImg} alt="Product Images" />
+        )}
+        {gig?.gigsImages && gig?.gigsImages[0]?.file && (
+          <img src={server + gig?.gigsImages[0]?.file} alt="Product Images" />
+        )}
         <div class="cart-item-info">
           <div style={{ marginTop: "20px" }}>
             <img
@@ -126,14 +148,12 @@ const ConsultantCard = () => {
               className="cart-item-price"
               style={{ fontSize: "14px", marginLeft: "-180px" }}
             >
-              Ayesha Ali
+              {data?.firstname} {data?.lastname}
             </p>
-            <p class="cart-item-price">$19.99</p>
+            <p class="cart-item-price">{gig?.price}</p>
           </div>
 
-          <p className="itemDesc">
-            I will give consultation on the Financial system in light of Quran
-          </p>
+          <p className="itemDesc">{gig?.title}</p>
           <div className="rating">
             <div>
               <img src={starImg} alt="Star" className="star" />
@@ -160,7 +180,7 @@ const ConsultantCard = () => {
               <span
                 style={{ fontWeight: "500", fontSize: "18px", color: "black" }}
               >
-                Expart
+                {data?.level ? data?.level : "New"}
               </span>
             </span>
           </div>

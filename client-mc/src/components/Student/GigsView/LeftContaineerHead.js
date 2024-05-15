@@ -1,13 +1,13 @@
 import React from "react";
 import Avatar from "../../../assets/GigsView/Avatar.png";
 import StarSvg from "../../../assets/GigsView/StarSvg";
+import { useGetAuthByIdQuery } from "../../../ApiService/AuthSlice/AuthSlice";
 
-const LeftContaineerHead = () => {
+const LeftContaineerHead = ({ gig }) => {
+  const user = useGetAuthByIdQuery(gig?.userId);
   return (
     <>
-      <h4 style={{ marginTop: "30px", marginBottom: "30px" }}>
-        I will give consultation on the Financial system in light of Quran
-      </h4>
+      <h4 style={{ marginTop: "30px", marginBottom: "30px" }}>{gig?.title}</h4>
       <div
         style={{
           display: "flex",
@@ -27,8 +27,11 @@ const LeftContaineerHead = () => {
           }}
         />
         <div>
-          <p style={{ fontWeight: "600", fontSize: "24px" }}>Usman Ahmad</p>
-          <p
+          <p style={{ fontWeight: "600", fontSize: "24px" }}>
+            {user?.data?.firstname} {user?.data?.lastname}
+          </p>
+          <div
+            className="mt-1"
             style={{
               display: "flex",
               alignItems: "center",
@@ -39,7 +42,7 @@ const LeftContaineerHead = () => {
             <span style={{ marginLeft: "10px" }}>
               5.0 <span>(28)</span>
             </span>
-          </p>
+          </div>
         </div>
         <div
           style={{
@@ -54,7 +57,7 @@ const LeftContaineerHead = () => {
             marginLeft: "150px",
           }}
         >
-          Expart
+          {gig?.level}
         </div>
       </div>
     </>

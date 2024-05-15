@@ -10,9 +10,10 @@ import Reviews from "./Reviews";
 import "./GigsView.css";
 import ArrowVio from "../../../assets/GigsView/ArrowVio";
 import RightContaineer from "./RightContaineer";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 function GigsView() {
   const navigate = useNavigate();
+  const { state } = useLocation();
   return (
     <div>
       <SubNav />
@@ -21,7 +22,7 @@ function GigsView() {
 
         <div style={{ width: "100%", display: "flex" }}>
           <div style={{ width: "65%", padding: "1%" }}>
-            <LeftContaineerHead />
+            <LeftContaineerHead gig={state} />
             <div style={{ width: "100%" }}>
               <div style={{ width: "100%", display: "flex" }}>
                 <img
@@ -40,7 +41,7 @@ function GigsView() {
                 About the Gig
               </h1>
 
-              <AboutText />
+              <AboutText gig={state} />
             </div>
 
             <h1
@@ -54,7 +55,7 @@ function GigsView() {
               About the Consultant
             </h1>
             {/* consultant Card  */}
-            <ConsultantCard />
+            <ConsultantCard gig={state} />
 
             <div>
               <h1
@@ -67,15 +68,17 @@ function GigsView() {
                 Gigs Keyword
               </h1>
               <div style={{ display: "flex", marginTop: "20px" }}>
-                <GigsKeyword keyword={"Islamic Finance"} />
-                <GigsKeyword keyword={"Maal"} />
-                <GigsKeyword keyword={"Tax"} />
-                <GigsKeyword keyword={"Zakaat"} />
+                {state?.keyword?.map((val, key) => (
+                  <GigsKeyword key={key} gig={state} keyword={val} />
+                ))}
+                {/* <GigsKeyword gig={state} keyword={"Maal"} />
+                <GigsKeyword gig={state} keyword={"Tax"} />
+                <GigsKeyword gig={state} keyword={"Zakaat"} /> */}
               </div>
             </div>
           </div>
           <div style={{ width: "35%", marginTop: "30px", padding: "1%" }}>
-            <RightContaineer />
+            <RightContaineer gig={state} />
             <div style={{ width: "100%", marginTop: "30px" }}>
               <button
                 onClick={() => navigate("/student/chat")}
@@ -97,7 +100,7 @@ function GigsView() {
             </div>
           </div>
         </div>
-        <Reviews />
+        <Reviews gig={state} />
       </div>
       {/* ...... */}
     </div>
@@ -106,44 +109,11 @@ function GigsView() {
 
 export default GigsView;
 
-const AboutText = () => {
+const AboutText = ({ gig }) => {
   return (
     <>
-      <p style={{ fontWeight: "400", fontSize: "20px" }}>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quod nihil
-        esse eos sed eligendi impedit necessitatibus iusto blanditiis temporibus
-        ducimus deleniti eveniet quae ex possimus dolor nostrum dicta doloribus
-        ea adipisci molestias optio, incidunt officia beatae! Incidunt
-        perferendis at harum laudantium debitis ea, perspiciatis sequi unde
-        deleniti soluta, veritatis iure! Lorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Provident eos ea temporibus nemo enim officiis itaque
-        dolorem perspiciatis doloribus fugiat, quidem cum culpa consectetur
-        voluptas amet ullam aliquam dolores sint? Accusamus dignissimos eum
-        perferendis maxime sed voluptates esse, dicta sint? Sequi sed quod saepe
-        deleniti dolorum accusamus libero laudantium ipsa! Lorem ipsum dolor
-        sit, amet consectetur adipisicing elit. Nobis distinctio libero
-        consequuntur quia eaque fugit, quo aperiam a dolore illo! Id ipsa non
-        laudantium consequuntur est ullam iusto blanditiis perspiciatis
-        reiciendis, animi at ratione voluptatibus suscipit quia quae ducimus
-        velit saepe facere a quos sed, magni vel. Unde, ratione temporibus!
-      </p>
-      <p style={{ fontWeight: "400", fontSize: "20px" }}>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore
-        doloremque enim nisi ab. Provident, eligendi? Itaque excepturi minus
-        nobis rerum provident, ratione harum tempore alias aperiam quidem soluta
-        unde sed dolore optio tenetur illo at similique! Tempore atque ratione
-        sequi unde, sed suscipit ex, deleniti, exercitationem cumque soluta ea
-        officia totam expedita nulla. Architecto, at voluptatum porro ullam
-        accusamus incidunt vitae tempora quasi illum aspernatur dolor saepe quos
-        quaerat hic laboriosam reprehenderit dolorem est, voluptates soluta non
-        itaque unde odit, vero magni! Officia commodi voluptates aliquam
-        asperiores rerum tempore id molestias explicabo minima eveniet quam
-        corrupti, animi ducimus sequi. Soluta.
-      </p>
-      <p style={{ fontWeight: "400", fontSize: "20px" }}>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
-        provident est eaque quidem fugiat porro ipsa saepe neque, perferendis
-        quia tempora quae iusto alias nesciunt!
+      <p style={{ fontWeight: "400", fontSize: "20px", textAlign: "justify" }}>
+        <div dangerouslySetInnerHTML={{ __html: gig?.content }} /> {}
       </p>
     </>
   );

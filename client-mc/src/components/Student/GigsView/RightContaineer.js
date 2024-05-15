@@ -6,17 +6,21 @@ import Time2 from "../../../assets/GigsView/Time2";
 import ArrowSvg from "../../../assets/PriceCard/ArrowSvg";
 import { useNavigate } from "react-router-dom";
 
-const RightContaineer = () => {
+const RightContaineer = ({ gig }) => {
   const navigate = useNavigate();
   return (
     <>
       <div className="container_main">
         <spam className="topheadder">
-          <div className="box_1">Paid Service</div>
-          <div className="box_2">Free service</div>
+          <div className={gig?.package !== "freePackage" ? "box_2" : "box_1"}>
+            Paid Service
+          </div>
+          <div className={gig?.package === "freePackage" ? "box_2" : "box_1"}>
+            Free service
+          </div>
         </spam>
         <div className="box_3">
-          <h1 style={{ fontWeight: "600", fontSize: "40px" }}>$40.00</h1>
+          <h1 style={{ fontWeight: "600", fontSize: "40px" }}>{gig?.price}</h1>
           <p style={{ fontWeight: "400", fontSize: "20px" }}>
             {" "}
             Save up to 20% with{" "}
@@ -62,7 +66,7 @@ const RightContaineer = () => {
           </p>
           <div className="submit_btn">
             <button
-              onClick={() => navigate("/student/book")}
+              onClick={() => navigate("/student/book", { state: gig })}
               className="button_book"
               style={{ display: "flex", justifyContent: "center" }}
             >
