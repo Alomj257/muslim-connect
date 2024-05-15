@@ -11,9 +11,11 @@ const DashNav = ({ navData, type }) => {
         <ul className="d-flex gap-5 flex-wrap m-0 justify-content-between">
           <NavLink
             to="/"
-            className={`${(nav) =>
-              nav.isActive ? "navbar-active" : ""} text-decoration-none
-          `}
+            className={(nav) =>
+              nav.isActive
+                ? "navbar-active text-decoration-none"
+                : " text-decoration-none"
+            }
           >
             <li className="logo">
               <img src={logo} alt="logo" className="h-100 w-100" />
@@ -32,11 +34,11 @@ const DashNav = ({ navData, type }) => {
                       <NavLink
                         key={index}
                         to={sbele.path}
-                        className={`${(nav) =>
-                          nav.isActive
-                            ? "navbar-active"
-                            : ""} text-decoration-none 
-           `}
+                        className={(nav) =>
+                          value.name !== "Connectez-vous" && nav.isActive
+                            ? "navbar-active text-decoration-none"
+                            : " text-decoration-none"
+                        }
                       >
                         <li
                           className={
@@ -55,9 +57,11 @@ const DashNav = ({ navData, type }) => {
                 <NavLink
                   key={key}
                   to={value.path}
-                  className={`${(nav) =>
-                    nav.isActive ? "navbar-active" : ""} text-decoration-none
-          `}
+                  className={(nav) =>
+                    value.name !== "Connectez-vous" && nav.isActive
+                      ? "navbar-active text-decoration-none"
+                      : " text-decoration-none"
+                  }
                 >
                   <li
                     className={

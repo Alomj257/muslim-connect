@@ -15,8 +15,8 @@ const LoginPage = () => {
 
 export default LoginPage;
 const navData = [
-  { name: "Découvrir", path: "découvrir" },
-  { name: "S'inscrire en tant que consultant", path: "tant-que-consultant" },
-  { name: "S'inscrire en tant qu'étudiant", path: "tant-quétudiant" },
-  { name: "Connectez-vous", path: "connectez-vous" },
+  { name: "Découvrir", path: "/découvrir" },
+  { name: "S'inscrire en tant que consultant", path: "/register" },
+  { name: "S'inscrire en tant qu'étudiant", path: "/student-register" },
+  { name: "Connectez-vous", path: "/login" },
 ];
