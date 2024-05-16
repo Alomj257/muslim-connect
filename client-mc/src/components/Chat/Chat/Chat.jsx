@@ -49,7 +49,6 @@ const Chat = () => {
     };
     getChats();
   }, [auth?.user]);
-
   return (
     <div className="chat position-relative" style={{ top: "18vh" }}>
       <div className="container ">
@@ -89,7 +88,7 @@ const Chat = () => {
               >
                 <FaAnglesRight size={20} />
               </span>
-              <RightSideProfile />
+              <RightSideProfile currentChat={currentChat} />
             </div>
           </>
         </div>

@@ -8,6 +8,7 @@ import {
   addMessage,
   getMessage,
 } from "../../../ApiService/ChatService/ChatService";
+import { useGetAuthByIdQuery } from "../../../ApiService/AuthSlice/AuthSlice";
 const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage }) => {
   const userId = chat?.members?.find((id) => id !== currentUser);
   const [userData, setUserData] = useState(null);
@@ -57,6 +58,7 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage }) => {
       setText("");
     } catch (error) {
       console.log(error);
+      setText("");
     }
     const receiverId = chat?.members.find((id) => id !== currentUser);
     setSendMessage({ ...message, receiverId });
@@ -64,38 +66,44 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage }) => {
   useEffect(() => {
     scroll?.current?.scrollIntoView({ behavior: "auto" });
   }, [message]);
+  // console.log(chat);
 
   return (
     <>
       <div className="px-4 py-2 d-flex flex-column h-100 ">
-        {chat ? (
+        {!chat ? (
           <h3 className="m-auto">Welcome chat home you can chat here </h3>
         ) : (
           <div className="border rounded-4 rounded-bottom-0 border-bottom-0 h-100">
             <Header userData={userData} />
-            <div className="chat-container d-flex py-3 flex-column justify-content-between">
+            <div className="chat-container h-100 d-flex py-3 flex-column justify-content-between">
               <div className="d-flex flex-column mssages ">
                 <div className="today text-center my-2 d-flex align-items-center">
                   <hr className="w-100" /> <span>Today </span>{" "}
                   <hr className="w-100" />
                 </div>
                 {/* you */}
-                <Message type="own" />
+                {/* <Message type="own" />
                 <Message type="sender" />
                 <Message type="own" />
                 <Message type="sender" />
-                <Message type="own" />
-                <Message type="sender" />
+                <Message type="own" /> */}
+
+                {message?.map((msg, key) => (
+                  <>
+                    <Message
+                      message={msg}
+                      type={msg?.senderId !== currentUser ? "sender" : "own"}
+                      scroll={scroll}
+                    />
+                  </>
+                ))}
               </div>
 
-              <form
-                action=""
-                className=""
-                ref={scroll}
-                onSubmit={handleSendMessage}
-              >
+              <form action="" className="" onSubmit={handleSendMessage}>
                 <div className="chat-form d-flex  align-items-center   p-2 pb-0">
                   <input
+                    value={text}
                     onChange={(e) => setText(e.target.value)}
                     type="text"
                     style={{ outline: "none" }}
@@ -122,13 +130,17 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage }) => {
 
 export default ChatBox;
 
-const Message = ({ message, type }) => {
+const Message = ({ message, type, scroll }) => {
+  const { data } = useGetAuthByIdQuery(message?.senderId);
   return (
-    <div className={`chat-message w-50 p-4 ${type === "own" && "ms-auto"}`}>
+    <div
+      ref={scroll}
+      className={`chat-message w-50 p-4 ${type === "own" && "ms-auto"}`}
+    >
       <div className="d-flex flex-column ">
         <div className="d-flex justify-content-between">
           <small className="fw-semibold">
-            {type === "own" ? "You" : "Sender"}
+            {type === "own" ? "You" : data?.firstname + " " + data?.lastname}
           </small>
           <small>Friday 2:20PM</small>
         </div>
@@ -137,8 +149,7 @@ const Message = ({ message, type }) => {
             type === "own" ? "own" : "sender"
           }-message rounded p-2`}
         >
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-          Necessitatibus assumenda expedita excepturi soluta molestiae harum!
+          {message?.message}
         </p>
       </div>
     </div>

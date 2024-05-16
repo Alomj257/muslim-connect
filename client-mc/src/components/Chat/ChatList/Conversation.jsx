@@ -1,30 +1,45 @@
 import React from "react";
 import img from "../../../assets/Nav_assets/studentProfile.jpeg";
+import { server } from "../../../ApiService/Axios";
+import { useAuth } from "../../../context/AuthContext";
+import { useGetAuthByIdQuery } from "../../../ApiService/AuthSlice/AuthSlice";
 
-const Conversation = ({ active }) => {
+const Conversation = ({ data, curUserId, online, active }) => {
+  const [auth] = useAuth();
+  // const [userData?.data, setUserData] = useState(null);
+  const userId = data?.members?.find((id) => id !== auth?.user?._id);
+  // const getData = useFetch(`/auth/users/${userId ? userId : ""}`);
+  const userData = useGetAuthByIdQuery(userId);
+
   return (
     <div
       className={`conversation rounded p-1 px-2 ${
-        active && "conversation-active"
+        online && "conversation-active"
       } d-flex gap-2  align-items-center`}
     >
       <div
-        className="profile-img  "
-        style={{ width: "50px", aspectRatio: "1/1" }}
+        className="profile-img  position-relative"
+        style={{ width: "50px", aspectRatio: "1/1", zIndex: "1" }}
       >
-        <img src={img} alt="profile" className="w-100 h-100 rounded-circle" />
+        <img
+          src={userData?.data?.profile ? server + userData?.data?.profile : img}
+          alt="profile"
+          className="w-100 h-100 rounded-circle position-absolute"
+          style={{ zIndex: "-1" }}
+        />
+        {online && (
+          <div className="online ms-auto mt-auto   rounded-circle shadow"></div>
+        )}
       </div>
-      <div>
-        <div className="d-flex justify-content-between align-items-center">
+      <div className="w-100">
+        <div className="d-flex justify-content-between  align-items-center">
           <h5 className="fw-semibold" style={{ fontSize: "16px" }}>
-            Mohammad Haseeb
+            {userData?.data?.firstname}
           </h5>
-          <small>1 hour ago</small>
+          {!online && <small>1 hour ago</small>}
         </div>
         <div>
-          <small>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </small>
+          <small>{userData?.data?.description}</small>
         </div>
       </div>
     </div>

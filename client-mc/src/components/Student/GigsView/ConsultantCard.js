@@ -1,11 +1,41 @@
 import React from "react";
 import Avatar from "../../../assets/GigsView/Avatar.png";
 import StarSvg from "../../../assets/GigsView/StarSvg";
-import { useGetGigsByIdQuery } from "../../../ApiService/GigsService/GigsService";
 import { useGetAuthByIdQuery } from "../../../ApiService/AuthSlice/AuthSlice";
+import { chatCreate } from "../../../ApiService/ChatService/ChatService";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../context/AuthContext";
 
 const ConsultantCard = ({ gig }) => {
   const user = useGetAuthByIdQuery(gig?.userId);
+  const [auth] = useAuth();
+  const navigate = useNavigate();
+  const handleMassage = async (currentUser, oppositeUser) => {
+    try {
+      if (!currentUser || !oppositeUser) {
+        toast.error("something wrong");
+        return;
+      }
+      if (currentUser === oppositeUser) {
+        toast.error("you can not apply this job");
+        return;
+      }
+      const { data } = await chatCreate({
+        senderId: currentUser,
+        receiverId: oppositeUser,
+      });
+      if (data.message) {
+        toast.error(data.message);
+        return;
+      } else {
+        navigate("/student/chat", { state: { currentUser, oppositeUser } });
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("something went wrong");
+    }
+  };
   return (
     <div
       style={{
@@ -17,6 +47,7 @@ const ConsultantCard = ({ gig }) => {
     >
       <ConsultantCardHead gig={gig} user={user} />
       <button
+        onClick={() => handleMassage(auth?.user?._id, gig?.userId)}
         style={{
           backgroundColor: "transparent",
           border: "1px solid rgba(124, 83, 153, 1)",
