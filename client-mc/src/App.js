@@ -24,6 +24,7 @@ import LevelOverviewPage from "./pages/Consultant/LevelOverviewPage";
 import SubscriptionPage from "./pages/Consultant/SubscriptionPage";
 import SessionsPage from "./pages/Consultant/SessionsPage";
 import ChatPage from "./pages/Chat/ChatPage";
+import Payment from "./PaymentHandler/Payment";
 function App() {
   return (
     <>
@@ -34,6 +35,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/payment" element={<Payment />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/student-register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />

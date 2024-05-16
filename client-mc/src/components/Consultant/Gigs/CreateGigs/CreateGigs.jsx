@@ -99,11 +99,11 @@ const CreateGigs = () => {
               >
                 Back
               </button>
-              {index >= stepsString.length - 1 ? (
+              {index === stepsString.length - 1 ? (
                 <button
                   type="submit"
                   // style={{ cursor: isLoading ? "not-allowed" : "" }}
-                  disabled={index >= stepsString.length}
+                  disabled={index < stepsString.length - 1}
                   className="btn btn-create-gigs-continue "
                 >
                   Submit

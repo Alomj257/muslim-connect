@@ -2,9 +2,10 @@ import React from "react";
 import Avatar from "../../../assets/GigsView/Avatar.png";
 import StarSvg from "../../../assets/GigsView/StarSvg";
 import { useGetGigsByIdQuery } from "../../../ApiService/GigsService/GigsService";
+import { useGetAuthByIdQuery } from "../../../ApiService/AuthSlice/AuthSlice";
 
 const ConsultantCard = ({ gig }) => {
-  const user = useGetGigsByIdQuery(gig?.userId);
+  const user = useGetAuthByIdQuery(gig?.userId);
   return (
     <div
       style={{
@@ -69,7 +70,7 @@ const ConsultantCard = ({ gig }) => {
             </span>
             <p style={{ fontWeight: "500", fontSize: "18px" }}>
               {new Date(
-                user?.data?.createAt ? user?.data?.createAt : ""
+                user?.data?.createdAt ? user?.data?.createdAt : ""
               ).getUTCFullYear()}
             </p>
           </div>
@@ -102,8 +103,7 @@ const ConsultantCard = ({ gig }) => {
 
 export default ConsultantCard;
 
-const ConsultantCardHead = ({ gig }) => {
-  const user = useGetGigsByIdQuery(gig?.userId);
+const ConsultantCardHead = ({ user, gig }) => {
   return (
     <>
       <div
@@ -134,6 +134,7 @@ const ConsultantCardHead = ({ gig }) => {
             {user?.data?.firstname} {user?.data?.lastname}
           </p>
           <p
+            className="my-1"
             style={{ fontWeight: "400", fontSize: "20px", marginTop: "-20px" }}
           >
             {gig?.title}

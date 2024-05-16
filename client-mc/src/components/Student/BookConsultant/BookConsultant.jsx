@@ -51,7 +51,7 @@ function BookConsultant() {
             name={user?.data?.firstname + " " + user?.data?.lastname}
             star={"5.0"}
             people="28"
-            price={state?.price}
+            price={"$" + state?.price}
           />
           <BenefitsCard gig={state} />
         </div>
@@ -225,7 +225,7 @@ const BenefitsCard = ({ gig }) => {
           <Tick /> Islam Financial System
         </li>
         <li>
-          <Time1 /> {gig?.duration} mins Consultation Session
+          <Time1 /> {gig?.duration}s Consultation Session
         </li>
       </ul>
       {/* </div> */}

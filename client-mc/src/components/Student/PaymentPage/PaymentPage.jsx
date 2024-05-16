@@ -10,12 +10,17 @@ import AddnewCard from "../../../assets/PaymentPage/AddnewCard";
 import { useLocation } from "react-router-dom";
 import { useGetAuthByIdQuery } from "../../../ApiService/AuthSlice/AuthSlice";
 import AddCard from "../AddCard/AddCard";
-import { useGetCardByUserIdQuery } from "../../../ApiService/CardSlice/CardSlice";
+import {
+  useDeleteCardMutation,
+  useGetCardByUserIdQuery,
+} from "../../../ApiService/CardSlice/CardSlice";
 import { useAuth } from "../../../context/AuthContext";
 import Rupay from "../../../assets/PaymentPage/Rupay";
 import Defualt from "../../../assets/PaymentPage/Defualt";
 import { loadStripe } from "@stripe/stripe-js";
 import { makePayment } from "../../../ApiService/Auth/Auth";
+import { toast } from "react-toastify";
+import UpdateCard from "../AddCard/UpdateCard";
 
 function PaymentPage() {
   let arr = ["Learning", "Consultation", "Book Consultation", "Payment"];
@@ -23,6 +28,9 @@ function PaymentPage() {
   const [auth] = useAuth();
   const { gig, details } = state;
   const [isAddCard, setIsAddCard] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [card, setCard] = useState(null);
+  const [selectedCard, setSelectedCard] = useState(null);
   const user = useGetAuthByIdQuery(gig?.userId);
   const [cards, setCards] = useState([]);
   const paymentCards = useGetCardByUserIdQuery(auth?.user?._id);
@@ -42,6 +50,7 @@ function PaymentPage() {
         quantity: 1,
         id: 1,
         gig,
+        selectedCard,
       },
     ];
     try {
@@ -60,6 +69,7 @@ function PaymentPage() {
     }
     // setPaymentLoading(false);
   };
+  console.log(selectedCard);
 
   return (
     <div>
@@ -94,24 +104,40 @@ function PaymentPage() {
             name={user?.data?.firstname + " " + user?.data?.lastname}
             star={"5.0"}
             people="28"
-            price={gig?.price}
+            price={"$" + gig?.price}
           />
-          {!isAddCard ? (
-            <PaymentMethod
-              gig={gig}
-              details={details}
-              cards={cards}
-              setIsAddCard={setIsAddCard}
-              isAddCard={isAddCard}
-            />
-          ) : (
-            <AddCard
+          {isUpdate ? (
+            <UpdateCard
               onAdd={onAdd}
-              cards={cards}
+              card={card}
+              setIsUpdate={setIsUpdate}
               setCards={setCards}
               setIsAddCard={setIsAddCard}
-              isAddCard={isAddCard}
             />
+          ) : (
+            <>
+              {" "}
+              {!isAddCard ? (
+                <PaymentMethod
+                  setSelectedCard={setSelectedCard}
+                  setCard={setCard}
+                  gig={gig}
+                  details={details}
+                  setIsUpdate={setIsUpdate}
+                  cards={cards}
+                  setIsAddCard={setIsAddCard}
+                  isAddCard={isAddCard}
+                />
+              ) : (
+                <AddCard
+                  onAdd={onAdd}
+                  cards={cards}
+                  setCards={setCards}
+                  setIsAddCard={setIsAddCard}
+                  isAddCard={isAddCard}
+                />
+              )}
+            </>
           )}
         </div>
         <div style={{ width: "35%" }}>
@@ -129,7 +155,30 @@ function PaymentPage() {
 
 export default PaymentPage;
 
-const PaymentMethod = ({ cards, setIsAddCard, isAddCard }) => {
+const PaymentMethod = ({
+  cards,
+  setCard,
+  setIsUpdate,
+  setIsAddCard,
+  isAddCard,
+  setSelectedCard,
+}) => {
+  const [deleteCard, { isError, error, isSuccess }] = useDeleteCardMutation();
+  const handleDelete = async (id) => {
+    try {
+      const { data } = await deleteCard(id);
+      if (isSuccess) {
+        toast.success(data);
+        return;
+      }
+      if (isError) {
+        toast.error(error);
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div style={{ marginTop: "5%", marginBottom: "5%" }}>
       <h2>Payment Method</h2>
@@ -173,6 +222,8 @@ const PaymentMethod = ({ cards, setIsAddCard, isAddCard }) => {
       >
         {cards?.map((val, key) => (
           <div
+            onClick={() => setSelectedCard(val)}
+            key={key}
             style={{
               display: "flex",
               alignItems: "center",
@@ -180,44 +231,63 @@ const PaymentMethod = ({ cards, setIsAddCard, isAddCard }) => {
               marginBottom: "30px",
             }}
           >
-            <input type="radio" id="option1" name="options" value="option1" />
-            <label for="option1">{identifyCardType(val?.cardNumber)}</label>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                border: "1px solid rgba(0, 0, 0, 0.2)",
-                borderRadius: "6px",
-                padding: "15px 50px 15px 50px",
-                width: "50%",
-                marginLeft: "35px",
-              }}
+            <input
+              type="radio"
+              id={val?.cardNumber}
+              name="options"
+              value="option1"
+            />
+            <label
+              style={{ cursor: "pointer" }}
+              className="d-flex w-100"
+              htmlFor={val?.cardNumber}
             >
-              <span>
-                {identifyCardTypeGetName(val?.cardNumber)} ****{" "}
-                {JSON.stringify(val?.cardNumber)?.slice(
-                  JSON.stringify(val?.cardNumber)?.length - 4,
-                  JSON.stringify(val?.cardNumber)?.length
-                )}
-              </span>
-            </div>
+              <span> {identifyCardType(val?.cardNumber)}</span>
+
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  border: "1px solid rgba(0, 0, 0, 0.2)",
+                  borderRadius: "6px",
+                  padding: "15px 50px 15px 50px",
+                  width: "50%",
+                  marginLeft: "35px",
+                }}
+              >
+                <span>
+                  {identifyCardTypeGetName(val?.cardNumber)} ****{" "}
+                  {JSON.stringify(val?.cardNumber)?.slice(
+                    JSON.stringify(val?.cardNumber)?.length - 4,
+                    JSON.stringify(val?.cardNumber)?.length
+                  )}
+                </span>
+              </div>
+            </label>
             <span
+              onClick={() => handleDelete(val?._id)}
               style={{
                 fontWeight: "400",
                 fontSize: "13px",
                 color: "rgba(220, 45, 0, 1)",
                 marginLeft: "10px",
+                cursor: "pointer",
               }}
             >
               Remove
             </span>{" "}
             <span
+              onClick={() => {
+                setCard(val);
+                setIsUpdate(true);
+              }}
               style={{
                 fontWeight: "400",
                 fontSize: "13px",
                 color: "rgba(26, 115, 232, 1)",
                 marginLeft: "10px",
+                cursor: "pointer",
               }}
             >
               Edit
@@ -240,7 +310,7 @@ const PaymentMethod = ({ cards, setIsAddCard, isAddCard }) => {
       >
         <AddnewCard />
       </div>
-
+      {/* 
       <div
         style={{
           width: "90%",
@@ -275,7 +345,7 @@ const PaymentMethod = ({ cards, setIsAddCard, isAddCard }) => {
         >
           Save
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };

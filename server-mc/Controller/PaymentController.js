@@ -26,7 +26,7 @@ exports.deleteCard = async (req, res) => {
   try {
     const card = await Card.findById(req.params.id);
     if (!card) {
-      res.status(404).json({ message: "invalid Card id" });
+      return res.status(404).json({ message: "invalid Card id" });
     }
     await Card.findByIdAndDelete(req.params.id);
     res.status(201).json("Card deleted");

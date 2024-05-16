@@ -11,6 +11,7 @@ import "./GigsView.css";
 import ArrowVio from "../../../assets/GigsView/ArrowVio";
 import RightContaineer from "./RightContaineer";
 import { useLocation, useNavigate } from "react-router-dom";
+import { server } from "../../../ApiService/Axios";
 function GigsView() {
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -25,11 +26,18 @@ function GigsView() {
             <LeftContaineerHead gig={state} />
             <div style={{ width: "100%" }}>
               <div style={{ width: "100%", display: "flex" }}>
-                <img
+                {/* <img
                   src={img}
                   alt=""
                   style={{ width: "100%", marginTop: "20px" }}
-                />
+                /> */}
+                {state?.gigsImages && state?.gigsImages[0]?.file && (
+                  <img
+                    src={server + state?.gigsImages[0]?.file}
+                    alt=""
+                    style={{ width: "100%", marginTop: "20px" }}
+                  />
+                )}
               </div>
               <h1
                 style={{

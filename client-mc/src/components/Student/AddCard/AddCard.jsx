@@ -143,7 +143,7 @@ const CardDetails = ({ onAdd, cards, setCards, setClose }) => {
             <input
               onChange={handleChange}
               name="cvv"
-              type="text"
+              type="password"
               placeholder="CVV"
               style={{
                 marginLeft: "20px",
@@ -170,12 +170,28 @@ const CardDetails = ({ onAdd, cards, setCards, setClose }) => {
           </label>
         </div>
         <div
+          className="gap-2"
           style={{
             display: "flex",
             justifyContent: "flex-end",
             marginTop: "30px",
           }}
         >
+          <div
+            onClick={() => setClose(false)}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              padding: "8px  30px 8px 30px",
+              borderRadius: "6px",
+              border: "2px solid rgba(124, 83, 153, 1)",
+              backgroundColor: "white",
+              color: "rgba(124, 83, 153, 1)",
+              cursor: "pointer",
+            }}
+          >
+            Cancel
+          </div>
           <button
             disabled={isLoading}
             type="submit"

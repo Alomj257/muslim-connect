@@ -3,8 +3,6 @@ const Gigs = require("../Model/Gigs");
 exports.CreateGigs = async (req, res) => {
   try {
     let { gigsImages, keyword, ...other } = req.body;
-    // console.log(req.body);
-    console.log(req.files);
     let images = [];
     for (let i = 0; i < req?.files?.length; i++) {
       images?.push({
@@ -16,7 +14,10 @@ exports.CreateGigs = async (req, res) => {
     req.body.gigsImages = images;
     req.body.keyword = keyword ? keyword?.split(",") : [];
     console.log(req?.body?.keyword);
-    await new Gigs(req.body).save();
+    const gig = await new Gigs(req.body).save();
+    if (gig) {
+      gig.status = "create";
+    }
     res.status(201).json("Gigs created");
   } catch (error) {
     console.log(error);

@@ -1,6 +1,6 @@
 import React from "react";
 
-const AddOns = ({ handleChange }) => {
+const AddOns = ({ handleChange, gigs }) => {
   return (
     <div className="add-ons">
       <h4 className="fw-semibold my-4">Add Ons</h4>
@@ -49,7 +49,7 @@ const AddOns = ({ handleChange }) => {
             onChange={handleChange}
             name="extraTime"
             className="w-100 border p-2"
-            placeholder="Extra Time"
+            placeholder="Extra Individuals"
           />
           <select
             style={{ outline: "none" }}
@@ -65,15 +65,27 @@ const AddOns = ({ handleChange }) => {
           <select
             style={{ outline: "none" }}
             onChange={handleChange}
-            name="price"
+            name="extraPrice"
             id=""
             className="w-100 border p-2"
           >
-            <option value="">Select Price</option>
-            <option value="$1/person">$1 per person</option>
-            <option value="$2/person">$2 per person</option>
-            <option value="$3/person">$3 per person</option>
-            <option value="$4/person">$4 per person</option>
+            {gigs?.collective === "collective" ? (
+              <>
+                <option value="">Select Price</option>
+                <option value="$1/person">$1 per person</option>
+                <option value="$2/person">$2 per person</option>
+                <option value="$3/person">$3 per person</option>
+                <option value="$4/person">$4 per person</option>
+              </>
+            ) : (
+              <>
+                <option value="">Select Price</option>
+                <option value="1">$1</option>
+                <option value="2">$2</option>
+                <option value="3">$3</option>
+                <option value="4">$4</option>
+              </>
+            )}
           </select>
         </div>
       </div>

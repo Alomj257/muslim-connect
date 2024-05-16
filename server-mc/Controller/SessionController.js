@@ -58,18 +58,19 @@ exports.getAllSessions = async (req, res) => {
 };
 
 exports.makePayment = async (req, res) => {
-  const { userId, gigId, buyerId, price, quantity, gig } = req.body;
+  const { consultantId, studentId, gigId, startTime, endTime, duration } =
+    req.body;
   try {
     console.log(req.body.items);
-    const user = await User.findById(userId);
-    // const gig = await Gigs.findById(gigId);
-    // if (!user) {
-    //   return res.status(404).json({ message: "user id not found" });
-    // }
-    // if (!gig) {
-    //   return res.status(404).json({ message: "Gigs id not found" });
-    // }
-    console.log(req.body.items);
+    const student = await User.findById(studentId);
+    const consultant = await User.findById(consultantId);
+    const gig = await User.findById(gigId);
+    if (!student || !consultant) {
+      return res.status(404).json({ message: "user id not found" });
+    }
+    if (!gig) {
+      return res.status(404).json({ message: "Gigs id not found" });
+    }
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: req.body.items.map((item) => {
@@ -77,14 +78,14 @@ exports.makePayment = async (req, res) => {
           price_data: {
             currency: "inr",
             product_data: {
-              name: item?.gig?.title,
+              name: item?.title,
               //   description: `Consumer: ${
               //     consumer?.firstname + " " + consumer?.lastname
               //   } to Tradeperson: ${
               //     tradeperson?.firstname + " " + tradeperson?.lastname
               //   } for milestone ${milestone}`,
             },
-            unit_amount: 1 * 100,
+            unit_amount: item?.price * 100,
           },
           quantity: item?.quantity,
         };
@@ -93,10 +94,8 @@ exports.makePayment = async (req, res) => {
       success_url: process.env.clientUrl + "/student",
       cancel_url: process.env.clientUrl + "/student/cancel",
     });
-
-    // if (session?.id) {
-    //   await getcontract.save();
-    // }
+    req.body.paymentId = session.id;
+    await new session(req.body).save();
     res.json({ id: session.id });
   } catch (error) {
     console.log(error);

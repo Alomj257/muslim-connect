@@ -12,15 +12,17 @@ const RightContaineer = ({ gig }) => {
     <>
       <div className="container_main">
         <spam className="topheadder">
-          <div className={gig?.package !== "freePackage" ? "box_2" : "box_1"}>
+          <div
+            className={gig?.package === "Premium package" ? "box_1" : "box_2"}
+          >
             Paid Service
           </div>
-          <div className={gig?.package === "freePackage" ? "box_2" : "box_1"}>
+          <div className={gig?.package === "Free package" ? "box_1" : "box_2"}>
             Free service
           </div>
         </spam>
         <div className="box_3">
-          <h1 style={{ fontWeight: "600", fontSize: "40px" }}>{gig?.price}</h1>
+          <h1 style={{ fontWeight: "600", fontSize: "40px" }}>${gig?.price}</h1>
           <p style={{ fontWeight: "400", fontSize: "20px" }}>
             {" "}
             Save up to 20% with{" "}
@@ -30,13 +32,13 @@ const RightContaineer = ({ gig }) => {
           </p>
           <ul className="ul" style={{ listStyleType: "none" }}>
             <li>
-              <Tick /> Apprentissage religieux individuel
+              <Tick /> Apprentissage religieux {gig?.theme}
             </li>
             <li>
               <Tick /> Islam Financial System
             </li>
             <li>
-              <Time1 /> 30 mins Consultation Session
+              <Time1 /> {gig?.duration}s Consultation Session
             </li>
           </ul>
           {/* </div> */}
@@ -54,16 +56,13 @@ const RightContaineer = ({ gig }) => {
               <p>
                 <Time2 />
                 <span style={{ fontWeight: "500", fontSize: "12px" }}>
-                  24hr available
+                  {gig?.availability} available
                 </span>
               </p>
             </div>
           </div>
           <h5 style={{ fontWeight: "600", fontSize: "18px" }}>In service</h5>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </p>
+          <p>{gig?.whyService}</p>
           <div className="submit_btn">
             <button
               onClick={() => navigate("/student/book", { state: gig })}

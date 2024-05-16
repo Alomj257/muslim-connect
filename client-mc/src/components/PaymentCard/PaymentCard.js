@@ -11,7 +11,11 @@ const PaymentCard = ({ handlePayment, gig, head, body, btn, url }) => {
     time: new Date(),
   });
   const payment = () => {
-    handlePayment();
+    if (head === "Payment") {
+      handlePayment();
+    } else {
+      navigate(url, { state: { details, gig } });
+    }
   };
   return (
     <>
