@@ -12,17 +12,20 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { Provider } from "react-redux";
 import { store } from "./app/Store";
+import StripeWrapper from "./PaymentHandler/components/StripeWrapper";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </AuthProvider>
-    </BrowserRouter>
+    <StripeWrapper>
+      <BrowserRouter>
+        <AuthProvider>
+          <Provider store={store}>
+            <App />
+          </Provider>
+        </AuthProvider>
+      </BrowserRouter>
+    </StripeWrapper>
   </React.StrictMode>
 );
 

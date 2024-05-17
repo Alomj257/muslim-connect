@@ -16,13 +16,19 @@ const CheckoutForm = () => {
   const [paymentSucceeded, setPaymentSucceeded] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:7000/api/sessions/user", {
+    fetch("http://localhost:7000/api/card/payment/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ items: [{ price: 1000, quantity: 1 }] }), // Example items
     })
       .then((res) => res.json())
-      .then((data) => setClientSecret(data.clientSecret))
+      .then((data) => {
+        if (data.clientSecret) {
+          setClientSecret(data.clientSecret);
+        } else {
+          throw new Error("Failed to get client secret");
+        }
+      })
       .catch((err) => setError(err.message));
   }, []);
 
@@ -43,12 +49,7 @@ const CheckoutForm = () => {
         clientSecret,
         {
           payment_method: {
-            card: {
-              number: cardNumberElement,
-              exp_month: cardExpiryElement,
-              exp_year: cardExpiryElement,
-              cvc: cardCvcElement,
-            },
+            card: cardNumberElement, // Correct way to pass the card elements
           },
         }
       );
