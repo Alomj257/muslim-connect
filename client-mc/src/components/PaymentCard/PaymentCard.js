@@ -3,6 +3,7 @@ import "./PaymentCard.css";
 import ArrowSvg from "../../assets/PriceCard/ArrowSvg";
 import { useNavigate } from "react-router-dom";
 import { PaymentCardBody } from "../Student/BookConsultant/BookConsultant";
+import { toast } from "react-toastify";
 
 const PaymentCard = ({ handlePayment, gig, head, body, btn, url }) => {
   const navigate = useNavigate();
@@ -14,6 +15,9 @@ const PaymentCard = ({ handlePayment, gig, head, body, btn, url }) => {
     if (head === "Payment") {
       handlePayment();
     } else {
+      if (!details?.date || !details?.time || !details?.duration) {
+        return toast.error("Empty required field ");
+      }
       navigate(url, { state: { details, gig } });
     }
   };

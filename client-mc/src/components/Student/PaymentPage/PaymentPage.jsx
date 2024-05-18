@@ -21,6 +21,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { makePayment } from "../../../ApiService/Auth/Auth";
 import { toast } from "react-toastify";
 import UpdateCard from "../AddCard/UpdateCard";
+import { useCreateSessionMutation } from "../../../ApiService/SessionSlice/SessionSlice";
 
 function PaymentPage() {
   let arr = ["Learning", "Consultation", "Book Consultation", "Payment"];
@@ -32,6 +33,7 @@ function PaymentPage() {
   const [card, setCard] = useState(null);
   const [selectedCard, setSelectedCard] = useState(null);
   const user = useGetAuthByIdQuery(gig?.userId);
+  const [createSession, { error, isError }] = useCreateSessionMutation();
   const [cards, setCards] = useState([]);
   const paymentCards = useGetCardByUserIdQuery(auth?.user?._id);
   useEffect(() => {
@@ -44,19 +46,29 @@ function PaymentPage() {
     const stripe = await loadStripe(
       "pk_test_51PBNGfSCZnl4fNe7OhyqOs5WH04BKl5VIpwEMOch1wYJNv3zwDtrgWKaXhE8HSfoSmjatibrbu7JFau7pFDWr36V00pzjNjava"
     );
-    const details = [
+    const deta = [
       {
-        price: 34,
+        price: parseInt(gig?.price || 0) || 1,
         quantity: 1,
         id: 1,
-        gig,
-        selectedCard,
       },
     ];
     try {
-      const response = await makePayment({ items: details });
+      const response = await makePayment({ items: deta });
       const session = response;
       console.log(session);
+      if (response?.data?.id) {
+        details.paymentId = response?.data?.id;
+        details.studentId = auth?.user?._id;
+        details.consultantId = gig?.userId;
+        details.gigId = gig?._id;
+        const res = await createSession(details);
+        console.log("session api call", res);
+        if (isError) {
+          toast.error(error.data.message || error.data);
+          return;
+        }
+      }
       const result = stripe.redirectToCheckout({
         sessionId: response?.data?.id,
       });
@@ -70,7 +82,6 @@ function PaymentPage() {
     // setPaymentLoading(false);
   };
   console.log(selectedCard);
-
   return (
     <div>
       {/* <DashNav navData={navData} /> */}
@@ -421,7 +432,7 @@ const PaymentInfo = ({ gig, details }) => {
         </div>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <p>Duration</p>
-          <p>{details?.duration}</p>
+          <p>{details?.duration}h</p>
         </div>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <p>Platform Comission</p>

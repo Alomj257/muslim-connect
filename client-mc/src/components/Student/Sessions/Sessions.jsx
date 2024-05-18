@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import myimg from "../../../assets/Rectangle 1891.png";
 import SearchSvg from "../../../assets/Session/Search_Svg";
 import "./Session.css";
+import { useGetSessionByUserIdQuery } from "../../../ApiService/SessionSlice/SessionSlice";
+import { useAuth } from "../../../context/AuthContext";
+import { server } from "../../../ApiService/Axios";
+import { useGetGigsByIdQuery } from "../../../ApiService/GigsService/GigsService";
+import { useGetAuthByIdQuery } from "../../../ApiService/AuthSlice/AuthSlice";
+import { PiDotsThreeOutlineFill } from "react-icons/pi";
+import { BsX } from "react-icons/bs";
 function Session() {
+  const [{ user }] = useAuth();
+  const sessions = useGetSessionByUserIdQuery(user?._id);
   return (
     <div style={{ paddingBottom: "5%" }}>
       {/* <DashNav navData={navData} /> */}
@@ -27,18 +36,22 @@ function Session() {
                 <th>START DATE</th>
                 <th>TOTAL</th>
                 <th>STATUS</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              <TableRow
-                name={"Usman Ahmad"}
-                gig={"  I will tech the course on Arabic Learning"}
-                date={"24th Jan, 2024"}
-                time={"3:40 pm"}
-                amount={"100$"}
-                status={"ACTIVE"}
-              />
-              <TableRow
+              {sessions?.isLoading ? (
+                "Loading...."
+              ) : sessions?.isError ? (
+                <div className="text-center text-danger my-2">
+                  Sessions Fetching error
+                </div>
+              ) : (
+                sessions?.data?.map((item, index) => (
+                  <TableRow item={item} time={item?.time} status={"ACTIV"} />
+                ))
+              )}
+              {/* <TableRow
                 name={"Usman Ahmad"}
                 gig={"  I will tech the course on Arabic Learning"}
                 date={"24th Jan, 2024"}
@@ -53,7 +66,7 @@ function Session() {
                 time={"3:40 pm"}
                 amount={"100$"}
                 status={"CANCELLED"}
-              />
+              /> */}
             </tbody>
           </table>
         </div>
@@ -132,7 +145,10 @@ const Type = ({ name, num }) => {
   );
 };
 
-const TableRow = ({ name, gig, date, time, amount, status }) => {
+const TableRow = ({ item, img }) => {
+  const user = useGetAuthByIdQuery(item?.consultantId);
+  const gig = useGetGigsByIdQuery(item?.gigId);
+  const [isAction, setAction] = useState(false);
   return (
     <tr>
       <td
@@ -144,7 +160,7 @@ const TableRow = ({ name, gig, date, time, amount, status }) => {
         }}
       >
         <img
-          src={myimg}
+          src={user?.data?.profile ? server + user?.data?.profile : img}
           alt=""
           style={{
             height: "40px",
@@ -153,7 +169,7 @@ const TableRow = ({ name, gig, date, time, amount, status }) => {
             borderRadius: "50%",
           }}
         />
-        {name}
+        {user?.data?.fistname} {user?.data?.lastname}
       </td>
       <td
         style={{
@@ -162,7 +178,7 @@ const TableRow = ({ name, gig, date, time, amount, status }) => {
           fontSize: "18px",
         }}
       >
-        {gig}
+        {gig?.data?.title}
       </td>
       <td style={{ textAlign: "center" }}>
         <span
@@ -172,7 +188,7 @@ const TableRow = ({ name, gig, date, time, amount, status }) => {
             fontSize: "18px",
           }}
         >
-          {date}
+          {item?.startDate}
           <span
             style={{
               display: "block",
@@ -180,11 +196,13 @@ const TableRow = ({ name, gig, date, time, amount, status }) => {
               color: "gray",
             }}
           >
-            {time}
+            {item?.time}
           </span>
         </span>
       </td>
-      <td style={{ fontWeight: "600", fontSize: "22px" }}>{amount}</td>
+      <td style={{ fontWeight: "600", fontSize: "22px" }}>
+        {gig?.data?.price}
+      </td>
       <td>
         <button
           style={{
@@ -198,8 +216,37 @@ const TableRow = ({ name, gig, date, time, amount, status }) => {
             fontSize: "13px",
           }}
         >
-          {status}
+          {gig?.data?.status === "progress" ? "Active" : gig?.data?.status}
         </button>
+      </td>
+      <td className="position-relative ">
+        {!isAction ? (
+          <span
+            onClick={() => setAction(!isAction)}
+            style={{ cursor: "pointer" }}
+            className="p-2  rounded-circle bg-light"
+          >
+            <PiDotsThreeOutlineFill size={25} />
+          </span>
+        ) : (
+          <span
+            onClick={() => setAction(!isAction)}
+            style={{ cursor: "pointer" }}
+            className="p-2  rounded-circle bg-light"
+          >
+            <BsX size={25} />
+          </span>
+        )}
+        <ul
+          style={{ listStyle: "none", zIndex: "4" }}
+          className={`d-flex threeDot px-0 rounded  flex-column bg-light  threeDot-${
+            isAction ? "open" : "close"
+          } gap-3 mt-0  left-0 position-absolute`}
+        >
+          <li className="p-1 px-2 ">Complete</li>
+          <li className="p-1 px-2 ">Cancel</li>
+          <li className="p-1 px-2 ">Review</li>
+        </ul>
       </td>
     </tr>
   );

@@ -34,7 +34,7 @@ const Item = ({ gig }) => {
             >
               {data?.firstname} {data?.lastname}
             </p>
-            <p class="cart-item-price">{gig?.price}</p>
+            <p class="cart-item-price">${gig?.price}</p>
           </div>
 
           <p className="itemDesc mt-2">{gig?.title}</p>

@@ -5,7 +5,11 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 exports.CreateSession = async (req, res) => {
   try {
+    const { gigId } = req.body;
     await new Session(req.body).save();
+    const gig = await Gigs.findById(gigId);
+    gig.status = "progress";
+    await gig.save();
     res.status(201).json("Session Created");
   } catch (error) {
     console.log(error);
@@ -56,21 +60,21 @@ exports.getAllSessions = async (req, res) => {
     res.status(500).json(error.message);
   }
 };
+exports.getSessionByUserId = async (req, res) => {
+  try {
+    const sessions = await Session.find({
+      $or: [{ studentId: req.params.id }, { consultantId: req.params.id }],
+    });
+
+    res.status(201).json(sessions);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error.message);
+  }
+};
 
 exports.makePayment = async (req, res) => {
-  const { consultantId, studentId, gigId, startTime, endTime, duration } =
-    req.body;
   try {
-    console.log(req.body.items);
-    const student = await User.findById(studentId);
-    const consultant = await User.findById(consultantId);
-    const gig = await User.findById(gigId);
-    if (!student || !consultant) {
-      return res.status(404).json({ message: "user id not found" });
-    }
-    if (!gig) {
-      return res.status(404).json({ message: "Gigs id not found" });
-    }
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: req.body.items.map((item) => {
@@ -78,12 +82,7 @@ exports.makePayment = async (req, res) => {
           price_data: {
             currency: "inr",
             product_data: {
-              name: item?.title,
-              //   description: `Consumer: ${
-              //     consumer?.firstname + " " + consumer?.lastname
-              //   } to Tradeperson: ${
-              //     tradeperson?.firstname + " " + tradeperson?.lastname
-              //   } for milestone ${milestone}`,
+              name: item?.title || "session",
             },
             unit_amount: item?.price * 100,
           },
@@ -95,7 +94,7 @@ exports.makePayment = async (req, res) => {
       cancel_url: process.env.clientUrl + "/student/cancel",
     });
     req.body.paymentId = session.id;
-    await new session(req.body).save();
+    // await new session(req.body).save();
     res.json({ id: session.id });
   } catch (error) {
     console.log(error);

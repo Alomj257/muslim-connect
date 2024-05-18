@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import "./Register.css";
 import { toast } from "react-toastify";
-import studentImg from "../../../assets/auth/student.jpeg";
-import consultantImg from "../../../assets/auth/login.jpeg";
 import { Link } from "react-router-dom";
 // import { registerUserService } from "../../../ApiService/Auth/Auth";
-import { FaArrowLeft, FaArrowRight, FaStar } from "react-icons/fa6";
 import { useCreateAuthMutation } from "../../../ApiService/AuthSlice/AuthSlice";
+import { LuUploadCloud } from "react-icons/lu";
+import StudentSay from "./StudentSay";
+import ConsultantSay from "./ConsultantSay";
 // import {
 //   FaRegArrowAltCircleRight,
 //   FaRegArrowAltCircleLeft,
@@ -173,7 +173,10 @@ const Register = () => {
                           htmlFor="certificate"
                           className="d-flex flex-column text-center"
                         >
-                          <span>icon</span>
+                          <span>
+                            {" "}
+                            <LuUploadCloud size={25} />
+                          </span>
                           <span
                             className="fw-bold "
                             style={{ color: "#7C5399" }}
@@ -201,7 +204,10 @@ const Register = () => {
                         htmlFor="identify"
                         className="d-flex flex-column text-center"
                       >
-                        <span>icon</span>
+                        <span>
+                          {" "}
+                          <LuUploadCloud size={25} />
+                        </span>
                         <span className="fw-bold " style={{ color: "#7C5399" }}>
                           {" "}
                           Click to Upload{" "}
@@ -313,125 +319,10 @@ const Register = () => {
           </form>
         </div>
       </div>
-      <div className="register-right-side w-100">
+      <div className="register-right-side flex-olumn">
         {/*  student */}
-        {role === "STUDENT" && (
-          <div
-            style={{ height: more ? "" : "100vh", zIndex: "1" }}
-            className={`w-100 position-relative ${more ? "h-100" : ""}`}
-          >
-            <img
-              src={studentImg}
-              className="student-img w-100 h-100"
-              alt="register"
-            />
-            <div
-              className={`position-absolute d-flex  ${!more ? "pb-5" : ""} `}
-              style={{ inset: "0" }}
-            >
-              <div
-                className={`slide said d-flex flex-column mt-auto ${
-                  !more ? "mb-5" : ""
-                }  `}
-              >
-                <p>
-                  “As a devout follower seeking religious guidance and
-                  knowledge, I couldn't be more pleased with my experience on
-                  Muslim Connect. This platform has truly revolutionized the way
-                  I connect with religious experts!”
-                </p>
-                <div className="d-flex justify-content-between alumani-name">
-                  <div>Ayesha Siddiqa</div>
-                  <div className="d-flex gap-2">
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                  </div>
-                </div>
-                <div className="d-flex justify-content-between alumani-location">
-                  <small className="text-light">
-                    Newly Converted Muslim, Indonesian
-                  </small>
-                  <div
-                    className="d-flex gap-4"
-                    style={{ fontWeight: "lighter" }}
-                  >
-                    <span
-                      className="p-2 border rounded-circle"
-                      style={{ cursor: "pointer" }}
-                    >
-                      <FaArrowLeft size={30} />
-                    </span>
-                    <span
-                      className="p-2 border rounded-circle"
-                      style={{ cursor: "pointer" }}
-                    >
-                      <FaArrowRight size={30} />
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-        {role === "CONSULTANT" && (
-          <div
-            style={{ height: more ? "" : "90vh", zIndex: "1" }}
-            className={`w-100 position-relative ${more ? "h-100" : ""}`}
-          >
-            <img
-              src={consultantImg}
-              className={`consultant-img w-100 h-100 `}
-              alt="register"
-            />
-            <div
-              className="position-absolute consult-layer d-flex  "
-              style={{ inset: "0" }}
-            >
-              <div
-                className={`slide consult-said d-flex flex-column  mt-auto 
-                }  `}
-                style={{ marginTop: !more ? "160px" : "" }}
-              >
-                <p>
-                  “As a consultant on Muslim Connect, I have had the privilege
-                  of connecting with individuals seeking guidance and knowledge
-                  in various aspects of Islamic life. I can confidently say that
-                  this platform has been instrumental in expanding my reach and
-                  impact as a religious expert.”
-                </p>
-                <div className="">
-                  <h3 className="fw-bold">Md Useman</h3>
-                </div>
-                <div className="d-flex justify-content-between">
-                  <div className="d-flex flex-column">
-                    <span className="fw-bold">Finance consultant</span>
-                    <small className="text-light">Indonesian</small>
-                  </div>{" "}
-                  <div
-                    className="d-flex gap-4"
-                    style={{ fontWeight: "lighter" }}
-                  >
-                    <span
-                      className="p-2 border rounded-circle"
-                      style={{ cursor: "pointer" }}
-                    >
-                      <FaArrowLeft size={30} />
-                    </span>
-                    <span
-                      className="p-2 border rounded-circle"
-                      style={{ cursor: "pointer" }}
-                    >
-                      <FaArrowRight size={30} />
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+        {role === "STUDENT" && <StudentSay more={more} />}
+        {role === "CONSULTANT" && <ConsultantSay more={more} />}
       </div>
     </div>
   );

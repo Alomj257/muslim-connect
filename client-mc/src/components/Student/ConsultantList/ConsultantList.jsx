@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import DownArrow from "../../../assets/Student/DownArrow";
 import FilterSvg from "../../../assets/Student/FilterSvg";
 import SearchSvg from "../../../assets/Student/SearchSvg";
@@ -10,9 +10,45 @@ import { useNavigate } from "react-router-dom";
 import { useGetAllGigsQuery } from "../../../ApiService/GigsService/GigsService";
 import { useGetAuthByIdQuery } from "../../../ApiService/AuthSlice/AuthSlice";
 import { server } from "../../../ApiService/Axios";
+import "./ConsultantList.css";
 
 function ConsultantList() {
-  const gigs = useGetAllGigsQuery();
+  const { data, isLoading, isError } = useGetAllGigsQuery();
+  const [filtered, setFiltered] = useState(data);
+  const [isLevel, setIsLevel] = useState(false);
+  const levelRef = useRef();
+  useEffect(() => {
+    setFiltered(data);
+  }, [data]);
+
+  const handleChange = (e) => {
+    const { value } = e.target;
+    const filteredData = data?.filter(
+      (item) =>
+        item?.title?.toLowerCase()?.includes(value.toLowerCase()) ||
+        item?.content?.toLowerCase()?.includes(value.toLowerCase()) ||
+        item?.whyService?.toLowerCase()?.includes(value.toLowerCase()) ||
+        item?.keyword?.some((keyword) =>
+          keyword?.toLowerCase()?.includes(value.toLowerCase())
+        )
+    );
+    setFiltered(filteredData);
+  };
+  const handleLevel = (e) => {
+    const { value } = e.target;
+    const filter = data?.filter((item) =>
+      item?.level?.toLowerCase()?.includes(value?.toLowerCase())
+    );
+    setFiltered(filter);
+  };
+  useEffect(() => {
+    const handler = (e) => {
+      if (levelRef?.current && !levelRef.current.contains(e.target)) {
+        setIsLevel(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+  });
   return (
     <div>
       <div>
@@ -47,6 +83,8 @@ function ConsultantList() {
               </span>{" "}
             </div>
             <div
+              ref={levelRef}
+              className="position-relative"
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -55,12 +93,60 @@ function ConsultantList() {
                 border: "1px solid rgba(208, 213, 221, 0.5)",
                 padding: "0px 50px 0px 50px",
                 borderRadius: "8px",
+                cursor: "pointer",
               }}
+              onClick={() => setIsLevel(true)}
             >
               <span style={{ fontWeight: "400", fontSize: "22px" }}>
                 Consultations
               </span>{" "}
               <DownArrow />
+              <ul
+                className={`position-absolute rounded levelList-${
+                  isLevel ? "open" : "close"
+                } px-0 consultant-level bg-light  `}
+                style={{ listStyle: "none", top: "4rem", zIndex: "5" }}
+              >
+                <li className="p-2 d-flex  align-items-center ">
+                  <input
+                    type="radio"
+                    name="level"
+                    value="Expert"
+                    onChange={handleLevel}
+                    id="Expert"
+                  />
+                  <label className="w-100" htmlFor="Expert">
+                    {" "}
+                    Expert
+                  </label>
+                </li>
+                <li className="p-2 d-flex  align-items-center ">
+                  <input
+                    type="radio"
+                    name="level"
+                    id="Beginner"
+                    value="Beginner"
+                    onChange={handleLevel}
+                  />
+                  <label className="w-100" htmlFor="Beginner">
+                    {" "}
+                    Beginner
+                  </label>
+                </li>
+                <li className="p-2 d-flex  align-items-center ">
+                  <input
+                    type="radio"
+                    id="Intermediate"
+                    onChange={handleLevel}
+                    value="Intermediate"
+                    name="level"
+                  />{" "}
+                  <label className="w-100" htmlFor="Intermediate">
+                    {" "}
+                    Intermediate
+                  </label>
+                </li>
+              </ul>
             </div>
           </div>
 
@@ -76,6 +162,7 @@ function ConsultantList() {
           >
             <input
               type="text"
+              onChange={handleChange}
               placeholder="Rechercher un service"
               style={{
                 border: "none",
@@ -96,22 +183,17 @@ function ConsultantList() {
           }}
           className="d-flex"
         >
-          {gigs?.isLoading ? (
+          {isLoading ? (
             "Loading...."
-          ) : gigs?.isError ? (
+          ) : isError ? (
             <div className="text-danger text-center w-100">
               Gigs fetching error{" "}
             </div>
           ) : (
-            gigs?.data?.map((val, index) => (
+            filtered?.map((val, index) => (
               <ConsultantCard gig={val} index={index} />
             ))
           )}
-          {/* <ConsultantCard />
-          <ConsultantCard />
-          <ConsultantCard />
-          <ConsultantCard />
-          <ConsultantCard /> */}
         </div>
       </div>
     </div>

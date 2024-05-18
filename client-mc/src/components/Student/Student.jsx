@@ -1,18 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./Student.css";
 import Profile from "./Profile/Profile";
 import Learning from "./ActiveLearning/Learning";
 import Item from "../Item/Item";
 import { useNavigate } from "react-router-dom";
-import {
-  useGetAllGigsQuery,
-  useGetFilterGigsQuery,
-} from "../../ApiService/GigsService/GigsService";
-import {
-  useGetAllAuthQuery,
-  useGetAuthByIdQuery,
-} from "../../ApiService/AuthSlice/AuthSlice";
+import { useGetAllGigsQuery } from "../../ApiService/GigsService/GigsService";
+import { useGetAuthByIdQuery } from "../../ApiService/AuthSlice/AuthSlice";
 import { useAuth } from "../../context/AuthContext";
+import { useGetSessionByUserIdQuery } from "../../ApiService/SessionSlice/SessionSlice";
 
 const Student = () => {
   const [auth] = useAuth();
@@ -32,11 +27,12 @@ const Student = () => {
     ArrayToString(user?.data?.intrests, "intrest") +
     ArrayToString(user?.data?.skills, "skill");
   const course = useGetAllGigsQuery();
+  const progress = useGetSessionByUserIdQuery(auth?.user?._id);
   // const { data: gigs, error, isLoading } = useGetFilterGigsQuery(params);
   // const { filtered } = useGetFilterGigsQuery(params);
   // console.log(filtered);
   // const consultant = useGetAllAuthQuery();
-
+  console.log(progress);
   return (
     <div className="student-container">
       <div>
@@ -72,11 +68,11 @@ const Student = () => {
           <div className="card">
             <h6>Active Learnings - 2</h6>
           </div>
-          {course?.isLoading
+          {progress?.isLoading
             ? "Loading...."
-            : course?.isError
+            : progress?.isError
             ? "Course fetching error "
-            : course?.data?.map((val, index) => (
+            : progress?.data?.map((val, index) => (
                 <Learning index={index} value={val} />
               ))}
         </div>
