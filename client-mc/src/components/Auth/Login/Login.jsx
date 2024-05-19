@@ -19,6 +19,7 @@ import {
   FaRegEnvelope,
 } from "react-icons/fa6";
 import { useAuth } from "../../../context/AuthContext";
+import Slider from "react-slick";
 
 const Login = () => {
   const [user, setUser] = useState(null);
@@ -432,6 +433,7 @@ const Login = () => {
         </div>
       </div>
       <div className="login-right-side order-1 w-100">
+        {/* <ConsultantSay /> */}
         <div className="w-100 position-relative h-100" style={{ zIndex: "1" }}>
           <img
             src={login}
@@ -439,6 +441,16 @@ const Login = () => {
             alt="register"
           />
           <div
+            className="position-absolute d-flex flex-column"
+            style={{
+              inset: "0",
+              borderRadius: " 0px 80px 80px 0px",
+              background: "#00000070",
+            }}
+          >
+            <Consult />
+          </div>
+          {/* <div
             className="position-absolute d-flex  "
             style={{
               inset: "0",
@@ -447,24 +459,26 @@ const Login = () => {
             }}
           >
             <div
-              className={`slide consult-said mt-auto d-flex flex-column 
+              className={`slide consult-said mt-auto 
                 }  `}
             >
-              <p>
-                “As a consultant on Muslim Connect, I have had the privilege of
-                connecting with individuals seeking guidance and knowledge in
-                various aspects of Islamic life. I can confidently say that this
-                platform has been instrumental in expanding my reach and impact
-                as a religious expert.”
-              </p>
-              <div className="">
-                <h3 className="fw-bold">Mohammed Useman</h3>
-              </div>
-              <div className="d-flex justify-content-between">
-                <div className="d-flex flex-column">
+              <div>
+                <p>
+                  “As a consultant on Muslim Connect, I have had the privilege
+                  of connecting with individuals seeking guidance and knowledge
+                  in various aspects of Islamic life. I can confidently say that
+                  this platform has been instrumental in expanding my reach and
+                  impact as a religious expert.”
+                </p>
+                <div className="">
+                  <h3 className="fw-bold">Mohammed Useman</h3>
+                </div>
+                <div className="d-flex flex-column ">
                   <span className="fw-bold">Finance consultant</span>
                   <small className="text-light">Indonesian</small>
                 </div>
+              </div>
+              <div className="d-flex justify-content-between ms-auto">
                 <div className="d-flex gap-4" style={{ fontWeight: "lighter" }}>
                   <span
                     className="p-2 border rounded-circle"
@@ -481,7 +495,7 @@ const Login = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
@@ -489,3 +503,86 @@ const Login = () => {
 };
 
 export default Login;
+
+export const Consult = () => {
+  const SliderRef = useRef();
+  var settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
+  return (
+    <>
+      <Slider
+        ref={SliderRef}
+        {...settings}
+        className="w-100  d-flex flex-column mt-auto "
+      >
+        {data?.map((val, key) => (
+          <div className="text-white p-4">
+            <p>{val?.message}</p>
+            <div className="">
+              <h3 className="fw-bold">{val?.name}</h3>
+            </div>
+            <div className="d-flex flex-column ">
+              <span className="fw-bold">{val?.desig}</span>
+              <small className="text-light">{val?.location}</small>
+            </div>
+          </div>
+        ))}
+      </Slider>
+      <div
+        className="d-flex gap-4 text-white justify-content-end pt-0 pb-4 p-5"
+        style={{ fontWeight: "lighter" }}
+      >
+        <button
+          onClick={() => SliderRef?.current?.slickPrev()}
+          className="p-2 bg-transparent border rounded-circle"
+          style={{ cursor: "pointer" }}
+        >
+          <FaArrowLeft size={30} />
+        </button>
+        <button
+          onClick={() => SliderRef?.current?.slickNext()}
+          className="p-2 bg-transparent border rounded-circle"
+          style={{ cursor: "pointer" }}
+        >
+          <FaArrowRight size={30} />
+        </button>
+      </div>
+    </>
+  );
+};
+
+const data = [
+  {
+    message:
+      "“As a consultant on Muslim Connect, I have had the privilege of connecting with individuals seeking guidance and knowledge in various aspects of Islamic life. I can confidently say that this platform has been instrumental in expanding my reach and impact as a religious expert.”",
+    name: "Mohammad Useman",
+    desig: "Finance consultant",
+    location: "Indonesian",
+  },
+  {
+    message:
+      "“As a consultant on Muslim Connect, I have had the privilege of connecting with individuals seeking guidance and knowledge in various aspects of Islamic life. I can confidently say that this platform has been instrumental in expanding my reach and impact as a religious expert.”",
+    name: "Mohammad Useman",
+    desig: "Finance consultant",
+    location: "Indonesian",
+  },
+  {
+    message:
+      "“As a consultant on Muslim Connect, I have had the privilege of connecting with individuals seeking guidance and knowledge in various aspects of Islamic life. I can confidently say that this platform has been instrumental in expanding my reach and impact as a religious expert.”",
+    name: "Mohammad Useman",
+    desig: "Finance consultant",
+    location: "Indonesian",
+  },
+  {
+    message:
+      "“As a consultant on Muslim Connect, I have had the privilege of connecting with individuals seeking guidance and knowledge in various aspects of Islamic life. I can confidently say that this platform has been instrumental in expanding my reach and impact as a religious expert.”",
+    name: "Mohammad Useman",
+    desig: "Finance consultant",
+    location: "Indonesian",
+  },
+];

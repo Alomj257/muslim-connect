@@ -1,8 +1,10 @@
 const GigsReview = require("../Model/GigsReview");
+const Notification = require("../Model/Notification");
 
 exports.CreateReview = async (req, res) => {
   try {
-    await new GigsReview(req.body).save();
+    const review = await new GigsReview(req.body).save();
+    await Notification({ modelId: review?._id, title: review?.message });
     res.status(201).json("Review created");
   } catch (error) {
     console.log(error);

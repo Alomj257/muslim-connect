@@ -6,10 +6,14 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 exports.CreateSession = async (req, res) => {
   try {
     const { gigId } = req.body;
-    await new Session(req.body).save();
+    const sessions = await new Session(req.body).save();
     const gig = await Gigs.findById(gigId);
     gig.status = "progress";
     await gig.save();
+    await new Notification({
+      modelId: sessions?._id,
+      title: gig?.title,
+    }).save();
     res.status(201).json("Session Created");
   } catch (error) {
     console.log(error);

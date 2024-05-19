@@ -36,7 +36,7 @@ const Conversation = ({ data, curUserId, online, active }) => {
           <h5 className="fw-semibold" style={{ fontSize: "16px" }}>
             {userData?.data?.firstname}
           </h5>
-          {!online && <small>1 hour ago</small>}
+          {!online && <small>Offline</small>}
         </div>
         <div>
           <small>{userData?.data?.description}</small>

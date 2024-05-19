@@ -132,6 +132,14 @@ export default ChatBox;
 
 const Message = ({ message, type, scroll }) => {
   const { data } = useGetAuthByIdQuery(message?.senderId);
+  const week = [
+    "Sunday",
+    "Monday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
   return (
     <div
       ref={scroll}
@@ -142,7 +150,10 @@ const Message = ({ message, type, scroll }) => {
           <small className="fw-semibold">
             {type === "own" ? "You" : data?.firstname + " " + data?.lastname}
           </small>
-          <small>Friday 2:20PM</small>
+          <small>
+            {week[new Date(message?.created).getDay() || 0]}{" "}
+            {new Date(message?.created).toLocaleTimeString()}
+          </small>
         </div>
         <p
           className={`text-center ${

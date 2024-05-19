@@ -1,4 +1,5 @@
 const Gigs = require("../Model/Gigs");
+const Notification = require("../Model/Notification");
 
 exports.CreateGigs = async (req, res) => {
   try {
@@ -18,6 +19,7 @@ exports.CreateGigs = async (req, res) => {
     if (gig) {
       gig.status = "create";
     }
+    await new Notification({ modelId: gig?._id, title: gig?.title }).save();
     res.status(201).json("Gigs created");
   } catch (error) {
     console.log(error);
