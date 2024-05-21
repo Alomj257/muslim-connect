@@ -5,6 +5,8 @@ export const registerUserService = async (data) =>
 export const loginService = async (data) =>
   await Axios.post("/auth/login", data);
 export const getUser = async (id) => await Axios.get(`/auth/users/${id}`);
+export const updateUser = async (id, data) =>
+  await Axios.put(`/auth/update/${id}`, data);
 //  forget
 export const sendOtpService = async (data) =>
   await Axios.post("/auth/users/forget", data);

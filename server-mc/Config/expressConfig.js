@@ -10,10 +10,7 @@ require("dotenv").config();
 app.use(cors());
 app.use(express.json());
 
-app.use(
-  "/profile/pic",
-  express.static(path.join(__dirname, "../public/Profile"))
-);
+app.use("/profile/pic", express.static(path.join(__dirname, "../public/User")));
 app.use(
   "/gigs/image",
   express.static(path.join(__dirname, "../public/GigsFiles"))

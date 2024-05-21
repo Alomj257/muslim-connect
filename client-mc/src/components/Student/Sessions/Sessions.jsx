@@ -1,22 +1,51 @@
-import React, { useState } from "react";
-import myimg from "../../../assets/Rectangle 1891.png";
+import React, { useEffect, useState } from "react";
 import SearchSvg from "../../../assets/Session/Search_Svg";
 import "./Session.css";
 import { useGetSessionByUserIdQuery } from "../../../ApiService/SessionSlice/SessionSlice";
 import { useAuth } from "../../../context/AuthContext";
 import { server } from "../../../ApiService/Axios";
-import { useGetGigsByIdQuery } from "../../../ApiService/GigsService/GigsService";
+import {
+  useGetAllGigsQuery,
+  useGetGigsByIdQuery,
+} from "../../../ApiService/GigsService/GigsService";
 import { useGetAuthByIdQuery } from "../../../ApiService/AuthSlice/AuthSlice";
 import { PiDotsThreeOutlineFill } from "react-icons/pi";
 import { BsX } from "react-icons/bs";
+import Review from "../../Review/Review";
 function Session() {
   const [{ user }] = useAuth();
   const sessions = useGetSessionByUserIdQuery(user?._id);
+  const [filteredSession, setFilteredSessions] = useState(sessions?.data || []);
+  const [isReview, setIsReview] = useState(false);
+  const [sessionId, setSessionId] = useState("");
+  const [gigId, setGigId] = useState("");
+  useEffect(() => {
+    setFilteredSessions(sessions?.data);
+  }, [sessions?.data]);
+  const setDetails = (gigId, sessionId) => {
+    setGigId(gigId);
+    setSessionId(sessionId);
+    setIsReview(true);
+  };
+  const gigs = useGetAllGigsQuery();
+  const handleChange = (e) => {
+    const { value } = e.target;
+    const filtered = sessions?.data?.filter((item) => {
+      const gig = gigs?.data.find((g) => g._id === item.gigId);
+      return (
+        gig?.title?.toLowerCase()?.includes(value.toLowerCase()) ||
+        gig?.price?.toLowerCase()?.includes(value.toLowerCase())
+      );
+    });
+    setFilteredSessions(filtered);
+  };
   return (
     <div style={{ paddingBottom: "5%" }}>
       {/* <DashNav navData={navData} /> */}
-      <Head />
-
+      <Head handleChange={handleChange} />
+      {isReview && (
+        <Review closeReview={setIsReview} sessionId={sessionId} gigId={gigId} />
+      )}
       <div style={{ display: "flex", marginLeft: "5%" }}>
         <Type name={"CONSULTATION"} num={"2"} />
         <Type name={"COURSES"} num={"5"} />
@@ -47,8 +76,14 @@ function Session() {
                   Sessions Fetching error
                 </div>
               ) : (
-                sessions?.data?.map((item, index) => (
-                  <TableRow item={item} time={item?.time} status={"ACTIV"} />
+                filteredSession?.map((item, index) => (
+                  <TableRow
+                    isReview={isReview}
+                    setDetails={setDetails}
+                    item={item}
+                    time={item?.time}
+                    status={"ACTIV"}
+                  />
                 ))
               )}
               {/* <TableRow
@@ -76,7 +111,7 @@ function Session() {
 }
 
 export default Session;
-const Head = () => {
+const Head = ({ handleChange }) => {
   return (
     <div style={{ paddingTop: "13%" }}>
       <div
@@ -103,6 +138,7 @@ const Head = () => {
           <SearchSvg />
           <input
             type="text"
+            onChange={handleChange}
             placeholder="Search"
             style={{ border: "none", outline: "none", marginLeft: "10px" }}
           />
@@ -145,109 +181,121 @@ const Type = ({ name, num }) => {
   );
 };
 
-const TableRow = ({ item, img }) => {
+const TableRow = ({ item, img, setDetails }) => {
   const user = useGetAuthByIdQuery(item?.consultantId);
   const gig = useGetGigsByIdQuery(item?.gigId);
   const [isAction, setAction] = useState(false);
+  const handleSet = () => {
+    setDetails(gig?.data?._id, item?._id);
+  };
   return (
-    <tr>
-      <td
-        style={{
-          display: "flex",
-          alignItems: "center",
-          fontWeight: "500",
-          fontSize: "16px",
-        }}
-      >
-        <img
-          src={user?.data?.profile ? server + user?.data?.profile : img}
-          alt=""
+    <>
+      <tr>
+        <td
           style={{
-            height: "40px",
-            width: "40px",
-            marginRight: "15px",
-            borderRadius: "50%",
+            display: "flex",
+            alignItems: "center",
+            fontWeight: "500",
+            fontSize: "16px",
           }}
-        />
-        {user?.data?.fistname} {user?.data?.lastname}
-      </td>
-      <td
-        style={{
-          color: "rgba(124, 83, 153, 1)",
-          fontWeight: "500",
-          fontSize: "18px",
-        }}
-      >
-        {gig?.data?.title}
-      </td>
-      <td style={{ textAlign: "center" }}>
-        <span
+        >
+          <img
+            src={user?.data?.profile ? server + user?.data?.profile : img}
+            alt=""
+            style={{
+              height: "40px",
+              width: "40px",
+              marginRight: "15px",
+              borderRadius: "50%",
+            }}
+          />
+          {user?.data?.fistname} {user?.data?.lastname}
+        </td>
+        <td
           style={{
-            display: "block",
+            color: "rgba(124, 83, 153, 1)",
             fontWeight: "500",
             fontSize: "18px",
           }}
         >
-          {item?.startDate}
+          {gig?.data?.title}
+        </td>
+        <td style={{ textAlign: "center" }}>
           <span
             style={{
               display: "block",
-              fontWeight: "400",
-              color: "gray",
+              fontWeight: "500",
+              fontSize: "18px",
             }}
           >
-            {item?.time}
+            {item?.startDate}
+            <span
+              style={{
+                display: "block",
+                fontWeight: "400",
+                color: "gray",
+              }}
+            >
+              {item?.time}
+            </span>
           </span>
-        </span>
-      </td>
-      <td style={{ fontWeight: "600", fontSize: "22px" }}>
-        {gig?.data?.price}
-      </td>
-      <td>
-        <button
-          style={{
-            backgroundColor: "rgba(124, 83, 153, 1)",
-            color: "white",
-            border: "1px solid white",
-            padding: "7px 20px 7px 20px",
-            borderRadius: "30px",
-            width: "150px",
-            fontWeight: "500",
-            fontSize: "13px",
-          }}
-        >
-          {gig?.data?.status === "progress" ? "Active" : gig?.data?.status}
-        </button>
-      </td>
-      <td className="position-relative ">
-        {!isAction ? (
-          <span
-            onClick={() => setAction(!isAction)}
-            style={{ cursor: "pointer" }}
-            className="p-2  rounded-circle bg-light"
+        </td>
+        <td style={{ fontWeight: "600", fontSize: "22px" }}>
+          ${gig?.data?.price}
+        </td>
+        <td>
+          <button
+            onClick={() => gig?.data?.status === "review" && handleSet()}
+            style={{
+              backgroundColor: "rgba(124, 83, 153, 1)",
+              color: "white",
+              border: "1px solid white",
+              padding: "7px 20px 7px 20px",
+              borderRadius: "30px",
+              width: "150px",
+              fontWeight: "500",
+              fontSize: "13px",
+            }}
           >
-            <PiDotsThreeOutlineFill size={25} />
-          </span>
-        ) : (
-          <span
-            onClick={() => setAction(!isAction)}
-            style={{ cursor: "pointer" }}
-            className="p-2  rounded-circle bg-light"
+            {gig?.data?.status === "review"
+              ? "Give Review"
+              : gig?.data?.status === "progress"
+              ? "Active"
+              : gig?.data?.status}
+          </button>
+        </td>
+        <td className="position-relative ">
+          {!isAction ? (
+            <span
+              onClick={() => setAction(!isAction)}
+              style={{ cursor: "pointer" }}
+              className="p-2  rounded-circle bg-light"
+            >
+              <PiDotsThreeOutlineFill size={25} />
+            </span>
+          ) : (
+            <span
+              onClick={() => setAction(!isAction)}
+              style={{ cursor: "pointer" }}
+              className="p-2  rounded-circle bg-light"
+            >
+              <BsX size={25} />
+            </span>
+          )}
+          <ul
+            style={{ listStyle: "none", zIndex: "4" }}
+            className={`d-flex threeDot px-0 rounded  flex-column bg-light  threeDot-${
+              isAction ? "open" : "close"
+            } gap-3 mt-0  left-0 position-absolute`}
           >
-            <BsX size={25} />
-          </span>
-        )}
-        <ul
-          style={{ listStyle: "none", zIndex: "4" }}
-          className={`d-flex threeDot px-0 rounded  flex-column bg-light  threeDot-${
-            isAction ? "open" : "close"
-          } gap-3 mt-0  left-0 position-absolute`}
-        >
-          <li className="p-1 px-2 ">Complete</li>
-          <li className="p-1 px-2 ">Cancel</li>
-          <li className="p-1 px-2 ">Review</li>
-        </ul>
-      </td>
-    </tr>
+            <li className="p-1 px-2 ">Complete</li>
+            <li className="p-1 px-2 ">Cancel</li>
+            <li onClick={() => handleSet()} className="p-1 px-2 ">
+              Review
+            </li>
+          </ul>
+        </td>
+      </tr>
+    </>
   );
 };

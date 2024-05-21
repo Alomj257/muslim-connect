@@ -1,10 +1,20 @@
 import React from "react";
-import Avatar from "../../../assets/GigsView/Avatar.png";
 import StarSvg from "../../../assets/GigsView/StarSvg";
 import { useGetAuthByIdQuery } from "../../../ApiService/AuthSlice/AuthSlice";
+import { useGetAllReviewByUserIdQuery } from "../../../ApiService/GigsService/GigsService";
+import { server } from "../../../ApiService/Axios";
 
 const LeftContaineerHead = ({ gig }) => {
   const user = useGetAuthByIdQuery(gig?.userId);
+  const reviews = useGetAllReviewByUserIdQuery(gig?.userId);
+  console.log(reviews);
+  const calCulateRating = () => {
+    let rating = 0;
+    reviews?.data?.forEach((ele) => {
+      rating += ele?.rating;
+    });
+    return Math.ceil(rating / reviews?.data?.length);
+  };
   return (
     <>
       <h4 style={{ marginTop: "30px", marginBottom: "30px" }}>{gig?.title}</h4>
@@ -16,8 +26,8 @@ const LeftContaineerHead = ({ gig }) => {
         }}
       >
         <img
-          src={Avatar}
-          alt=""
+          src={server + user?.data?.profile}
+          alt="profile"
           srcset=""
           style={{
             height: "70px",
@@ -40,7 +50,7 @@ const LeftContaineerHead = ({ gig }) => {
           >
             <StarSvg />
             <span style={{ marginLeft: "10px" }}>
-              5.0 <span>(28)</span>
+              {calCulateRating() || 0.0} <span>({reviews?.data?.length})</span>
             </span>
           </div>
         </div>

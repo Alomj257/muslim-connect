@@ -22,11 +22,19 @@ root.render(
   <React.StrictMode>
     {/* <StripeWrapper> */}
     <BrowserRouter>
+      {/* <Auth0Provider
+    domain="dev-oklh8lhzjylydsvu.us.auth0.com"
+    clientId="jGdVx3pXslhZx2XCuVeyGal11CV6DNYO"
+    authorizationParams={{
+      redirect_uri: window.location.origin
+    }}
+  > */}
       <AuthProvider>
         <Provider store={store}>
           <App />
         </Provider>
       </AuthProvider>
+      {/* </Auth0Provider> */}
     </BrowserRouter>
     {/* </StripeWrapper> */}
   </React.StrictMode>

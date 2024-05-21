@@ -19,14 +19,10 @@ AuthRoutes.post("/register", uploadMuiltiFieldFiles("./Public/User"), register);
 AuthRoutes.post("/resend/token", resendToken);
 AuthRoutes.get("/verify/:email/:token", verifyEmail);
 AuthRoutes.post("/login", login);
-AuthRoutes.put(
-  "/update/:id",
-  uploadFile("./Public/Profile"),
-  updateUserDetails
-);
+AuthRoutes.put("/update/:id", uploadFile("./Public/User"), updateUserDetails);
 AuthRoutes.put(
   "/update/img/:id",
-  uploadFile("./Public/Profile"),
+  uploadFile("./Public/User"),
   updateUserDetails
 );
 AuthRoutes.get("/users", getAllUsers);

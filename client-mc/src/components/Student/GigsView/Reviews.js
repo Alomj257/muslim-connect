@@ -1,8 +1,25 @@
 import React from "react";
-import FiveStarSvg from "../../../assets/GigsView/FiveStarSvg";
 import ProfileImg from "../../../assets/GigsView/Ellipse 22.png";
+import { useGetAllReviewByGigIdQuery } from "../../../ApiService/GigsService/GigsService";
+import { useGetAuthByIdQuery } from "../../../ApiService/AuthSlice/AuthSlice";
+import { server } from "../../../ApiService/Axios";
+import { FaStar } from "react-icons/fa6";
 
-const Reviews = () => {
+const Reviews = ({ gig }) => {
+  const { data, isLoading, isError } = useGetAllReviewByGigIdQuery(gig?._id);
+  const calCulateAvg = () => {
+    let avgRat = 0;
+    if (Array.isArray(data)) {
+      data.forEach((ele) => {
+        avgRat += ele?.rating;
+      });
+    }
+    return Math.ceil(avgRat / data?.length);
+  };
+  if (data?.length === 0) {
+    return <h3 className="text-center fw-bold"> No Reviews</h3>;
+  }
+
   return (
     <div
       style={{
@@ -33,7 +50,7 @@ const Reviews = () => {
               fontSize: "28px",
             }}
           >
-            139 reviws from this Gig
+            {data?.length} reveiws from this Gig
           </h2>
           <div
             style={{
@@ -43,14 +60,16 @@ const Reviews = () => {
               gap: "5px",
             }}
           >
-            <FiveStarSvg />
+            {Array.from({ length: calCulateAvg() || 0 }).map((_, key) => (
+              <FaStar size={30} key={key} />
+            ))}
             <h1
               style={{
                 fontWeight: 600,
                 fontSize: "28px",
               }}
             >
-              5
+              {calCulateAvg()}
             </h1>
           </div>
         </div>
@@ -61,8 +80,14 @@ const Reviews = () => {
           marginTop: "2rem",
         }}
       >
-        <ReviewsPersons />
-        <ReviewsPersons />
+        {isLoading ? (
+          "Loading....."
+        ) : isError ? (
+          <div className="text-center text-danger"> Fetching error occured</div>
+        ) : (
+          data?.map((val, index) => <ReviewsPersons val={val} index={index} />)
+        )}
+        {/* <ReviewsPersons /> */}
       </div>
     </div>
   );
@@ -70,9 +95,11 @@ const Reviews = () => {
 
 export default Reviews;
 
-const ReviewsPersons = () => {
+const ReviewsPersons = ({ val, index }) => {
+  const user = useGetAuthByIdQuery(val?.userId);
   return (
     <div
+      key={index}
       style={{
         display: "flex",
         alignItems: "start",
@@ -88,8 +115,8 @@ const ReviewsPersons = () => {
           aspectRatio: 1 / 1,
           // height: '200px'
         }}
-        src={ProfileImg}
-        alt=""
+        src={server + user?.data?.profile || ProfileImg}
+        alt="profile"
       />
       <div
         style={{
@@ -106,7 +133,7 @@ const ReviewsPersons = () => {
             marginLeft: "10px",
           }}
         >
-          Ali Mohammad
+          {user?.data?.firstname} {user?.data?.lastname}
         </h1>
         <div
           style={{
@@ -122,7 +149,9 @@ const ReviewsPersons = () => {
               gap: "5px",
             }}
           >
-            <FiveStarSvg />
+            {Array.from({ length: val?.rating || 0 }).map((_, i) => (
+              <FaStar size={20} key={i} />
+            ))}
             <h1
               style={{
                 fontWeight: 600,
@@ -130,7 +159,7 @@ const ReviewsPersons = () => {
                 paddingRight: "1rem",
               }}
             >
-              5
+              {val?.rating}
             </h1>
           </div>
           <p
@@ -142,7 +171,7 @@ const ReviewsPersons = () => {
               color: "gray",
             }}
           >
-            1 month ago
+            {new Date(val?.createdAt).toLocaleTimeString()}
           </p>
         </div>
         <p
@@ -152,9 +181,7 @@ const ReviewsPersons = () => {
             fontWeight: 500,
           }}
         >
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit rerum
-          minus voluptatem nam ut corporis veniam facere. Neque quis nulla at
-          nam, consequatur, fugit distinctio aperiam, earum esse magnam nihil.
+          {val?.message}
         </p>
       </div>
     </div>

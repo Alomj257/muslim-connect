@@ -1,14 +1,22 @@
 import React from "react";
 import "./Item.css";
 import cartImg from "../../assets/Student/cartImg.png";
-import profileImg from "../../assets/Student/Ellipse 21.png";
-import starImg from "../../assets/Student/material-symbols_star.png";
 import { useNavigate } from "react-router-dom";
 import { useGetAuthByIdQuery } from "../../ApiService/AuthSlice/AuthSlice";
 import { server } from "../../ApiService/Axios";
+import { FaStar } from "react-icons/fa6";
+import { useGetAllReviewByGigIdQuery } from "../../ApiService/GigsService/GigsService";
 const Item = ({ data, index }) => {
   const navigate = useNavigate();
   const user = useGetAuthByIdQuery(data?.userId);
+  const reviews = useGetAllReviewByGigIdQuery(data?._id);
+  const calCulateRating = () => {
+    let rating = 0;
+    reviews?.data?.forEach((ele) => {
+      rating += ele?.rating;
+    });
+    return Math.ceil(rating / reviews?.data?.length);
+  };
   return (
     <div
       key={index}
@@ -26,7 +34,7 @@ const Item = ({ data, index }) => {
         <div class="cart-item-info">
           <div style={{ marginTop: "15px" }}>
             <img
-              src={profileImg}
+              src={server + user?.data?.profile}
               className="profileImg"
               alt=""
               style={{ marginRight: "20px" }}
@@ -37,13 +45,16 @@ const Item = ({ data, index }) => {
             >
               {user?.data?.firstname} {user?.data?.lastname}
             </p>
-            <p class="cart-item-price">{data?.price}</p>
+            <p class="cart-item-price">${data?.price}</p>
           </div>
 
           <p className="itemDesc">{data?.title}</p>
-          <div className="rating">
-            <img src={starImg} alt="Star" className="star" />
-            {/* <span className="rating-count">(2 reviews)</span> */}
+          <div className="rating  d-flex gap-2 align-items-center flex-start justify-content-start">
+            <FaStar size={25} />
+            <span className="fw-bold fs-5">{calCulateRating() || 0}</span>
+            <span className="rating-count">
+              ({reviews?.data?.length} reviews)
+            </span>
           </div>
         </div>
       </div>

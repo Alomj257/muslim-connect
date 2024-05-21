@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Student.css";
 import Profile from "./Profile/Profile";
 import Learning from "./ActiveLearning/Learning";
@@ -28,11 +28,18 @@ const Student = () => {
     ArrayToString(user?.data?.skills, "skill");
   const course = useGetAllGigsQuery();
   const progress = useGetSessionByUserIdQuery(auth?.user?._id);
-  // const { data: gigs, error, isLoading } = useGetFilterGigsQuery(params);
-  // const { filtered } = useGetFilterGigsQuery(params);
-  // console.log(filtered);
-  // const consultant = useGetAllAuthQuery();
-  console.log(progress);
+  const [filteredSession, setFilteredSessions] = useState(progress?.data);
+
+  useEffect(() => {
+    const filterProgress = () => {
+      const filtered = progress?.data?.filter((item) => {
+        const gig = course?.data?.find((g) => g?._id === item?.gigId);
+        return gig?.status?.toLowerCase()?.includes("progress");
+      });
+      setFilteredSessions(filtered);
+    };
+    filterProgress();
+  }, [course?.data, progress?.data]);
   return (
     <div className="student-container">
       <div>
@@ -72,7 +79,7 @@ const Student = () => {
             ? "Loading...."
             : progress?.isError
             ? "Course fetching error "
-            : progress?.data?.map((val, index) => (
+            : filteredSession?.map((val, index) => (
                 <Learning index={index} value={val} />
               ))}
         </div>

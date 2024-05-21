@@ -103,11 +103,10 @@ export const gigsApi = createApi({
     }),
 
     //  review end points
-
     createRiview: builder.mutation({
       query: (data) => {
         return {
-          url: "/gigs/user/review/",
+          url: "/gigs/review/data/",
           method: "POST",
           body: data,
           headers: {
@@ -121,7 +120,7 @@ export const gigsApi = createApi({
       query: (data) => {
         const { id, ...remain } = data;
         return {
-          url: `/gigs/user/review/${id}`,
+          url: `/gigs/review/data/${id}`,
           body: remain,
           method: "PUT",
           headers: {
@@ -133,7 +132,7 @@ export const gigsApi = createApi({
     deleteReview: builder.mutation({
       query: (id) => {
         return {
-          url: `/gigs/user/review/${id}`,
+          url: `/gigs/review/data/${id}`,
           method: "DELETE",
           headers: {
             "Content-type": "application/json; charset=UTF-8",
@@ -144,7 +143,15 @@ export const gigsApi = createApi({
     getAllReviewByUserId: builder.query({
       query: (id) => {
         return {
-          url: `/gigs/user/review/user/${id}`,
+          url: `/gigs/review/data/user/${id}`,
+          method: "GET",
+        };
+      },
+    }),
+    getAllReviews: builder.query({
+      query: (id) => {
+        return {
+          url: `/gigs/review/data/`,
           method: "GET",
         };
       },
@@ -152,7 +159,7 @@ export const gigsApi = createApi({
     getAllReviewByGigId: builder.query({
       query: (id) => {
         return {
-          url: `/gigs/user/review/gig/${id}`,
+          url: `/gigs/review/data/gig/${id}`,
           method: "GET",
         };
       },
@@ -173,6 +180,7 @@ export const {
   useCreateRiviewMutation,
   useUpdateReviewMutation,
   useDeleteReviewMutation,
+  useGetAllReviewsQuery,
   useGetAllReviewByGigIdQuery,
   useGetAllReviewByUserIdQuery,
 } = gigsApi;

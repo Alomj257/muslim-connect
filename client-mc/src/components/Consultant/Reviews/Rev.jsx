@@ -1,40 +1,43 @@
 import React from "react";
-import profileImg from "../../../assets/Student/Ellipse 21.png";
 import { MdStar } from "react-icons/md";
-const Rev = () => {
+import { useGetAuthByIdQuery } from "../../../ApiService/AuthSlice/AuthSlice";
+import { server } from "../../../ApiService/Axios";
+const Rev = ({ review }) => {
+  const { data } = useGetAuthByIdQuery(review?.userId);
   return (
     <>
       <div className="review">
         <div className="d-flex gap-4 ">
           <div
-            style={{ width: "150px", aspectRatio: "1" }}
+            style={{ width: "50px", aspectRatio: "1" }}
             className="d-flex align-items-center mb-auto my-2"
           >
-            <img src={profileImg} alt="profile" className="w-100 h-100 " />
+            <img
+              src={server + data?.profile}
+              alt="profile"
+              className="w-100 h-100 rounded-circle "
+            />
           </div>
           <div>
-            <h5>Ali Ahmad</h5>
+            <h5>
+              {data?.firstname} {data?.lastname}
+            </h5>
             <div className="d-flex  align-items-center">
               <span className="d-flex align-items-center">
-                <MdStar size={25} />
-                <MdStar size={25} />
-                <MdStar size={25} />
-                <MdStar size={25} />
-                <MdStar size={25} />
+                {Array.from({ length: review?.rating }).map((_, key) => (
+                  <MdStar size={25} key={key} />
+                ))}
               </span>
               <div className="d-flex gap-2 align-items-center">
-                <span className="fw-semibold fs-5">5</span>{" "}
+                <span className="fw-semibold fs-5">{review?.rating}</span>{" "}
                 <span className="fs-bold">|</span>
-                <span className="text-muted">1 Month</span>
+                <span className="text-muted">
+                  {new Date(review?.createdAt).toLocaleTimeString()}
+                </span>
               </div>
             </div>
             <div className="my-3" style={{ fontSize: "15px" }}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla
-              esse nobis quis voluptates voluptate praesentium, aliquid quas
-              eaque magnam voluptatem veritatis quam quasi ipsam error harum
-              delectus pariatur debitis eveniet! Fuga deserunt nisi, harum atque
-              cumque iste modi praesentium quos ad quisquam optio fugit nesciunt
-              rem. Beatae distinctio enim doloribus,
+              {review?.message}
             </div>
           </div>
         </div>

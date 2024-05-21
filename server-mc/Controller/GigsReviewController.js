@@ -58,7 +58,7 @@ exports.getAllReviews = async (req, res) => {
 
 exports.getAllReviewByGigId = async (req, res) => {
   try {
-    const Reviews = await GigsReview.find({ gigsId: req.params.id });
+    const Reviews = await GigsReview.find({ gigId: req.params.id });
     res.status(201).json(Reviews);
   } catch (error) {
     console.log(error);
@@ -67,7 +67,7 @@ exports.getAllReviewByGigId = async (req, res) => {
 };
 exports.getAllReviewByUserId = async (req, res) => {
   try {
-    const Reviews = await GigsReview.find({ gigsId: req.params.id });
+    const Reviews = await GigsReview.find({ userId: req.params.id });
     res.status(201).json(Reviews);
   } catch (error) {
     console.log(error);

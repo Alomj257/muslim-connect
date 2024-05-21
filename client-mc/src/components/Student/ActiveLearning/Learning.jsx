@@ -4,6 +4,7 @@ import learningImg from "../../../assets/Student/learningImg.png";
 import profileImg from "../../../assets/Student/Ellipse 21.png";
 import { useGetAuthByIdQuery } from "../../../ApiService/AuthSlice/AuthSlice";
 import { useGetGigsByIdQuery } from "../../../ApiService/GigsService/GigsService";
+import { server } from "../../../ApiService/Axios";
 const Learning = ({ value, index }) => {
   const user = useGetAuthByIdQuery(value?.consultantId);
   const gig = useGetGigsByIdQuery(value?.gigId);
@@ -11,8 +12,18 @@ const Learning = ({ value, index }) => {
 
   return (
     <div key={index} className="card cus">
-      <img src={learningImg} className="lcart" alt="l cart" />
-      <img src={profileImg} className="profileImg" alt="profile" />
+      {gig?.data?.gigsImages && (
+        <img
+          src={server + gig?.data?.gigsImages[0]?.file}
+          className="lcart"
+          alt="l cart"
+        />
+      )}
+      <img
+        src={server + user?.data?.profile}
+        className="profileImg"
+        alt="profile"
+      />
       <p style={{ fontWeight: "bold", marginLeft: "-85px" }}>
         {user?.data?.firstname} {user?.data?.lastname}
       </p>
@@ -22,7 +33,7 @@ const Learning = ({ value, index }) => {
       </div>
       <div>
         <p>Schedule on</p>
-        <p style={{ fontWeight: "bold" }}>{value?.data}</p>
+        <p style={{ fontWeight: "bold" }}>{value?.date}</p>
       </div>
       <div>
         <p>Status</p>

@@ -12,9 +12,38 @@ import ArrowVio from "../../../assets/GigsView/ArrowVio";
 import RightContaineer from "./RightContaineer";
 import { useLocation, useNavigate } from "react-router-dom";
 import { server } from "../../../ApiService/Axios";
+import { chatCreate } from "../../../ApiService/ChatService/ChatService";
+import { toast } from "react-toastify";
+import { useAuth } from "../../../context/AuthContext";
 function GigsView() {
   const navigate = useNavigate();
   const { state } = useLocation();
+  const [{ user }] = useAuth();
+  const handleMassage = async (currentUser, oppositeUser) => {
+    try {
+      if (!currentUser || !oppositeUser) {
+        toast.error("something wrong");
+        return;
+      }
+      if (currentUser === oppositeUser) {
+        toast.error("you can not apply this job");
+        return;
+      }
+      const { data } = await chatCreate({
+        senderId: currentUser,
+        receiverId: oppositeUser,
+      });
+      if (data.message) {
+        toast.error(data.message);
+        return;
+      } else {
+        navigate("/student/chat", { state: { currentUser, oppositeUser } });
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("something went wrong");
+    }
+  };
   return (
     <div>
       <SubNav />
@@ -89,7 +118,7 @@ function GigsView() {
             <RightContaineer gig={state} />
             <div style={{ width: "100%", marginTop: "30px" }}>
               <button
-                onClick={() => navigate("/student/chat")}
+                onClick={() => handleMassage(user?._id, state?.userId)}
                 className="button_book"
                 style={{
                   display: "flex",

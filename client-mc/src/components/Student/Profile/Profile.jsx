@@ -28,12 +28,13 @@ import UpdateUser, {
   Skills,
   SocialMedia,
 } from "./UpdateProfile/UpdateUser";
+import { server } from "../../../ApiService/Axios";
+import { updateUser } from "../../../ApiService/Auth/Auth";
 
 const Profile = () => {
   const [auth] = useAuth();
   const [id, setId] = useState(auth?.user?._id);
   const { data, refetch } = useGetAuthByIdQuery(id);
-  console.log(data);
   const user = data;
   const [isEditDesc, setIsDesc] = useState(false);
   const [description, setDesc] = useState(user?.description);
@@ -77,18 +78,61 @@ const Profile = () => {
   const onUpdate = () => {
     refetch();
   };
+  const [profile, setprofile] = useState(null);
+  const handlePic = async (e) => {
+    const { files } = e.target;
+    if (files) {
+      setprofile(files[0]);
+      try {
+        const formData = new FormData();
+        formData.append("file", files[0]);
+        const { data } = await updateUser(user?._id, formData);
+        console.log(data);
+        if (data?.message) {
+          toast.error(data?.message);
+          return;
+        }
+        onUpdate();
+        toast.success(data);
+      } catch (error) {
+        console.log(error);
+        console.log(error?.response?.data?.message || error?.response?.data);
+      }
+    }
+  };
 
   return (
     <div className="profile-container">
-      <div class="profile-picture">
-        <img src={profilePic} alt="profile pic" />
+      <div
+        class="profile-picture"
+        style={{ width: "200px", aspectRatio: "1/1" }}
+      >
+        <label htmlFor="profile">
+          {" "}
+          <img
+            src={
+              profile ? URL.createObjectURL(profile) : server + user?.profile
+            }
+            alt="profile pic"
+            className="w-100 h-100 rounded-circle"
+          />
+        </label>
+        <input
+          type="file"
+          id="profile"
+          style={{ opacity: 0 }}
+          onChange={handlePic}
+        />
       </div>
       <div class="profile-info w-100">
-        <div className="d-flex w-100 align-items-center ">
-          <h6 className="fw-semibold ms-auto text-capitalize">
+        <div className="d-flex w-100 justify-content-between align-items-center ">
+          <h6 className="fw-semibold mx-auto text-capitalize">
             {user?.firstname} {user?.lastname}
           </h6>
-          <MdEdit className="ms-auto" size={20} />
+          <label htmlFor="profile">
+            {" "}
+            <MdEdit className="ms-auto" size={20} />
+          </label>
         </div>
         <p>
           Loyality Rank:{" "}

@@ -88,7 +88,10 @@ const Chat = () => {
               >
                 <FaAnglesRight size={20} />
               </span>
-              <RightSideProfile currentChat={currentChat} />
+              <RightSideProfile
+                currentUser={auth?.user?._id}
+                currentChat={currentChat}
+              />
             </div>
           </>
         </div>

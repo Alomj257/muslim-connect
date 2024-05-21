@@ -11,7 +11,6 @@ const Consultant = () => {
   const [{ user }] = useAuth();
   console.log(user);
   const { data } = useGetGigsByUserIdQuery(user?._id);
-  console.log(data);
   return (
     <div className="student-container">
       <div>
@@ -86,7 +85,7 @@ const Consultant = () => {
           </div>
         </div>
         <div className="w-100">
-          <Review />
+          <Review gigs={data} />
         </div>
       </div>
     </div>

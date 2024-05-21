@@ -82,13 +82,17 @@ export const authApi = createApi({
         console.log("Actual Update Post: ", data);
         const formData = new FormData();
         for (let key in data) {
-          formData.append(
-            key,
-            Array.isArray(data[key]) ? JSON.stringify(data[key]) : data[key]
-          );
+          if (key !== "file") {
+            formData.append(
+              key,
+              Array.isArray(data[key]) ? JSON.stringify(data[key]) : data[key]
+            );
+          } else {
+            formData.append(key, data[key]);
+          }
         }
         return {
-          url: `/auth//update/${id}`,
+          url: `/auth/update/${id}`,
           method: "PUT",
           body: formData,
           formData: true,

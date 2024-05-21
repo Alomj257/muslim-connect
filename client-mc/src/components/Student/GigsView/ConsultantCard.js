@@ -6,6 +6,8 @@ import { chatCreate } from "../../../ApiService/ChatService/ChatService";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
+import { useGetAllReviewByUserIdQuery } from "../../../ApiService/GigsService/GigsService";
+import { server } from "../../../ApiService/Axios";
 
 const ConsultantCard = ({ gig }) => {
   const user = useGetAuthByIdQuery(gig?.userId);
@@ -135,6 +137,16 @@ const ConsultantCard = ({ gig }) => {
 export default ConsultantCard;
 
 const ConsultantCardHead = ({ user, gig }) => {
+  const reviews = useGetAllReviewByUserIdQuery(gig?.userId);
+  const calculateRate = () => {
+    let avgRate = 0;
+    if (Array.isArray(reviews.data)) {
+      reviews?.data?.forEach((ele) => {
+        avgRate += ele?.rating;
+      });
+    }
+    return avgRate / reviews?.data?.length || 0;
+  };
   return (
     <>
       <div
@@ -144,8 +156,8 @@ const ConsultantCardHead = ({ user, gig }) => {
         }}
       >
         <img
-          src={Avatar}
-          alt=""
+          src={server + user?.data?.profile}
+          alt="profile"
           srcset=""
           style={{
             height: "120px",
@@ -187,7 +199,7 @@ const ConsultantCardHead = ({ user, gig }) => {
                 color: "grey",
               }}
             >
-              5.0
+              {calculateRate() || 0.0}
               <span
                 style={{
                   marginLeft: "10px",
@@ -196,7 +208,7 @@ const ConsultantCardHead = ({ user, gig }) => {
                   color: "black",
                 }}
               >
-                (28)
+                ({reviews?.data?.length || 0})
               </span>
             </span>
           </p>
