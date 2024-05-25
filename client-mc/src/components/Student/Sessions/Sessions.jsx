@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import SearchSvg from "../../../assets/Session/Search_Svg";
 import "./Session.css";
-import { useGetSessionByUserIdQuery } from "../../../ApiService/SessionSlice/SessionSlice";
+import {
+  useCancelSessionMutation,
+  useCompleteSessionMutation,
+  useGetSessionByUserIdQuery,
+} from "../../../ApiService/SessionSlice/SessionSlice";
 import { useAuth } from "../../../context/AuthContext";
 import { server } from "../../../ApiService/Axios";
 import {
@@ -12,6 +16,7 @@ import { useGetAuthByIdQuery } from "../../../ApiService/AuthSlice/AuthSlice";
 import { PiDotsThreeOutlineFill } from "react-icons/pi";
 import { BsX } from "react-icons/bs";
 import Review from "../../Review/Review";
+import { toast } from "react-toastify";
 function Session() {
   const [{ user }] = useAuth();
   const sessions = useGetSessionByUserIdQuery(user?._id);
@@ -21,7 +26,7 @@ function Session() {
   const [gigId, setGigId] = useState("");
   useEffect(() => {
     setFilteredSessions(sessions?.data);
-  }, [sessions?.data]);
+  }, [sessions?.data, sessions?.refetch]);
   const setDetails = (gigId, sessionId) => {
     setGigId(gigId);
     setSessionId(sessionId);
@@ -38,6 +43,10 @@ function Session() {
       );
     });
     setFilteredSessions(filtered);
+  };
+
+  const handleRefetch = () => {
+    sessions.refetch();
   };
   return (
     <div style={{ paddingBottom: "5%" }}>
@@ -81,6 +90,7 @@ function Session() {
                     isReview={isReview}
                     setDetails={setDetails}
                     item={item}
+                    handleRefetch={handleRefetch}
                     time={item?.time}
                     status={"ACTIV"}
                   />
@@ -181,12 +191,53 @@ const Type = ({ name, num }) => {
   );
 };
 
-const TableRow = ({ item, img, setDetails }) => {
+const TableRow = ({ item, img, setDetails, handleRefetch }) => {
   const user = useGetAuthByIdQuery(item?.consultantId);
   const gig = useGetGigsByIdQuery(item?.gigId);
+  const [cancelSession, { error, isError, isSuccess }] =
+    useCancelSessionMutation();
+  const [completeSession, other] = useCompleteSessionMutation();
   const [isAction, setAction] = useState(false);
   const handleSet = () => {
     setDetails(gig?.data?._id, item?._id);
+  };
+  const handleComplete = async (id) => {
+    try {
+      const { data } = await completeSession(id);
+      if (other?.isError) {
+        toast.error(other?.error?.data?.message || other?.error?.data);
+        return;
+      }
+      if (data?.message) {
+        toast.error(data?.message);
+        return;
+      }
+      handleRefetch();
+      toast.success(data);
+    } catch (error) {
+      console.log(error);
+      toast.error("something went wrong...!");
+    }
+  };
+  const handleCancel = async (id) => {
+    try {
+      const { data } = await cancelSession(id);
+      if (isError) {
+        toast.error(error?.data?.message || error?.data);
+        return;
+      }
+      if (data?.message) {
+        toast.error(data?.message);
+        return;
+      }
+      if (isSuccess) {
+        handleRefetch();
+        toast.success(data);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("something went wrong...!");
+    }
   };
   return (
     <>
@@ -288,9 +339,21 @@ const TableRow = ({ item, img, setDetails }) => {
               isAction ? "open" : "close"
             } gap-3 mt-0  left-0 position-absolute`}
           >
-            <li className="p-1 px-2 ">Complete</li>
-            <li className="p-1 px-2 ">Cancel</li>
-            <li onClick={() => handleSet()} className="p-1 px-2 ">
+            {user?.data?.role === "CONSULTANT" && (
+              <li
+                className="p-1 py-2 px-2 fw-bold"
+                onClick={() => handleComplete(item?._id)}
+              >
+                Complete
+              </li>
+            )}
+            <li
+              className="p-1 py-2 px-2 fw-bold "
+              onClick={() => handleCancel(item?._id)}
+            >
+              Cancel
+            </li>
+            <li onClick={() => handleSet()} className="p-1 fw-bold py-2 px-2 ">
               Review
             </li>
           </ul>

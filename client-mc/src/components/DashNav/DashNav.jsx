@@ -87,7 +87,7 @@ const DashNav = ({ navData, type }) => {
             </span>
           </li>
           <NavLink
-            to="/student/chat"
+            to={user?.role === "STUDENT" ? "/student/chat" : "/consultant/chat"}
             className={(nav) =>
               nav.isActive
                 ? "navbar-active text-decoration-none"

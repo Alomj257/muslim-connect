@@ -3,10 +3,10 @@ import "./Register.css";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 // import { registerUserService } from "../../../ApiService/Auth/Auth";
-import { useCreateAuthMutation } from "../../../ApiService/AuthSlice/AuthSlice";
 import { LuUploadCloud } from "react-icons/lu";
 import StudentSay from "./StudentSay";
 import ConsultantSay from "./ConsultantSay";
+import { registerUserService } from "../../../ApiService/Auth/Auth";
 // import {
 //   FaRegArrowAltCircleRight,
 //   FaRegArrowAltCircleLeft,
@@ -16,7 +16,7 @@ const Register = () => {
   const [role, setRole] = useState("STUDENT");
   const [user, setUser] = useState(null);
   const [more, setMore] = useState(false);
-  const [createAuth] = useCreateAuthMutation();
+  // const [createAuth] = useCreateAuthMutation();
   const handleChange = (e) => {
     const { name, files, value } = e.target;
     setUser({ ...user, [name]: files ? files[0] : value });
@@ -25,13 +25,13 @@ const Register = () => {
     e.preventDefault();
     try {
       user.role = role;
-      // const formdata = new FormData();
-      // for (const [name, value] of Object.entries(user)) {
-      //   formdata.append(name, value);
-      // }
+      const formdata = new FormData();
+      for (const [name, value] of Object.entries(user)) {
+        formdata.append(name, value);
+      }
       // formdata.append("role", role);
-      // const { data } = await registerUserService(formdata);
-      const { data } = await createAuth(user);
+      const { data } = await registerUserService(formdata);
+      // const { data } = await createAuth(user);
       console.log(data);
       if (data.message) {
         toast.error(data.message);

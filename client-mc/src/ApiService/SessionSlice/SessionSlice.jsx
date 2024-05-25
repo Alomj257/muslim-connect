@@ -59,6 +59,28 @@ export const sessionApi = createApi({
         };
       },
     }),
+    completeSession: builder.mutation({
+      query: (id) => {
+        return {
+          url: `/complete/${id}`,
+          method: "POST",
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        };
+      },
+    }),
+    cancelSession: builder.mutation({
+      query: (id) => {
+        return {
+          url: `/cancel/${id}`,
+          method: "POST",
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        };
+      },
+    }),
 
     // end end points
   }),
@@ -71,4 +93,6 @@ export const {
   useCreateSessionMutation,
   useUpdateSessionMutation,
   useDeleteSessionMutation,
+  useCompleteSessionMutation,
+  useCancelSessionMutation,
 } = sessionApi;

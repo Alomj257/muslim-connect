@@ -3,6 +3,7 @@ import "./Review.css";
 import { MdStar } from "react-icons/md";
 import Rev from "./Rev";
 import { useGetAllReviewByGigIdQuery } from "../../../ApiService/GigsService/GigsService";
+import { useAuth } from "../../../context/AuthContext";
 
 const Review = ({ gigs }) => {
   const [totalReview, setTotalReview] = useState(0);
@@ -44,6 +45,7 @@ export default Review;
 const GigReview = ({ gig, index, setTotalRating, setTotalReview }) => {
   const reviews = useGetAllReviewByGigIdQuery(gig?._id);
   console.log(setTotalRating, setTotalReview);
+  const [{ user }] = useAuth();
   useEffect(() => {
     const Calculate = () => {
       let rat = 0;
@@ -58,12 +60,15 @@ const GigReview = ({ gig, index, setTotalRating, setTotalReview }) => {
   }, [reviews?.data]);
   return (
     <>
-      {reviews?.data?.map((val, index) => (
-        <>
-          <hr />
-          <Rev review={val} />
-        </>
-      ))}
+      {reviews?.data?.map(
+        (val, index) =>
+          val?.userId !== user?._id && (
+            <>
+              <hr />
+              <Rev review={val} />
+            </>
+          )
+      )}
     </>
   );
 };

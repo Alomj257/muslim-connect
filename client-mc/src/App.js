@@ -27,6 +27,10 @@ import ChatPage from "./pages/Chat/ChatPage";
 import Payment from "./PaymentHandler/Payment";
 import AddPayMethod from "./PaymentHandler/components/AddPayMethod";
 import PaymentScreen from "./PaymentHandler/components/PaymentScreen";
+import {
+  ConsultantProtect,
+  StudentProtect,
+} from "./ProtectRoutes/ProtectRoutes";
 function App() {
   return (
     <>
@@ -45,30 +49,34 @@ function App() {
         <Route path="/student-register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         {/* student */}
-        <Route path="/student" element={<StudentPage />}>
-          <Route path="" element={<StudentHome />} />
-          <Route path="loyalty" element={<LevelOverview />} />
-          <Route path="learning" element={<ConsultantList />} />
-          <Route path="subscription" element={<Subscription />} />
-          <Route path="sessions" element={<Sessions />} />
-          <Route path="chat" element={<ChatPage />} />
-          <Route path="gigsview" element={<GigsView />} />
-          <Route path="book" element={<BookConsultant />} />
-          <Route path="payment" element={<PaymentPage />} />
-          <Route path="addcard" element={<AddCard />} />
+        <Route path="/student" element={<StudentProtect />}>
+          <Route path="" element={<StudentPage />}>
+            <Route path="" element={<StudentHome />} />
+            <Route path="loyalty" element={<LevelOverview />} />
+            <Route path="learning" element={<ConsultantList />} />
+            <Route path="subscription" element={<Subscription />} />
+            <Route path="sessions" element={<Sessions />} />
+            <Route path="chat" element={<ChatPage />} />
+            <Route path="gigsview" element={<GigsView />} />
+            <Route path="book" element={<BookConsultant />} />
+            <Route path="payment" element={<PaymentPage />} />
+            <Route path="addcard" element={<AddCard />} />
+          </Route>
         </Route>
 
         {/* consultant */}
         <Route path="/découvrir" element={<SuccessSectionPage />} />
-        <Route path="/consultant" element={<ConsultantPage />}>
-          <Route path="" element={<ConsultantHome />} />
-          <Route path="gigs/create-gigs" element={<CreateGigsPage />} />
-          <Route path="gigs" element={<GigsPage />} />
-          <Route path="level" element={<LevelOverviewPage />} />
-          <Route path="subscription" element={<SubscriptionPage />} />
-          <Route path="sessions" element={<SessionsPage />} />
-          <Route path="payment" element={<PaymentPage />} />
-          <Route path="chat" element={<ChatPage />} />
+        <Route path="/consultant" element={<ConsultantProtect />}>
+          <Route path="" element={<ConsultantPage />}>
+            <Route path="" element={<ConsultantHome />} />
+            <Route path="gigs/create-gigs" element={<CreateGigsPage />} />
+            <Route path="gigs" element={<GigsPage />} />
+            <Route path="level" element={<LevelOverviewPage />} />
+            <Route path="subscription" element={<SubscriptionPage />} />
+            <Route path="sessions" element={<SessionsPage />} />
+            <Route path="payment" element={<PaymentPage />} />
+            <Route path="chat" element={<ChatPage />} />
+          </Route>
         </Route>
       </Routes>
     </>

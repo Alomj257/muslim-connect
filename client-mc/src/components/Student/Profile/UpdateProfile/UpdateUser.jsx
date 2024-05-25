@@ -113,7 +113,7 @@ const UpdateUser = ({ setEdu, user, onUpdate }) => {
           <button
             type="button"
             onClick={() => setEdu(false)}
-            className="w-100 p-2 bg-white fw-bold"
+            className="w-100 p-2 bg-white fw-bold text-danger border border-danger rounded"
           >
             Cancel
           </button>
@@ -190,7 +190,7 @@ export const LanguageUpdate = ({ setIsLang, user, onUpdate }) => {
         <div className="d-flex justify-content-between gap-3 align-items-center">
           <button
             onClick={() => setIsLang(false)}
-            className="w-100 p-2 bg-white fw-bold"
+            className="w-100 p-2 bg-white fw-bold text-danger border border-danger rounded"
           >
             Cancel
           </button>
@@ -246,7 +246,7 @@ export const Interest = ({ setIsIntrest, user, onUpdate }) => {
         <div className="d-flex justify-content-between gap-3 align-items-center">
           <button
             onClick={() => setIsIntrest(false)}
-            className="w-100 p-2 bg-white fw-bold"
+            className="w-100 p-2 bg-white fw-bold text-danger border border-danger rounded"
           >
             Cancel
           </button>
@@ -316,7 +316,7 @@ export const Skills = ({ setIsSkill, user, onUpdate }) => {
         <div className="d-flex justify-content-between gap-3 align-items-center">
           <button
             onClick={() => setIsSkill(false)}
-            className="w-100 p-2 bg-white fw-bold"
+            className="w-100 p-2 bg-white fw-bold text-danger border border-danger rounded"
           >
             Cancel
           </button>
@@ -389,7 +389,7 @@ export const SocialMedia = ({ setIsSocial, user, onUpdate }) => {
         <div className="d-flex justify-content-between gap-3 align-items-center">
           <button
             onClick={() => setIsSocial(false)}
-            className="w-100 p-2 bg-white fw-bold"
+            className="w-100 p-2 bg-white fw-bold text-danger border border-danger rounded"
           >
             Cancel
           </button>

@@ -9,6 +9,8 @@ exports.CreateSession = async (req, res) => {
     const sessions = await new Session(req.body).save();
     const gig = await Gigs.findById(gigId);
     gig.status = "progress";
+    sessions.status = "progress";
+    await sessions.save();
     await gig.save();
     await new Notification({
       modelId: sessions?._id,
@@ -103,5 +105,41 @@ exports.makePayment = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });
+  }
+};
+
+exports.completeSession = async (req, res) => {
+  try {
+    const session = await Session.findById(req.params.id);
+    if (!session) {
+      res.status(404).json({ message: "invalid session id" });
+    }
+    const gig = await Gigs.findById(session?.gigId);
+    session.status = "completed";
+    gig.status = "completed";
+    await session.save();
+    await gig.save();
+
+    res.status(200).json("session completed successfully");
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error?.message });
+  }
+};
+exports.cancellSession = async (req, res) => {
+  try {
+    const session = await Session.findById(req.params.id);
+    if (!session) {
+      res.status(404).json({ message: "invalid session id" });
+    }
+    const gig = await Gigs.findById(session?.gigId);
+    session.status = "cancelled";
+    gig.status = "cancelled";
+    await session.save();
+    await gig.save();
+    res.status(200).json("session Cancelled successfully");
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error?.message });
   }
 };
