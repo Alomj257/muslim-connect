@@ -2,23 +2,42 @@ import React from "react";
 import "./Learning.css";
 import learningImg from "../../../assets/Student/learningImg.png";
 import profileImg from "../../../assets/Student/Ellipse 21.png";
-const Learning = () => {
+import { useGetAuthByIdQuery } from "../../../ApiService/AuthSlice/AuthSlice";
+import { useGetGigsByIdQuery } from "../../../ApiService/GigsService/GigsService";
+import { server } from "../../../ApiService/Axios";
+const Learning = ({ value, index }) => {
+  const user = useGetAuthByIdQuery(value?.consultantId);
+  const gig = useGetGigsByIdQuery(value?.gigId);
+  console.log(value?.consultantId);
+
   return (
-    <div className="card cus">
-      <img src={learningImg} className="lcart" alt="l cart" />
-      <img src={profileImg} className="profileImg" alt="profile" />
-      <p style={{ fontWeight: "bold", marginLeft: "-85px" }}>Ayesha Ali</p>
+    <div key={index} className="card cus">
+      {gig?.data?.gigsImages && (
+        <img
+          src={server + gig?.data?.gigsImages[0]?.file}
+          className="lcart"
+          alt="l cart"
+        />
+      )}
+      <img
+        src={server + user?.data?.profile}
+        className="profileImg"
+        alt="profile"
+      />
+      <p style={{ fontWeight: "bold", marginLeft: "-85px" }}>
+        {user?.data?.firstname} {user?.data?.lastname}
+      </p>
       <div>
         <p>Price</p>
-        <p style={{ fontWeight: "bold" }}>$56</p>
+        <p style={{ fontWeight: "bold" }}>${gig?.data?.price}</p>
       </div>
       <div>
         <p>Schedule on</p>
-        <p style={{ fontWeight: "bold" }}>4/3/2024</p>
+        <p style={{ fontWeight: "bold" }}>{value?.date}</p>
       </div>
       <div>
         <p>Status</p>
-        <div className="cbtn sbtn">In Progress</div>
+        <div className="cbtn sbtn">{gig?.data?.status || "Progress"}</div>
       </div>
     </div>
   );

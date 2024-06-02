@@ -19,6 +19,5 @@ GigsRoutes.get("/:id", getOneGigs);
 GigsRoutes.get("/", getAllGigss);
 GigsRoutes.get("/user/:id", getAllGigsByUserId);
 GigsRoutes.get("/filter", filterGigs);
-GigsRoutes.use("/user/review", reviewRoute);
-
+GigsRoutes.use("/review/data", reviewRoute);
 module.exports = GigsRoutes;

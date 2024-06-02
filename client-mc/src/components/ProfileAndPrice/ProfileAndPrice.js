@@ -43,7 +43,7 @@ function ProfileAndPrice({ img, name, star, people, price }) {
         </div>
       </div>
 
-      <div style={{ fontWeight: "600", fontSize: "42px" }}>$ {price} </div>
+      <div style={{ fontWeight: "600", fontSize: "42px" }}> {price} </div>
     </div>
   );
 }

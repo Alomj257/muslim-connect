@@ -1,7 +1,8 @@
 import React from "react";
 import img from "../../../assets/Nav_assets/studentProfile.jpeg";
+import { server } from "../../../ApiService/Axios";
 
-const Header = () => {
+const Header = ({ userData }) => {
   return (
     <>
       <div
@@ -11,19 +12,23 @@ const Header = () => {
           className="profile-img  "
           style={{ width: "50px", aspectRatio: "1/1" }}
         >
-          <img src={img} alt="profile" className="w-100 h-100 rounded-circle" />
+          <img
+            src={
+              userData?.data?.profile ? server + userData?.data?.profile : img
+            }
+            alt="profile"
+            className="w-100 h-100 rounded-circle"
+          />
         </div>
         <div className="w-100">
           <div className="d-flex justify-content-between w-100 align-items-center">
             <h5 className="fw-semibold" style={{ fontSize: "16px" }}>
-              Mohammad Haseeb
+              {userData?.firstname} {userData?.lastname}
             </h5>
             <small>...</small>
           </div>
           <div>
-            <small>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </small>
+            <small>{userData?.description}</small>
           </div>
         </div>
       </div>

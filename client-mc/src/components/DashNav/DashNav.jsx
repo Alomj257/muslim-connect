@@ -4,7 +4,12 @@ import { NavLink } from "react-router-dom";
 import logo from "../../assets/Nav_assets/logo.png";
 import studentProfile from "../../assets/Nav_assets/studentProfile.jpeg";
 import { FaAngleDown, FaRegBell, FaRegEnvelope } from "react-icons/fa6";
+import { useGetAuthByIdQuery } from "../../ApiService/AuthSlice/AuthSlice";
+import { useAuth } from "../../context/AuthContext";
+import { server } from "../../ApiService/Axios";
 const DashNav = ({ navData, type }) => {
+  const [{ user }] = useAuth();
+  const { data } = useGetAuthByIdQuery(user?._id);
   return (
     <>
       <nav className="c-navbar d-flex">
@@ -81,11 +86,20 @@ const DashNav = ({ navData, type }) => {
               <FaRegBell />{" "}
             </span>
           </li>
-          <li>
-            <span className="p-1 rounded border">
-              <FaRegEnvelope />
-            </span>
-          </li>
+          <NavLink
+            to={user?.role === "STUDENT" ? "/student/chat" : "/consultant/chat"}
+            className={(nav) =>
+              nav.isActive
+                ? "navbar-active text-decoration-none"
+                : " text-decoration-none"
+            }
+          >
+            <li>
+              <span className="p-1 rounded border">
+                <FaRegEnvelope />
+              </span>
+            </li>
+          </NavLink>
           <li className="d-flex align-items-center">
             <div
               className="m-auto"
@@ -93,7 +107,7 @@ const DashNav = ({ navData, type }) => {
             >
               <img
                 className="h-100 w-100 rounded-circle"
-                src={studentProfile}
+                src={data?.profile ? server + data?.profile : studentProfile}
                 alt="profile"
               />
             </div>

@@ -18,4 +18,5 @@ reviewRoute.get("/:id", getOneReview);
 reviewRoute.get("/", getAllReviews);
 reviewRoute.get("/user/:id", getAllReviewByUserId);
 reviewRoute.get("/gig/:id", getAllReviewByGigId);
+
 module.exports = reviewRoute;

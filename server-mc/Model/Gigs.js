@@ -38,6 +38,9 @@ const GigsSchema = new mongoose.Schema({
   cancelations: Number,
   // rating
   rating: Array,
+  // session
+  sessionId: Array,
+  status: String,
 });
 
 const Gigs = mongoose.model("Gigs", GigsSchema);

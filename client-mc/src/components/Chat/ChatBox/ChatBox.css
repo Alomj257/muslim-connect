@@ -13,7 +13,7 @@
         background-color: var(--purple-color);
     }
     .mssages{
-        max-height: 60vh;
+        max-height:40vh;
         overflow-y: scroll;
         scrollbar-width: none;
     }

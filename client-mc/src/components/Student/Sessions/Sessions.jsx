@@ -1,13 +1,60 @@
-import React from "react";
-import myimg from "../../../assets/Rectangle 1891.png";
+import React, { useEffect, useState } from "react";
 import SearchSvg from "../../../assets/Session/Search_Svg";
 import "./Session.css";
+import {
+  useCancelSessionMutation,
+  useCompleteSessionMutation,
+  useGetSessionByUserIdQuery,
+} from "../../../ApiService/SessionSlice/SessionSlice";
+import { useAuth } from "../../../context/AuthContext";
+import { server } from "../../../ApiService/Axios";
+import {
+  useGetAllGigsQuery,
+  useGetGigsByIdQuery,
+} from "../../../ApiService/GigsService/GigsService";
+import { useGetAuthByIdQuery } from "../../../ApiService/AuthSlice/AuthSlice";
+import { PiDotsThreeOutlineFill } from "react-icons/pi";
+import { BsX } from "react-icons/bs";
+import Review from "../../Review/Review";
+import { toast } from "react-toastify";
 function Session() {
+  const [{ user }] = useAuth();
+  const sessions = useGetSessionByUserIdQuery(user?._id);
+  const [filteredSession, setFilteredSessions] = useState(sessions?.data || []);
+  const [isReview, setIsReview] = useState(false);
+  const [sessionId, setSessionId] = useState("");
+  const [gigId, setGigId] = useState("");
+  useEffect(() => {
+    setFilteredSessions(sessions?.data);
+  }, [sessions?.data, sessions?.refetch]);
+  const setDetails = (gigId, sessionId) => {
+    setGigId(gigId);
+    setSessionId(sessionId);
+    setIsReview(true);
+  };
+  const gigs = useGetAllGigsQuery();
+  const handleChange = (e) => {
+    const { value } = e.target;
+    const filtered = sessions?.data?.filter((item) => {
+      const gig = gigs?.data.find((g) => g._id === item.gigId);
+      return (
+        gig?.title?.toLowerCase()?.includes(value.toLowerCase()) ||
+        gig?.price?.toLowerCase()?.includes(value.toLowerCase())
+      );
+    });
+    setFilteredSessions(filtered);
+  };
+
+  const handleRefetch = () => {
+    sessions.refetch();
+  };
   return (
     <div style={{ paddingBottom: "5%" }}>
       {/* <DashNav navData={navData} /> */}
-      <Head />
-
+      <Head handleChange={handleChange} />
+      {isReview && (
+        <Review closeReview={setIsReview} sessionId={sessionId} gigId={gigId} />
+      )}
       <div style={{ display: "flex", marginLeft: "5%" }}>
         <Type name={"CONSULTATION"} num={"2"} />
         <Type name={"COURSES"} num={"5"} />
@@ -27,18 +74,29 @@ function Session() {
                 <th>START DATE</th>
                 <th>TOTAL</th>
                 <th>STATUS</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              <TableRow
-                name={"Usman Ahmad"}
-                gig={"  I will tech the course on Arabic Learning"}
-                date={"24th Jan, 2024"}
-                time={"3:40 pm"}
-                amount={"100$"}
-                status={"ACTIVE"}
-              />
-              <TableRow
+              {sessions?.isLoading ? (
+                "Loading...."
+              ) : sessions?.isError ? (
+                <div className="text-center text-danger my-2">
+                  Sessions Fetching error
+                </div>
+              ) : (
+                filteredSession?.map((item, index) => (
+                  <TableRow
+                    isReview={isReview}
+                    setDetails={setDetails}
+                    item={item}
+                    handleRefetch={handleRefetch}
+                    time={item?.time}
+                    status={"ACTIV"}
+                  />
+                ))
+              )}
+              {/* <TableRow
                 name={"Usman Ahmad"}
                 gig={"  I will tech the course on Arabic Learning"}
                 date={"24th Jan, 2024"}
@@ -53,7 +111,7 @@ function Session() {
                 time={"3:40 pm"}
                 amount={"100$"}
                 status={"CANCELLED"}
-              />
+              /> */}
             </tbody>
           </table>
         </div>
@@ -63,7 +121,7 @@ function Session() {
 }
 
 export default Session;
-const Head = () => {
+const Head = ({ handleChange }) => {
   return (
     <div style={{ paddingTop: "13%" }}>
       <div
@@ -90,6 +148,7 @@ const Head = () => {
           <SearchSvg />
           <input
             type="text"
+            onChange={handleChange}
             placeholder="Search"
             style={{ border: "none", outline: "none", marginLeft: "10px" }}
           />
@@ -132,75 +191,174 @@ const Type = ({ name, num }) => {
   );
 };
 
-const TableRow = ({ name, gig, date, time, amount, status }) => {
+const TableRow = ({ item, img, setDetails, handleRefetch }) => {
+  const user = useGetAuthByIdQuery(item?.consultantId);
+  const gig = useGetGigsByIdQuery(item?.gigId);
+  const [cancelSession, { error, isError, isSuccess }] =
+    useCancelSessionMutation();
+  const [completeSession, other] = useCompleteSessionMutation();
+  const [isAction, setAction] = useState(false);
+  const handleSet = () => {
+    setDetails(gig?.data?._id, item?._id);
+  };
+  const handleComplete = async (id) => {
+    try {
+      const { data } = await completeSession(id);
+      if (other?.isError) {
+        toast.error(other?.error?.data?.message || other?.error?.data);
+        return;
+      }
+      if (data?.message) {
+        toast.error(data?.message);
+        return;
+      }
+      handleRefetch();
+      toast.success(data);
+    } catch (error) {
+      console.log(error);
+      toast.error("something went wrong...!");
+    }
+  };
+  const handleCancel = async (id) => {
+    try {
+      const { data } = await cancelSession(id);
+      if (isError) {
+        toast.error(error?.data?.message || error?.data);
+        return;
+      }
+      if (data?.message) {
+        toast.error(data?.message);
+        return;
+      }
+      if (isSuccess) {
+        handleRefetch();
+        toast.success(data);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("something went wrong...!");
+    }
+  };
   return (
-    <tr>
-      <td
-        style={{
-          display: "flex",
-          alignItems: "center",
-          fontWeight: "500",
-          fontSize: "16px",
-        }}
-      >
-        <img
-          src={myimg}
-          alt=""
+    <>
+      <tr>
+        <td
           style={{
-            height: "40px",
-            width: "40px",
-            marginRight: "15px",
-            borderRadius: "50%",
+            display: "flex",
+            alignItems: "center",
+            fontWeight: "500",
+            fontSize: "16px",
           }}
-        />
-        {name}
-      </td>
-      <td
-        style={{
-          color: "rgba(124, 83, 153, 1)",
-          fontWeight: "500",
-          fontSize: "18px",
-        }}
-      >
-        {gig}
-      </td>
-      <td style={{ textAlign: "center" }}>
-        <span
+        >
+          <img
+            src={user?.data?.profile ? server + user?.data?.profile : img}
+            alt=""
+            style={{
+              height: "40px",
+              width: "40px",
+              marginRight: "15px",
+              borderRadius: "50%",
+            }}
+          />
+          {user?.data?.fistname} {user?.data?.lastname}
+        </td>
+        <td
           style={{
-            display: "block",
+            color: "rgba(124, 83, 153, 1)",
             fontWeight: "500",
             fontSize: "18px",
           }}
         >
-          {date}
+          {gig?.data?.title}
+        </td>
+        <td style={{ textAlign: "center" }}>
           <span
             style={{
               display: "block",
-              fontWeight: "400",
-              color: "gray",
+              fontWeight: "500",
+              fontSize: "18px",
             }}
           >
-            {time}
+            {item?.startDate}
+            <span
+              style={{
+                display: "block",
+                fontWeight: "400",
+                color: "gray",
+              }}
+            >
+              {item?.time}
+            </span>
           </span>
-        </span>
-      </td>
-      <td style={{ fontWeight: "600", fontSize: "22px" }}>{amount}</td>
-      <td>
-        <button
-          style={{
-            backgroundColor: "rgba(124, 83, 153, 1)",
-            color: "white",
-            border: "1px solid white",
-            padding: "7px 20px 7px 20px",
-            borderRadius: "30px",
-            width: "150px",
-            fontWeight: "500",
-            fontSize: "13px",
-          }}
-        >
-          {status}
-        </button>
-      </td>
-    </tr>
+        </td>
+        <td style={{ fontWeight: "600", fontSize: "22px" }}>
+          ${gig?.data?.price}
+        </td>
+        <td>
+          <button
+            onClick={() => gig?.data?.status === "review" && handleSet()}
+            style={{
+              backgroundColor: "rgba(124, 83, 153, 1)",
+              color: "white",
+              border: "1px solid white",
+              padding: "7px 20px 7px 20px",
+              borderRadius: "30px",
+              width: "150px",
+              fontWeight: "500",
+              fontSize: "13px",
+            }}
+          >
+            {gig?.data?.status === "review"
+              ? "Give Review"
+              : gig?.data?.status === "progress"
+              ? "Active"
+              : gig?.data?.status}
+          </button>
+        </td>
+        <td className="position-relative ">
+          {!isAction ? (
+            <span
+              onClick={() => setAction(!isAction)}
+              style={{ cursor: "pointer" }}
+              className="p-2  rounded-circle bg-light"
+            >
+              <PiDotsThreeOutlineFill size={25} />
+            </span>
+          ) : (
+            <span
+              onClick={() => setAction(!isAction)}
+              style={{ cursor: "pointer" }}
+              className="p-2  rounded-circle bg-light"
+            >
+              <BsX size={25} />
+            </span>
+          )}
+          <ul
+            style={{ listStyle: "none", zIndex: "4" }}
+            className={`d-flex threeDot px-0 rounded  flex-column bg-light  threeDot-${
+              isAction ? "open" : "close"
+            } gap-3 mt-0  left-0 position-absolute`}
+          >
+            {user?.data?.role === "CONSULTANT" && (
+              <li
+                className="p-1 py-2 px-2 fw-bold"
+                onClick={() => handleComplete(item?._id)}
+              >
+                Complete
+              </li>
+            )}
+            <li
+              className="p-1 py-2 px-2 fw-bold "
+              onClick={() => handleCancel(item?._id)}
+            >
+              Cancel
+            </li>
+            <li onClick={() => handleSet()} className="p-1 fw-bold py-2 px-2 ">
+              Review
+            </li>
+          </ul>
+        </td>
+      </tr>
+    </>
   );
 };

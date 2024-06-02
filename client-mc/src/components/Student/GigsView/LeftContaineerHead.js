@@ -1,13 +1,23 @@
 import React from "react";
-import Avatar from "../../../assets/GigsView/Avatar.png";
 import StarSvg from "../../../assets/GigsView/StarSvg";
+import { useGetAuthByIdQuery } from "../../../ApiService/AuthSlice/AuthSlice";
+import { useGetAllReviewByUserIdQuery } from "../../../ApiService/GigsService/GigsService";
+import { server } from "../../../ApiService/Axios";
 
-const LeftContaineerHead = () => {
+const LeftContaineerHead = ({ gig }) => {
+  const user = useGetAuthByIdQuery(gig?.userId);
+  const reviews = useGetAllReviewByUserIdQuery(gig?.userId);
+  console.log(reviews);
+  const calCulateRating = () => {
+    let rating = 0;
+    reviews?.data?.forEach((ele) => {
+      rating += ele?.rating;
+    });
+    return Math.ceil(rating / reviews?.data?.length);
+  };
   return (
     <>
-      <h4 style={{ marginTop: "30px", marginBottom: "30px" }}>
-        I will give consultation on the Financial system in light of Quran
-      </h4>
+      <h4 style={{ marginTop: "30px", marginBottom: "30px" }}>{gig?.title}</h4>
       <div
         style={{
           display: "flex",
@@ -16,8 +26,8 @@ const LeftContaineerHead = () => {
         }}
       >
         <img
-          src={Avatar}
-          alt=""
+          src={server + user?.data?.profile}
+          alt="profile"
           srcset=""
           style={{
             height: "70px",
@@ -27,8 +37,11 @@ const LeftContaineerHead = () => {
           }}
         />
         <div>
-          <p style={{ fontWeight: "600", fontSize: "24px" }}>Usman Ahmad</p>
-          <p
+          <p style={{ fontWeight: "600", fontSize: "24px" }}>
+            {user?.data?.firstname} {user?.data?.lastname}
+          </p>
+          <div
+            className="mt-1"
             style={{
               display: "flex",
               alignItems: "center",
@@ -37,9 +50,9 @@ const LeftContaineerHead = () => {
           >
             <StarSvg />
             <span style={{ marginLeft: "10px" }}>
-              5.0 <span>(28)</span>
+              {calCulateRating() || 0.0} <span>({reviews?.data?.length})</span>
             </span>
-          </p>
+          </div>
         </div>
         <div
           style={{
@@ -54,7 +67,7 @@ const LeftContaineerHead = () => {
             marginLeft: "150px",
           }}
         >
-          Expart
+          {gig?.level}
         </div>
       </div>
     </>

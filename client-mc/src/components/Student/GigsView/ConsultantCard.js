@@ -1,8 +1,43 @@
 import React from "react";
 import Avatar from "../../../assets/GigsView/Avatar.png";
 import StarSvg from "../../../assets/GigsView/StarSvg";
+import { useGetAuthByIdQuery } from "../../../ApiService/AuthSlice/AuthSlice";
+import { chatCreate } from "../../../ApiService/ChatService/ChatService";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../context/AuthContext";
+import { useGetAllReviewByUserIdQuery } from "../../../ApiService/GigsService/GigsService";
+import { server } from "../../../ApiService/Axios";
 
-const ConsultantCard = () => {
+const ConsultantCard = ({ gig }) => {
+  const user = useGetAuthByIdQuery(gig?.userId);
+  const [auth] = useAuth();
+  const navigate = useNavigate();
+  const handleMassage = async (currentUser, oppositeUser) => {
+    try {
+      if (!currentUser || !oppositeUser) {
+        toast.error("something wrong");
+        return;
+      }
+      if (currentUser === oppositeUser) {
+        toast.error("you can not apply this job");
+        return;
+      }
+      const { data } = await chatCreate({
+        senderId: currentUser,
+        receiverId: oppositeUser,
+      });
+      if (data.message) {
+        toast.error(data.message);
+        return;
+      } else {
+        navigate("/student/chat", { state: { currentUser, oppositeUser } });
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("something went wrong");
+    }
+  };
   return (
     <div
       style={{
@@ -12,8 +47,9 @@ const ConsultantCard = () => {
         padding: "8%",
       }}
     >
-      <ConsultantCardHead />
+      <ConsultantCardHead gig={gig} user={user} />
       <button
+        onClick={() => handleMassage(auth?.user?._id, gig?.userId)}
         style={{
           backgroundColor: "transparent",
           border: "1px solid rgba(124, 83, 153, 1)",
@@ -39,7 +75,9 @@ const ConsultantCard = () => {
             >
               Level
             </span>
-            <p style={{ fontWeight: "500", fontSize: "18px" }}> Bronze</p>
+            <p style={{ fontWeight: "500", fontSize: "18px" }}>
+              {user?.data?.level}
+            </p>
           </div>
           <div>
             <span
@@ -49,7 +87,9 @@ const ConsultantCard = () => {
             </span>
             <p style={{ fontWeight: "500", fontSize: "18px" }}>
               {" "}
-              Islamic Finance, Quran consultation
+              {user?.data?.skills?.map((val, key) => (
+                <span key={key}>{val?.skill} ,</span>
+              ))}
             </p>
           </div>
         </div>
@@ -61,7 +101,11 @@ const ConsultantCard = () => {
             >
               Member Since
             </span>
-            <p style={{ fontWeight: "500", fontSize: "18px" }}> 2018</p>
+            <p style={{ fontWeight: "500", fontSize: "18px" }}>
+              {new Date(
+                user?.data?.createdAt ? user?.data?.createdAt : ""
+              ).getUTCFullYear()}
+            </p>
           </div>
           <div>
             <span
@@ -70,8 +114,9 @@ const ConsultantCard = () => {
               Languages
             </span>
             <p style={{ fontWeight: "500", fontSize: "18px" }}>
-              {" "}
-              English, Indonesian
+              {user?.data?.languages?.map((val, key) => (
+                <span key={key}>{val?.language} ,</span>
+              ))}
             </p>
           </div>
         </div>
@@ -82,12 +127,7 @@ const ConsultantCard = () => {
           About
         </span>
         <p style={{ fontWeight: "500", fontSize: "18px" }}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum
-          quod obcaecati explicabo inventore odit minima aspernatur voluptates
-          enim, nisi voluptas natus id labore facilis incidunt vero
-          exercitationem quasi non quam fugit. Accusantium, itaque obcaecati?
-          Inventore in deserunt architecto assumenda nesciunt quod excepturi.
-          Esse quasi quam minima quo deleniti incidunt corporis?
+          {user?.data?.description}
         </p>
       </div>
     </div>
@@ -96,7 +136,17 @@ const ConsultantCard = () => {
 
 export default ConsultantCard;
 
-const ConsultantCardHead = () => {
+const ConsultantCardHead = ({ user, gig }) => {
+  const reviews = useGetAllReviewByUserIdQuery(gig?.userId);
+  const calculateRate = () => {
+    let avgRate = 0;
+    if (Array.isArray(reviews.data)) {
+      reviews?.data?.forEach((ele) => {
+        avgRate += ele?.rating;
+      });
+    }
+    return avgRate / reviews?.data?.length || 0;
+  };
   return (
     <>
       <div
@@ -106,8 +156,8 @@ const ConsultantCardHead = () => {
         }}
       >
         <img
-          src={Avatar}
-          alt=""
+          src={server + user?.data?.profile}
+          alt="profile"
           srcset=""
           style={{
             height: "120px",
@@ -123,13 +173,17 @@ const ConsultantCardHead = () => {
             justifyContent: "center",
           }}
         >
-          <p style={{ fontWeight: "600", fontSize: "24px" }}>Usman Ahmad</p>
-          <p
-            style={{ fontWeight: "400", fontSize: "20px", marginTop: "-20px" }}
-          >
-            Consultant Islamic Financial System
+          <p style={{ fontWeight: "600", fontSize: "24px" }}>
+            {user?.data?.firstname} {user?.data?.lastname}
           </p>
           <p
+            className="my-1"
+            style={{ fontWeight: "400", fontSize: "20px", marginTop: "-20px" }}
+          >
+            {gig?.title}
+          </p>
+          <p
+            className="mt-2"
             style={{
               display: "flex",
               alignItems: "center",
@@ -145,7 +199,7 @@ const ConsultantCardHead = () => {
                 color: "grey",
               }}
             >
-              5.0
+              {calculateRate() || 0.0}
               <span
                 style={{
                   marginLeft: "10px",
@@ -154,7 +208,7 @@ const ConsultantCardHead = () => {
                   color: "black",
                 }}
               >
-                (28)
+                ({reviews?.data?.length || 0})
               </span>
             </span>
           </p>
@@ -172,7 +226,7 @@ const ConsultantCardHead = () => {
             marginLeft: "150px",
           }}
         >
-          Expart
+          {user?.data?.level ? user?.data?.level : "New"}
         </div>
       </div>
     </>

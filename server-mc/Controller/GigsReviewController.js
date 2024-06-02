@@ -1,8 +1,10 @@
 const GigsReview = require("../Model/GigsReview");
+const Notification = require("../Model/Notification");
 
 exports.CreateReview = async (req, res) => {
   try {
-    await new GigsReview(req.body).save();
+    const review = await new GigsReview(req.body).save();
+    await Notification({ modelId: review?._id, title: review?.message });
     res.status(201).json("Review created");
   } catch (error) {
     console.log(error);
@@ -56,7 +58,7 @@ exports.getAllReviews = async (req, res) => {
 
 exports.getAllReviewByGigId = async (req, res) => {
   try {
-    const Reviews = await GigsReview.find({ gigsId: req.params.id });
+    const Reviews = await GigsReview.find({ gigId: req.params.id });
     res.status(201).json(Reviews);
   } catch (error) {
     console.log(error);
@@ -65,7 +67,7 @@ exports.getAllReviewByGigId = async (req, res) => {
 };
 exports.getAllReviewByUserId = async (req, res) => {
   try {
-    const Reviews = await GigsReview.find({ gigsId: req.params.id });
+    const Reviews = await GigsReview.find({ userId: req.params.id });
     res.status(201).json(Reviews);
   } catch (error) {
     console.log(error);

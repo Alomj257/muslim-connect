@@ -1,22 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Student.css";
 import Profile from "./Profile/Profile";
 import Learning from "./ActiveLearning/Learning";
 import Item from "../Item/Item";
 import { useNavigate } from "react-router-dom";
 import { useGetAllGigsQuery } from "../../ApiService/GigsService/GigsService";
-import {
-  useGetAllAuthQuery,
-  useGetAuthByIdQuery,
-} from "../../ApiService/AuthSlice/AuthSlice";
+import { useGetAuthByIdQuery } from "../../ApiService/AuthSlice/AuthSlice";
 import { useAuth } from "../../context/AuthContext";
+import { useGetSessionByUserIdQuery } from "../../ApiService/SessionSlice/SessionSlice";
 
 const Student = () => {
   const [auth] = useAuth();
   const navigate = useNavigate();
-  const user = useGetAuthByIdQuery(auth?.user?.id);
+  const user = useGetAuthByIdQuery(auth?.user?._id);
 
-  const [params, setParams] = useState({
+  let [params, setParams] = useState({
     location: "New York",
     category: "Music",
     priceMin: 100,
@@ -25,11 +23,23 @@ const Student = () => {
       ArrayToString(user?.data?.intrests, "intrest") +
       ArrayToString(user?.data?.skills, "skill"), // Example keywords
   });
-  console.log(user);
+  params.keywords =
+    ArrayToString(user?.data?.intrests, "intrest") +
+    ArrayToString(user?.data?.skills, "skill");
   const course = useGetAllGigsQuery();
-  const { data: gigs, error, isLoading } = useGetAllGigsQuery(params);
-  const consultant = useGetAllAuthQuery();
+  const progress = useGetSessionByUserIdQuery(auth?.user?._id);
+  const [filteredSession, setFilteredSessions] = useState(progress?.data);
 
+  useEffect(() => {
+    const filterProgress = () => {
+      const filtered = progress?.data?.filter((item) => {
+        const gig = course?.data?.find((g) => g?._id === item?.gigId);
+        return gig?.status?.toLowerCase()?.includes("progress");
+      });
+      setFilteredSessions(filtered);
+    };
+    filterProgress();
+  }, [course?.data, progress?.data]);
   return (
     <div className="student-container">
       <div>
@@ -65,24 +75,24 @@ const Student = () => {
           <div className="card">
             <h6>Active Learnings - 2</h6>
           </div>
-          {course?.isLoading
+          {progress?.isLoading
             ? "Loading...."
-            : course?.isError
+            : progress?.isError
             ? "Course fetching error "
-            : course?.data?.map((val, index) => (
+            : filteredSession?.map((val, index) => (
                 <Learning index={index} value={val} />
               ))}
         </div>
         <h2 style={{ marginTop: "4%" }}>Recommendations</h2>
         <div className="card items">
-          {consultant?.isLoading ? (
+          {course?.isLoading ? (
             "Loading...."
-          ) : consultant?.isError ? (
+          ) : course?.isError ? (
             <div className="text-danger text-center w-100">
               Consultant fetching error{" "}
             </div>
           ) : (
-            consultant?.data?.map((val, index) => <Item />)
+            course?.data?.map((val, index) => <Item data={val} index={index} />)
           )}
 
           {/* <Item />
@@ -100,7 +110,7 @@ const ArrayToString = (arr, key) => {
   let res = "";
   if (Array.isArray(arr)) {
     arr?.forEach((ele) => {
-      res += ele[key] ? ele[key] : "";
+      res = res + (ele[key] ? ele[key] : "") + ",";
     });
   }
   return res;
